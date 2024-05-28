@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} Vendor</h2>
+<form [formGroup]="vendorData" (ngSubmit)="addVendor()">
+<mat-dialog-content>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Vendor Name</mat-label>
+                <input matInput formControlName='name'>
+                <mat-error *ngIf="vendorData.get('name')?.hasError('name')">Description Required</mat-error>         
+              </mat-form-field>     
+        </div>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Person</mat-label>
+                <input matInput formControlName='contactName'>
+                <mat-error *ngIf="vendorData.get('contactName')?.hasError('contactName')">supplier Required</mat-error> 
+              </mat-form-field>
+             
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Email</mat-label>
+                <input matInput formControlName='contactEmail'>
+                <mat-error *ngIf="vendorData.get('contactEmail')?.hasError('contactEmail')">manufacturer Required</mat-error> 
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Number</mat-label>
+                <input matInput formControlName='contactNumber'>
+                <mat-error *ngIf="vendorData.get('contactNumber')?.hasError('contactNumber')">manufacturer Required</mat-error> 
+              </mat-form-field>
+        </div>
+       
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Address</mat-label>
+                <input matInput formControlName='address'>
+                <div class="invalid-feedback" *ngIf="vendorData.get('address')?.hasError('address')">
+                    <sup>*</sup>Please enter your city name
+                  </div>                
+              </mat-form-field>
+        </div>
+       
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">{{dialogdata ? 'Update': 'Save'}}</button>
+    </mat-dialog-actions>
+</form>

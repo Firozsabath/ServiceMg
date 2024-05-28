@@ -1,0 +1,155 @@
+
+<div style="padding: 15px;">
+    <div>    
+        <div class="row">
+            <div class="col col-12 col-md-6">
+                <h1>Ticket Details</h1>
+            </div>
+            <!-- <div class="col col-12 col-md-6">
+                <button mat-flat-button color="accent" class="float-end custombutton" (click)="onUpdate(ticket)"><span class="material-symbols-outlined">edit</span> update status</button>
+            </div> -->
+        </div>
+       
+    </div>
+    <div>
+        <span><a mat-raised-button class="requestActionbutton me-3 mb-2" [routerLink]="['/admin/tickets']"><span class="customBackButton material-symbols-outlined">arrow_back</span> Back</a>
+    </span>
+        <div class="mb-3">
+            <h2> {{ticket.subject}}</h2>
+            <p>
+                <span class="headermachine me-3"><span class="headericon material-symbols-outlined me-1 mb-2">coffee_maker</span> {{ticket.machine}} </span>
+                <span><button mat-flat-button class="requestActionbutton me-2 mb-2" (click)="onUpdateStatus(ticket.id,'status')"><span class="headericon material-symbols-outlined">edit</span> update status</button></span>                
+                <span><button mat-flat-button class="requestActionbutton me-2 mb-2" (click)="onUpdateStatus(ticket.id,'respond')"><span class="headericon material-symbols-outlined">add_comment</span> Respond</button></span>
+                <span><button mat-flat-button class="requestActionbutton mb-2" (click)="addUsedParts(ticket.id)"><span class="headericon material-symbols-outlined">add</span> Add Parts</button></span>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-col-12 col-md-8">
+                <mat-card>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-12 col-md-12">
+                                <div class="row">
+                                    <div class="col col-12 col-md-12">
+                                        <h3 class="fw-bold">Description:</h3>
+                                        <p><span>{{ticket.description}}</span></p>
+                                    </div>
+                                    <div class="col col-12 col-md-12">
+                                        <h3 class="fw-bold">Technician's Comment:</h3>
+                                        <p><span>{{ticket.technicianComment}}</span></p>
+                                    </div>
+                                    <div class="col col-12 col-md-12">
+                                        <h3 class="fw-bold">Technician's Response:</h3>
+                                        <p><span>{{ticket.respondMessage}}</span></p>
+                                    </div>
+                                </div>
+                                
+                            </div>                       
+                        </div> 
+                        <mat-divider></mat-divider>
+                            <div class="row mt-3">
+                                <div class="col col-12 col-md-12">
+                                    <div  class="mat-elevation-z8 p-0">
+                                        <table mat-table [dataSource]="dataSource">  
+                                            <ng-container matColumnDef="id">
+                                                <th [hidden]="true" mat-header-cell *matHeaderCellDef> ID </th>
+                                                <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.id}} </td>
+                                              </ng-container>
+                                          
+                                              
+                                              <ng-container matColumnDef="serviceid">
+                                                <th [hidden]="true" mat-header-cell *matHeaderCellDef> Service </th>
+                                                <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.serviceID}}</td>
+                                              </ng-container>
+                                              <ng-container matColumnDef="partsid">
+                                                <th mat-header-cell *matHeaderCellDef> parts </th>
+                                                <td mat-cell *matCellDef="let row" width="60%" > {{row.partName}}</td>
+                                              </ng-container>
+                                              <ng-container matColumnDef="quantity">
+                                                <th mat-header-cell *matHeaderCellDef> quantity Used </th>
+                                                <td mat-cell *matCellDef="let row" width="20%" class="text-center"> {{row.quantityUsed}}</td>
+                                              </ng-container>
+                                              <ng-container matColumnDef="Actions">
+                                                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                                <td mat-cell *matCellDef="let element" width="20%" class="text-center"> 
+                                                  <button mat-mini-fab color="default"  class="me-2" (click)="editItem(element)"><span class="material-symbols-outlined">edit</span></button>
+                                                  <button mat-mini-fab color="default"  (click)="deleteItem(element.id,element.serviceID)"><span class="material-symbols-outlined">delete</span></button>
+                                                  </td>
+                                              </ng-container>
+                                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                                    </div>
+                                </div>                                  
+                            </div>                  
+                    </mat-card-content>
+                </mat-card>    
+            </div>
+            <div class="col-col-12 col-md-4">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>
+                            <span>Details</span>
+                        </mat-card-title>                   
+                    </mat-card-header>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col col-12 col-md-5">
+                                <h3 class="fw-bold">Category:</h3>                                
+                            </div>
+                            <div class="col col-12 col-md-7">
+                                <p><span>{{ticket.serviceType}}</span></p>
+                            </div>
+                            <div class="col col-12 col-md-5">
+                                <h3 class="fw-bold">Technician:</h3>                                
+                            </div>
+                            <div class="col col-12 col-md-7">
+                                <p><span>{{ticket.technician}}</span></p>
+                            </div>  
+
+                            <div class="col col-12 col-md-5">
+                                <h3 class="fw-bold">Priority:</h3>                                
+                            </div>
+                            <div class="col col-12 col-md-7">
+                                <p><span>{{ticket.priority}}</span></p>
+                            </div>  
+
+                            <div class="col col-12 col-md-5">
+                                <h3 class="fw-bold">Responded Time:</h3>                                
+                            </div>
+                            <div class="col col-12 col-md-7">
+                                <p><span>{{formatTimeDifference(ticket.respondedinHours)}}</span></p>
+                            </div>  
+
+                            <div class="col col-12 col-md-5">
+                                <h3 class="fw-bold">Status:</h3>                                
+                            </div>
+                            <div class="col col-12 col-md-7">
+                                <p><span>{{ticket.serviceStatus}}</span></p>
+                            </div> 
+                            <div class="col col-12 col-md-5">
+                                <h3 class="fw-bold">Created date:</h3>                                
+                            </div>
+                            <div class="col col-12 col-md-7">
+                                <p><span>{{ticket.requestedDate}}</span></p>
+                            </div>                  
+                            <div class="col col-12 col-md-5">
+                                <h3 class="fw-bold">Due date:</h3>                                
+                            </div>
+                            <div class="col col-12 col-md-7">
+                                <p><span>{{ticket.estimatedCompleteDate}}</span></p>
+                            </div> 
+                           
+                        </div>
+                       
+                    </mat-card-content>
+                </mat-card>    
+                
+            </div>
+        </div>
+        
+       
+    </div>
+</div>
+

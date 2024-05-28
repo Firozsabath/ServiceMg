@@ -1,0 +1,113 @@
+<h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} Branch</h2>
+<form [formGroup]="branchData" (ngSubmit)="addBranches()">
+<mat-dialog-content>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Branch Name</mat-label>
+                <input matInput formControlName='branchName'>
+                <mat-error *ngIf="branchData.get('branchName')?.hasError('branchName')">Branch Name Required</mat-error>         
+              </mat-form-field>     
+        </div>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Select Company</mat-label>
+                <mat-select [(ngModel)]="selectedValue" name="configsList" formControlName='companyID'>
+                  <mat-option [value]="">
+                    Select a Company
+                  </mat-option>
+                  <mat-option *ngFor="let company of companyList" [value]="company.id">{{company.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Number</mat-label>
+                <input matInput formControlName='contactNumber'>
+                <mat-error *ngIf="branchData.get('contactNumber')?.hasError('contactNumber')">Email Required</mat-error> 
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>TRN Number</mat-label>
+                <input matInput formControlName='trnNumber'>
+                <div class="invalid-feedback" *ngIf="branchData.get('trnNumber')?.hasError('trnNumber')">
+                    <sup>*</sup>Please enter your city name
+                  </div>                
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Person</mat-label>
+                <input matInput formControlName='contactPerson'>
+                <div class="invalid-feedback" *ngIf="branchData.get('contactPerson')?.hasError('contactPerson')">
+                    <sup>*</sup>Please enter your company size
+                  </div>                
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <!-- <mat-form-field appearance="fill">
+                <mat-label>doc 1</mat-label>
+                <input matInput formControlName='doc1'>
+                <mat-error *ngIf="branchData.get('doc1')?.hasError('doc1')">documents 1</mat-error> 
+              </mat-form-field> -->
+
+              <div>
+                <mat-toolbar *ngIf="currentFile" class="progress-bar">
+                  <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
+                  <span class="progress">{{ progress }}%</span>
+                </mat-toolbar>
+              
+                <mat-form-field>
+                  <div>
+                    <mat-toolbar>
+                      <input matInput [value]="fileName" />
+              
+                      <button type="button"
+                        mat-flat-button
+                        color="primary"
+                        [disabled]="!currentFile"
+                        (click)="upload()"
+                      >
+                        Upload
+                      </button>
+                    </mat-toolbar>
+              
+                    <input
+                      type="file"
+                      id="fileInput"
+                      (change)="selectFile($event)"
+                      name="fileInput"
+                    />
+                  </div>
+                </mat-form-field>
+              </div>
+              
+              <div *ngIf="message" class="message">
+                {{ message }}
+              </div>
+
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>doc 2</mat-label>
+                <input matInput formControlName='doc2'>
+                <mat-error *ngIf="branchData.get('doc2')?.hasError('doc2')">documents 2</mat-error> 
+              </mat-form-field>
+        </div>
+        <div [hidden]="true" class="row">
+            <mat-form-field appearance="fill">                
+                <input matInput formControlName='createdTime'>
+              </mat-form-field>
+        </div>
+        <div [hidden]="true" class="row">
+            <mat-form-field appearance="fill">              
+                <input matInput formControlName='updateTime'>
+              </mat-form-field>
+        </div>
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">{{dialogdata ? 'Update': 'Save'}}</button>
+    </mat-dialog-actions>
+</form>
+

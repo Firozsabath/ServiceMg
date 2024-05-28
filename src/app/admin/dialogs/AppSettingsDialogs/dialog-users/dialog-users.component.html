@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} User</h2>
+<form [formGroup]="userData" (ngSubmit)="addUser()">
+<mat-dialog-content>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName='email'>
+                <mat-error *ngIf="userData.get('description')?.hasError('name')">Description Required</mat-error>         
+              </mat-form-field>     
+        </div>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>User Name</mat-label>
+                <input matInput formControlName='username'>
+                <mat-error *ngIf="userData.get('username')?.hasError('username')">manufacturer Required</mat-error> 
+              </mat-form-field>
+        </div>
+        <div class="row">           
+              <mat-form-field appearance="fill">
+                <mat-label>Select Role</mat-label>
+                <mat-select [(ngModel)]="selectedRole" name="rolesList" formControlName='role'>
+                  <mat-option [value]="">
+                    Select a Role
+                  </mat-option>
+                  <mat-option *ngFor="let role of roles" [value]="role.name">{{role.normalizedName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div [hidden]="isUpdate" class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>password</mat-label>
+                <input matInput formControlName='password'>
+                <div class="invalid-feedback" *ngIf="userData.get('password')?.hasError('password')">
+                    <sup>*</sup>Please enter your city name
+                  </div>                
+              </mat-form-field>
+        </div>
+       
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">{{dialogdata ? 'Update': 'Save'}}</button>
+    </mat-dialog-actions>
+</form>

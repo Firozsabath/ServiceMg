@@ -1,0 +1,65 @@
+<h1>Branches</h1>
+    <form [formGroup]="Loginform">
+        <div class="row">
+            <div class="col col-10 col-md-5">                         
+                  
+                  <mat-form-field appearance="fill">
+                    <mat-label>Select Company</mat-label>
+                    <mat-select [(ngModel)]="selectedValue" name="configsList" formControlName='compid'>
+                      <mat-option [value]="">
+                        Select a Company
+                      </mat-option>
+                      <mat-option *ngFor="let company of companyList" [value]="company.id">{{company.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="col col-2 col-md-4">
+              <button type="button" mat-raised-button color="primary" (click)="onSearch()" class="me-3 custombutton">          
+                Get Branches
+              </button>      
+              
+              <button type="button" mat-raised-button color="primary" (click)="addBranch()" class="me-3 custombutton">          
+                <span class="material-symbols-outlined">add</span> Add a new Branch
+              </button> 
+            </div>
+          </div> 
+    </form>    
+
+<div >
+    <mat-card *ngFor="let branch of branches" class="example-card mb-3">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image">
+            <img class="card-img-top rounded-circle custom_rounded profimg" src="../assets/Images/logo1.jpg" alt="Card image cap">
+          </div>
+          <mat-card-title>{{branch.branchName}}</mat-card-title>
+          <mat-card-subtitle>{{branch.companyID}}</mat-card-subtitle>
+        </mat-card-header>    
+        <mat-card-content>
+            <div class="row">
+                <div class="col col-md-3">
+                    <span class="fw-bold">Contact Number</span> <span> : {{branch.contactNumber}}</span> 
+                </div>
+                <div class="col col-md-3">
+                    <span class="fw-bold">Contact Person :</span> <span>{{branch.contactPerson}}</span>
+                </div>
+                <div class="col col-md-3">
+                    <span class="fw-bold">TRN Number :</span> <span> {{branch.trnNumber}}</span>
+                </div>
+                <div class="col col-md-3">
+                    <span class="fw-bold">Created Date :</span> <span> {{branch.createdTime | date: 'dd/MM/yyyy'}}</span>
+                </div>
+            </div>
+          <p>
+          
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" class="me-3">View</button>
+          <button mat-flat-button color="accent" (click)="editBranch(branch)" class="me-3">Update</button>
+          <button mat-flat-button color="warn" (click)="deleteBranch(branch.id)">Delete</button>
+        </mat-card-actions>
+        <!-- <mat-divider></mat-divider> -->
+      </mat-card>
+
+</div>
+

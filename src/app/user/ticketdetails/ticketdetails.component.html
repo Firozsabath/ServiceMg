@@ -1,0 +1,67 @@
+
+<div>    
+    <div class="row">
+        <div class="col col-12 col-md-6">
+            <h1><span><a mat-mini-fab color="default" class="me-3" [routerLink]="['/user/tickets']"><span class="material-symbols-outlined">arrow_back</span></a></span>Ticket Details</h1>
+        </div>
+        <div class="col col-12 col-md-6">
+            <button mat-flat-button color="accent" class="float-end custombutton" (click)="onUpdate(ticket)"><span class="material-symbols-outlined">edit</span> update status</button>
+        </div>
+    </div>
+   
+</div>
+<div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                {{ticket.subject}}
+            </mat-card-title>
+            <mat-card-subtitle>
+               <span>Machine Name: </span> {{ticket.machine}}
+            </mat-card-subtitle>           
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="row">
+                <div class="col col-12 col-md-8">
+                    <div class="row">
+                        <div class="col col-12 col-md-12">
+                            <h3 class="fw-bold">Description:</h3>
+                            <p><span>{{ticket.description}}</span></p>
+                        </div>
+                        <div class="col col-12 col-md-12">
+                            <h3 class="fw-bold">Technician Assigned:</h3>
+                            <p><span>{{ticket.technician}}</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-12 col-md-4 ticketspecific">
+                    <div class="row">
+                        <div class="col col-12 col-md-12">
+                            <h3 class="fw-bold">Ticket category:</h3>
+                            <p><span>{{ticket.serviceType}}</span></p>
+                        </div>
+                        <div class="col col-12 col-md-12">
+                            <h3 class="fw-bold">Ticket priority:</h3>
+                            <p><span>{{ticket.priority}}</span></p>
+                        </div>
+                        <div class="col col-12 col-md-12">
+                            <h3 class="fw-bold">Ticket status:</h3>
+                            <p><span>{{ticket.serviceStatus}}</span></p>
+                        </div>
+                        <div class="col col-12 col-md-12">
+                            <h3 class="fw-bold">Ticket created date:</h3>
+                            <p><span>{{ticket.requestedDate}}</span></p>
+                        </div>
+                        <div class="col col-12 col-md-12">
+                            <h3 class="fw-bold">Ticket due date:</h3>
+                            <p><span>{{ticket.estimatedCompleteDate}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </mat-card-content>
+    </mat-card>    
+   
+</div>

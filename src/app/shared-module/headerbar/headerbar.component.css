@@ -1,0 +1,9 @@
+.mat-toolbar.mat-primary{
+    background-color: #3C4F76;
+    color: #fff;
+}
+
+.app-header{
+    color: gold;
+    font-weight: bold;
+}

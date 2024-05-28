@@ -1,0 +1,13 @@
+<app-headerbar></app-headerbar>
+<mat-sidenav-container>
+    <mat-sidenav [(opened)]="opened" mode="side">
+        <app-sidebar-student></app-sidebar-student>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <main>
+        <div style="padding: 15px;">
+          <router-outlet></router-outlet>       
+        </div>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

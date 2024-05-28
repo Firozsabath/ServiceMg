@@ -1,0 +1,22 @@
+@media (min-width: 768px ) {
+
+    .lginbg {
+        width: 30%;
+        /* margin: 10rem auto; */
+        position: relative;
+        top:10%;
+        margin:auto;
+    }
+}
+.custom_rounded{
+    width:30%;
+    margin:auto;
+}
+
+.mat-form-field{
+    width: 100%;
+}
+
+.profimg{
+    width: 20%;
+}

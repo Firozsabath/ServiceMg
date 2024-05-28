@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="clickMenu()">
+      <span class="material-symbols-outlined">menu</span>
+   </button>
+   <span class="app-header">
+   Coffee Service Management
+    </span>
+   <span class="example-spacer"></span>
+   <button style="display: none;" [hidden]="logbtnHide" (click)="logout()" mat-raised-button color="accent" class="example-icon">
+     <mat-icon>logout</mat-icon> Logout
+   </button>      
+</mat-toolbar>

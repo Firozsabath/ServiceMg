@@ -1,0 +1,40 @@
+<div style="background-image: url(../assets/Images/Coffe_Machine1.jpg); width: 100%; height: 100vh; background-repeat: no-repeat; background-size: cover;">
+    <!-- <img src="../assets/Images/Coffe_Machine1.jpg"> -->
+    <div class="lginbg">
+        <div class="card p-4">
+            <img class="card-img-top rounded-circle custom_rounded profimg" src="../assets/Images/logo1.jpg" alt="Card image cap">
+            <div class="card-body text-center">
+                <h5 class="card-title text-center">Welcome</h5>            
+                <p class="card-text small font-weight-bold">Login using your  credentials.</p>                
+            </div>
+            <mat-error class="mb-2 text-center fw-bold">{{errMessage}}</mat-error>
+            <mat-card>
+                <form [formGroup]="Loginform" (ngSubmit)="OnSubmit(signInForm)" #signInForm="ngForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Enter Your EmailID" name="EmailID" id="EmailID"  formControlName = 'username'>
+                        <mat-error *ngIf="Allcontrols?.username?.errors?.email&&submitted">Invalid EmailID</mat-error>
+                        <mat-error *ngIf="Allcontrols?.username?.errors?.required&&submitted">EmailID Required</mat-error>                               
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Enter Your Password" name="password" id="password" [type]="hide ? 'password' : 'text'" formControlName = 'password'>  
+                        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <span class="material-symbols-outlined">
+                                {{hide ? 'visibility_off' : 'visibility'}}
+                                </span>
+                            <!-- <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon> -->
+                          </button>                  
+                        <mat-error *ngIf="Allcontrols?.password?.errors?.required&&submitted">Password Required</mat-error>                         
+                    </mat-form-field>
+    
+                    <div style="text-align: center;">
+                        <button mat-raised-button color="primary">Login</button>
+                    </div>
+                </form>
+            </mat-card>        
+        </div>
+    
+    </div>
+    </div>

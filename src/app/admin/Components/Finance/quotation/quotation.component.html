@@ -1,0 +1,81 @@
+<div>
+    <h1 class="mb-3">Quotation Generation</h1>
+
+    <div class="container">
+        <form [formGroup]="quotation" (ngSubmit)="viewQuot()">          
+
+            <div class="row mb-4">
+              <div class="col col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                    <mat-label>Valididty Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName='validUntil'>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>              
+            </div>
+                <div class="col col-12 col-md-4">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a Company</mat-label>
+                        <mat-select [(ngModel)]="selectedCompany" name="companyList" formControlName='companyID'>
+                          <mat-option [value]="">
+                            Select a Company
+                          </mat-option>
+                          <mat-option *ngFor="let comp of drps.requestCompanies" [value]="comp.id">{{comp.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>           
+                <!-- <div class="col col-12 col-md-4">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a machine</mat-label>
+                        <mat-select [(ngModel)]="selectedMachine" name="machineList" formControlName='machineID'>
+                          <mat-option [value]="">
+                            Select a Machine
+                          </mat-option>
+                          <mat-option *ngFor="let machine of drps.requestMachines" [value]="machine.id">{{machine.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div> -->
+            </div>
+            <div class="row">
+                <div formArrayName="quotationItems">
+                    <div *ngFor="let part of quotationItems.controls; let i = index" [formGroupName]="i">
+                        <div class="row">                        
+                            <div class="col col-12 col-md-7">
+                                <mat-form-field  appearance="fill"  class="example-full-width">
+                                    <mat-label>Select Parts</mat-label>
+                                    <input type="text"
+                                           placeholder="Pick one"
+                                           aria-label="Number"
+                                           matInput                                
+                                           [formControl]="myControl"
+                                           [matAutocomplete]="auto">
+                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event,i)">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                            {{option.description}}
+                                          </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field>
+                               
+                            </div>
+                            <div class="col col-12 col-md-3">
+                                <mat-form-field  appearance="fill" >
+                                    <mat-label>Quantity</mat-label>
+                                    <input matInput formControlName="quantityUsed">                                   
+                                  </mat-form-field> 
+                            </div>
+                            <div class="col col-12 col-md-2">
+                                <button mat-flat-button color="warn" type="button" (click)="removeItem(i)">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button mat-flat-button color="primary" type="button" class="float-end" (click)="addItem()">Add Used Part</button>
+                  </div>
+            </div>
+            <div>
+                <button mat-flat-button type="submit" color="primary">View Quotaion</button>
+            </div>
+        </form>
+        
+    </div>
+</div>

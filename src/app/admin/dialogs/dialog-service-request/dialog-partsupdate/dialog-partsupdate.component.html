@@ -1,0 +1,47 @@
+
+<h2 mat-dialog-title>Update Service Request</h2>
+<form [formGroup]="servicePart" (ngSubmit)="updateServicePart()">
+<mat-dialog-content>    
+    <div class="row">
+        <div class="col col-12 col-md-4 d-none">
+            <mat-form-field appearance="fill">
+                <mat-label>Service ID</mat-label>
+                <input matInput formControlName="serviceID">                
+              </mat-form-field> 
+        </div>
+        <div class="col col-12 col-md-7">
+            <mat-form-field  class="example-full-width">
+                <mat-label>Select Parts</mat-label>
+                <input [hidden]="true" matInput formControlName="partsID">   
+                <input  matInput formControlName="partName" readonly="readonly">
+
+                <!-- <input type="text"
+                       placeholder="Pick one"
+                       aria-label="Number"
+                       matInput                                
+                       [formControl]="myControl"
+                       [matAutocomplete]="auto"
+                       formControlName="partsID"
+                       >                       
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event)">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option.description}}
+                      </mat-option>
+                </mat-autocomplete> -->
+              </mat-form-field>       
+        </div>
+        <div class="col col-12 col-md-5">
+            <mat-form-field>
+                <mat-label>Quantity</mat-label>
+                <input matInput formControlName="quantityUsed">               
+              </mat-form-field> 
+        </div>      
+    </div>
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">Update</button>
+    </mat-dialog-actions>
+</form>
+
+

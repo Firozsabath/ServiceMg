@@ -1,0 +1,72 @@
+ <span><a mat-raised-button class="requestActionbutton me-3 mb-2" [routerLink]="['/admin/fin/quotation']"><span class="customBackButton material-symbols-outlined">arrow_back</span> Back</a>
+
+ <div *ngIf="quotaData">
+    <div class="container" id="quotation" style="padding: 20px; font-family: Arial, sans-serif;">
+        <div class="header">
+            <div class="row mb-4">
+                <div class="col col-4">
+                    <p>Cofee Service Management</p>    
+                    <p>We can place logo here</p>    
+                </div>
+                <div class="col col-4 text-center">
+                    <h2>Quotation</h2>
+                </div>
+                <div class="col col-4 text-end">
+                    <p class="m-0 p-0" style="font-size: 12px;">Business Bay</p>
+                    <p class="m-0 p-0" style="font-size: 12px;">P.O Box 1213211</p>
+                    <p class="m-0 p-0" style="font-size: 12px;">Dubai, UAE</p>
+                    <p class="m-0 p-0" style="font-size: 12px;">+971 4564654</p>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-4">
+                <p><strong>Company:</strong> {{ quotaData.companyName }}</p>
+                <p><strong>Address:</strong> {{ quotaData.companyAddress }}</p>
+                 
+              </div>
+              <div class="col col-4 text-center">
+                  
+              </div>
+              <div class="col col-4 text-end">
+                <p><strong>Date:</strong> {{ quotaData.dateCreated | date}}</p> 
+                <p><strong>Validity Date:</strong> {{ quotaData.validUntil | date}}</p>                 
+              </div>
+          </div>
+        </div>
+    
+        <!-- <h1 style="text-align: center;">Quotation</h1> -->
+        
+        <!-- <p><strong>Customer:</strong> {{ quotaData.companyID }}</p> -->
+      
+        <table border="1" width="100%" class="table table-bordered" style="border-collapse: collapse; margin-top: 20px;">
+          <thead>
+            <tr style="text-align: center;">
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of quotaData.quotationItems">
+              <td>{{ item.description }}</td>
+              <td style="text-align: right;">{{ item.quantityUsed }}</td>
+              <td style="text-align: right;">{{ item.amount | number: '1.2-2' }}</td>
+              <td style="text-align: right;">{{ item.total | number: '1.2-2' }}</td>
+              <!-- <td>{{item.partsId}}</td>
+              <td>{{item.quantityUsed}}</td> -->
+            </tr>
+            <tr>
+              <td colspan="3" style="text-align: right; font-weight: bold;">Total Amount</td>
+              <td style="text-align: right; font-weight: bold;">{{ quotaData.totalAmount | number: '1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center">
+        <button mat-flat-button color="primary" (click)="downloadQuotationPDF()">Generate Quotataion</button>
+      </div>
+ </div>
+
+  

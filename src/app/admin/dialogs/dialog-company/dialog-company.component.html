@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} Company</h2>
+<form [formGroup]="companyData" (ngSubmit)="addCompany()">
+<mat-dialog-content>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Company Name</mat-label>
+                <input matInput formControlName='name'>
+                <mat-error *ngIf="companyData.get('name')?.hasError('name')">Company Name Required</mat-error>         
+              </mat-form-field>     
+        </div>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Number</mat-label>
+                <input matInput formControlName='contactPerson'>
+                <mat-error *ngIf="companyData.get('contactPerson')?.hasError('contactPerson')">Company Name Required</mat-error> 
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName='email'>
+                <mat-error *ngIf="companyData.get('email')?.hasError('email')">Email Required</mat-error> 
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Address</mat-label>
+                <input matInput formControlName='address'>
+                <div class="invalid-feedback" *ngIf="companyData.get('address')?.hasError('address')">
+                    <sup>*</sup>Please enter your city name
+                  </div>                
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Company Size</mat-label>
+                <input matInput formControlName='companySize'>
+                <div class="invalid-feedback" *ngIf="companyData.get('companySize')?.hasError('companySize')">
+                    <sup>*</sup>Please enter your company size
+                  </div>                
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Notes</mat-label>
+                <input matInput formControlName='notes'>
+                <mat-error *ngIf="companyData.get('notes')?.hasError('notes')">Company Name Required</mat-error> 
+              </mat-form-field>
+        </div>
+        <div [hidden]="true" class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter ID</mat-label>
+                <input matInput formControlName='createddate'>
+              </mat-form-field>
+        </div>
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">{{dialogdata ? 'Update': 'Save'}}</button>
+    </mat-dialog-actions>
+</form>

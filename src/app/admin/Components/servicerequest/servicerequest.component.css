@@ -1,0 +1,23 @@
+.mat-card-content{
+    padding: 15px;
+}
+
+.ticketspecific{
+    border-left: 1px #a59b9b solid;
+}
+
+.headermachine{
+    background-color: #acafb3;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.headericon{
+    font-size: 20px !important;
+    vertical-align: sub;    
+}
+
+.requestActionbutton{
+    background-color: #bdb9b9;
+    border-radius: 10px;  
+ }

@@ -1,0 +1,21 @@
+
+
+<div class="mat-elevation-z8 p-3 customcomponentheight">
+    <p class="fw-bold">Tickets by category</p>
+    <ngx-charts-bar-vertical
+(window:resize)="onResize($event)"
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="dataset"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)">
+</ngx-charts-bar-vertical>
+</div>
+

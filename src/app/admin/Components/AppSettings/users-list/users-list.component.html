@@ -1,0 +1,64 @@
+  
+  <div class="row">
+    <div class="col col-12 col-md-6">
+        <h1>Users</h1>
+    </div>
+    <div class="col col-12 col-md-6">
+      <button mat-raised-button color="primary" (click)="addUser()" class="me-3 float-end custombutton"><span class="material-symbols-outlined">add</span> Add a new user </button>          
+    </div>
+</div>
+<mat-form-field>
+<mat-label>Filter</mat-label>
+<input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>  
+</mat-form-field>
+<div class="row p-3">
+<div class="mat-elevation-z8 p-0">
+  <table mat-table [dataSource]="dataSource" matSort >  
+   
+    <ng-container matColumnDef="id">
+      <th [hidden]="true" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.id}} </td>       
+    </ng-container>  
+    
+    
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+      <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.username}}</td>
+    </ng-container>  
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.email}}</td>
+    </ng-container>     
+    
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+      <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.role}} </td>
+    </ng-container> 
+
+    <ng-container matColumnDef="password">
+        <th [hidden]="true" mat-header-cell *matHeaderCellDef mat-sort-header> Password </th>
+        <td [hidden]="true" width="20%" mat-cell *matCellDef="let row"> {{row.password}}</td>
+      </ng-container> 
+    
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td width="20%" mat-cell *matCellDef="let element" class="text-center"> 
+        <button mat-mini-fab color="primary" class="me-2" (click)="editUser(element)"><span class="material-symbols-outlined">edit</span></button>
+        <button mat-mini-fab color="primary"  (click)="deleteUser(element.id)"><span class="material-symbols-outlined">delete</span></button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+</div>
+

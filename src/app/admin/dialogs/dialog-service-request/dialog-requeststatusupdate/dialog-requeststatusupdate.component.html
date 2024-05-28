@@ -1,0 +1,42 @@
+
+<h2 mat-dialog-title>{{dialogdata ? 'Update': 'Add'}} Service Request</h2>
+<form [formGroup]="requestData" (ngSubmit)="updateticketStatus()">
+<mat-dialog-content> 
+    <ng-container *ngIf="dialogdata.type === 'status'">
+        <div class="row">       
+            <mat-form-field appearance="fill">
+                <mat-label>Request Status</mat-label>
+                <mat-select [(ngModel)]="selectedRequestStatus" name="requestStatusList" formControlName='serviceStatusID'>
+                  <mat-option [value]="">
+                    Select a request status
+                  </mat-option>
+                  <mat-option *ngFor="let status of statusesList" [value]="status.id">{{status.description}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div> 
+            <div class="row">
+                <mat-form-field appearance="fill">
+                    <mat-label>Technician's Comment</mat-label>
+                    <textarea rows="5" matInput formControlName='technicianComment'></textarea>
+                    <mat-error *ngIf="requestData.get('technicianComment')?.hasError('technicianComment')">Model is required</mat-error> 
+                  </mat-form-field>
+            </div>             
+    </ng-container>
+    <ng-container *ngIf="dialogdata.type === 'respond'">
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Technician's Comment</mat-label>
+                <textarea rows="5" matInput formControlName='respondMessage'></textarea>
+                <mat-error *ngIf="requestData.get('respondMessage')?.hasError('respondMessage')">Model is required</mat-error> 
+              </mat-form-field>
+        </div>  
+    </ng-container>
+    
+      
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">{{dialogdata ? 'Update': 'Save'}}</button>
+    </mat-dialog-actions>
+</form>
+

@@ -1,0 +1,34 @@
+.mat-nav-list .mat-list-item{
+    font-size: 15px;
+    font-weight: 700;
+}
+
+  .menu-button {
+    transition: 300ms ease-in-out;
+    transform: rotate(0deg);
+  }
+  .menu-button.rotated {
+    transform: rotate(180deg);
+  }
+  .submenu {
+    overflow-y: hidden;
+    transition: transform 300ms ease;
+    transform: scaleY(0);
+    transform-origin: top;
+    padding-left: 30px;
+  }
+  .submenu.expanded {
+    transform: scaleY(1);
+  }
+
+  .customexpansionMenu{
+    background-color: transparent !important;
+    color: black;
+    font-weight: 700;
+  }
+
+  .highlightCard {
+    border-left: 10px solid #3C4F76;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.15);
+    background: #c9c1c1;
+}

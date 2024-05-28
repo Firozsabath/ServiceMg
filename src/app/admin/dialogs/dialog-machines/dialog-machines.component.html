@@ -1,0 +1,102 @@
+
+<h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} Machine</h2>
+<form [formGroup]="machFormData" (ngSubmit)="addMachines()">
+<mat-dialog-content>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Machine Name</mat-label>
+                <input matInput formControlName='name'>
+                <mat-error *ngIf="machFormData.get('name')?.hasError('name')">Branch Name Required</mat-error>         
+              </mat-form-field>     
+        </div>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Select a branch</mat-label>
+                <mat-select [(ngModel)]="selectedBranch" name="branchList" formControlName='branchID'>
+                  <mat-option [value]="">
+                    Select a Branch
+                  </mat-option>
+                  <mat-option *ngFor="let branch of branchList" [value]="branch.branchID">{{branch.branchName}} - {{branch.companyName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter Model</mat-label>
+                <input matInput formControlName='model'>
+                <mat-error *ngIf="machFormData.get('model')?.hasError('model')">Model is required</mat-error> 
+              </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="fill">
+              <mat-label>SKU ID</mat-label>
+              <input matInput formControlName='skuID'>
+              <mat-error *ngIf="machFormData.get('skuID')?.hasError('skuID')">Sku ID is required</mat-error> 
+            </mat-form-field>
+      </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Manufacturer</mat-label>
+                <input matInput formControlName='manufacturer'>
+                <div class="invalid-feedback" *ngIf="machFormData.get('manufacturer')?.hasError('manufacturer')">
+                    <sup>*</sup>Please enter manufacturer name
+                  </div>                
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <!-- <mat-form-field appearance="fill">
+                <mat-label>contract Type</mat-label>
+                <input matInput formControlName='contractTypeID'>
+
+                
+
+                <div class="invalid-feedback" *ngIf="machFormData.get('contractTypeID')?.hasError('contractTypeID')">
+                    <sup>*</sup>Please select a contract type
+                  </div>                
+              </mat-form-field> -->
+
+              <mat-form-field appearance="fill">
+                <mat-label>Select a Contract Type</mat-label>
+                <mat-select [(ngModel)]="selectedBranch" name="contractList" formControlName='contractTypeID'>
+                  <mat-option [value]="">
+                    Select a Branch
+                  </mat-option>
+                  <mat-option *ngFor="let contract of contractType" [value]="contract.id">{{contract.description}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Installation Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName='installationDate'>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>              
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Contract End Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName='contractEndDate'>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>              
+        </div>
+        <div [hidden]="true" class="row">
+            <mat-form-field appearance="fill">                
+                <input matInput formControlName='createdTime'>
+              </mat-form-field>
+        </div>
+        <div [hidden]="true" class="row">
+            <mat-form-field appearance="fill">              
+                <input matInput formControlName='updatedTime'>
+              </mat-form-field>
+        </div>
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">{{dialogdata ? 'Update': 'Save'}}</button>
+    </mat-dialog-actions>
+</form>
+
