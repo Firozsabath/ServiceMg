@@ -19,6 +19,7 @@ export class DialogTechnicianComponent implements OnInit {
     id:[0],
     name:['',Validators.required],
     position:['',Validators.required],
+    email:['',Validators.required],
     createddate:[new Date]
   })
 
@@ -28,7 +29,7 @@ export class DialogTechnicianComponent implements OnInit {
 
   addTechnican(){
     var item = this.technician.value;
-    var postData: Technicians={id:item.id,name:item.name,position:item.position,imgUrl:"",createdTime:item.createddate,updateTime:new Date};
+    var postData: Technicians={id:item.id,name:item.name,position:item.position,email:item.email,imgUrl:"",createdTime:item.createddate,updateTime:new Date};
       console.log(postData);
 
       if(this.dialoddata){

@@ -1,1 +1,23 @@
-<p>dialog-servicerequeststypes works!</p>
+<h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} request type</h2>
+<form [formGroup]="rTypeData" (ngSubmit)="addRequestType()">
+    <mat-dialog-content>    
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName='description'>
+                <mat-error *ngIf="rTypeData.get('description')?.hasError('name')">Description Required</mat-error>         
+              </mat-form-field>     
+        </div>    
+       
+        <div [hidden]="true" class="row">
+            <mat-form-field appearance="fill">               
+                <input matInput formControlName='id'>                             
+              </mat-form-field>
+        </div>
+       
+</mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" color="warn">Cancel</button>
+        <button mat-button type="submit" cdkFocusInitial color="primary">{{dialogdata ? 'Update': 'Save'}}</button>
+    </mat-dialog-actions>
+</form>

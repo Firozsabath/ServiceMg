@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 @NgModule({
   declarations: [
     AppComponent 
@@ -27,9 +28,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    EditorModule
   ],
-  providers: [],
+  providers: [{provide: TINYMCE_SCRIPT_SRC, useValue: '/tinymce/tinymce.min.js'}],
   bootstrap: [AppComponent],
   exports:[
     MatToolbarModule,

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Machines } from 'src/app/models/Machines';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MachinesopService { 
 
-  apiUrl = "https://localhost:7053/api/";
+  apiUrl = environment.baseApiUrl;
   constructor(private http:HttpClient) { }
 
   getMachines():Observable<any>{    

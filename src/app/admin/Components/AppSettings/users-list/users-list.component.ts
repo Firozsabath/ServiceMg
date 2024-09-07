@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ReplaySubject, takeUntil } from 'rxjs';
 import { DialogUsersComponent } from 'src/app/admin/dialogs/AppSettingsDialogs/dialog-users/dialog-users.component';
 import { DialogConfirmBoxComponent } from 'src/app/admin/dialogs/dialog-confirm-box/dialog-confirm-box.component';
 import { ConfirmDialogModel } from 'src/app/models/ConfirmDialogModel';
@@ -23,14 +24,18 @@ export class UsersListComponent implements OnInit {
   @ViewChild(MatSort) msort: MatSort;
   constructor(private authService:AuthenticationserviceService, private dialog:MatDialog, private _snackBar:MatSnackBar) { }
 
+  private readonly destroyed = new ReplaySubject<void>();
+
   ngOnInit(): void {
     this.getUsers();
   }
 
   getUsers(){
-    this.authService.getUsers().subscribe(
+    this.authService.getUsers()
+    .pipe(takeUntil(this.destroyed))
+    .subscribe(
       (data:any)=>{
-        console.log(data);
+        //console.log(data);
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.msort;
@@ -40,7 +45,9 @@ export class UsersListComponent implements OnInit {
 
   addUser(){    
     let dialogRef = this.dialog.open(DialogUsersComponent,{width:"30vw"});
-    dialogRef.afterClosed().subscribe({
+    dialogRef.afterClosed()
+    .pipe(takeUntil(this.destroyed))
+    .subscribe({
       next:(val)=>{
         if(val){
           this.getUsers();
@@ -56,7 +63,7 @@ export class UsersListComponent implements OnInit {
 
   editUser(us:User){
     let dialogRef = this.dialog.open(DialogUsersComponent,{width:"30vw",data:us});
-    dialogRef.afterClosed().subscribe({
+    dialogRef.afterClosed().pipe(takeUntil(this.destroyed)).subscribe({
       next:(val)=>{
         if(val){
           this.getUsers();
@@ -73,7 +80,7 @@ export class UsersListComponent implements OnInit {
 
     diRef.afterClosed().subscribe(res=>{
       if(res){
-        this.authService.deleteUser(id).subscribe({
+        this.authService.deleteUser(id).pipe(takeUntil(this.destroyed)).subscribe({
           next:(val:any)=>{
             this._snackBar.open("Deleted Successfully!","Ok");
             this.getUsers();
@@ -81,6 +88,11 @@ export class UsersListComponent implements OnInit {
         })
       }
     })
+  }
+
+  ngOnDestroy(){
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 
 }

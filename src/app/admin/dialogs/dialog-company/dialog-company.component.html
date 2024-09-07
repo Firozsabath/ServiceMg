@@ -47,6 +47,15 @@
                 <mat-error *ngIf="companyData.get('notes')?.hasError('notes')">Company Name Required</mat-error> 
               </mat-form-field>
         </div>
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Discount Percentage(In Numbers Only)</mat-label>
+                <input matInput formControlName='assignedDiscount'>
+                <div class="invalid-feedback" *ngIf="companyData.get('assignedDiscount')?.hasError('assignedDiscount')">
+                    <sup>*</sup>Please enter your company size
+                  </div>                
+              </mat-form-field>
+        </div>
         <div [hidden]="true" class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Enter ID</mat-label>

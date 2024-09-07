@@ -31,17 +31,11 @@ export class LoginComponent implements OnInit {
 
   OnSubmit(fd:any){
     this.submitted = true;
-    if(this.Loginform.valid){
-           
+    if(this.Loginform.valid){          
       this.auth.getValidated(this.Loginform.value).subscribe({
-        next:(val:any)=>{
-          console.log(val);
-          this.counter = val.token;
-            if(this.counter != null)
-            {
-              localStorage.setItem('token',this.counter);
-              this._router.navigateByUrl('/admin/dashboard');
-            }
+        next:(val:any)=>{         
+          this.counter = val.token;          
+          this.auth.setSession(this.counter);
         },
         error:(val:any)=>{
           //console.log(val);

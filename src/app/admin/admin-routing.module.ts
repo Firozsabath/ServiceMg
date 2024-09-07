@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGGuard } from '../guards/auth-g.guard';
 import { Inventory } from '../models/Inventory';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { AdminMainpageComponent } from './Components/admin-mainpage/admin-mainpage.component';
+import { RequestcategoriesListComponent } from './Components/AppSettings/requestcategories-list/requestcategories-list.component';
+import { RequestprioritiesListComponent } from './Components/AppSettings/requestpriorities-list/requestpriorities-list.component';
+import { RequesttypeListComponent } from './Components/AppSettings/requesttype-list/requesttype-list.component';
 import { UsersListComponent } from './Components/AppSettings/users-list/users-list.component';
 import { VendorsListComponent } from './Components/AppSettings/vendors-list/vendors-list.component';
 import { BranchesListComponent } from './Components/branches-list/branches-list.component';
@@ -20,6 +24,7 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
+    canActivate:[AuthGGuard],
      children:[
       {
           path: '',
@@ -60,6 +65,18 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersListComponent,
+      },
+      {
+        path: 'reqcategories',
+        component: RequestcategoriesListComponent,
+      },
+      {
+        path: 'reqTypes',
+        component: RequesttypeListComponent,
+      },
+      {
+        path: 'reqpriorities',
+        component: RequestprioritiesListComponent,
       },
       {
         path: 'vendors',

@@ -1,1 +1,22 @@
-<p>requestpriorities-list works!</p>
+<h1>Request Types</h1>
+
+<div class="intDiv">
+    <div>
+        <button mat-raised-button color="primary" (click)="addrType()" class="me-3 mb-3 custombutton"><span class="material-symbols-outlined">add</span> Add a request type </button>          
+    </div>
+    <div *ngFor="let rPriorities of rPriorityList" class="row itembg">
+        <div class="col-8">
+            <p><span>{{rPriorities.description}}</span> 
+                </p> 
+        </div>
+        <div class="col-4 text-end">
+            <span>
+                <button mat-mini-fab color="primary" class="me-2" (click)="editRequestType(rPriorities)"><span class="material-symbols-outlined">edit</span></button>
+            </span> 
+            <!-- <span>
+                <button mat-mini-fab color="primary" class="" (click)="deleteRequestType(rPriorities.id)"><span class="material-symbols-outlined">delete</span></button>
+            </span> -->
+        </div>
+    </div>
+       
+</div>

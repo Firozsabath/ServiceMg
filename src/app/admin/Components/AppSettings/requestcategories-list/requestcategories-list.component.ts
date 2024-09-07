@@ -12,4 +12,6 @@ export class RequestcategoriesListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+
 }

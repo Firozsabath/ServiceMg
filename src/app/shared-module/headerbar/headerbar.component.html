@@ -3,10 +3,16 @@
       <span class="material-symbols-outlined">menu</span>
    </button>
    <span class="app-header">
-   Coffee Service Management
+   Bean Balance
     </span>
    <span class="example-spacer"></span>
-   <button style="display: none;" [hidden]="logbtnHide" (click)="logout()" mat-raised-button color="accent" class="example-icon">
-     <mat-icon>logout</mat-icon> Logout
-   </button>      
+   <div fxFlex fxLayoutAlign="flex-end center">
+   <span style="font-size: 14px;margin-right:15px;" [hidden]="logoutbtnHide">Welcome back, {{userEmailId}}</span>
+    <button [hidden]="logoutbtnHide" (click)="logout()" mat-mini-fab color="accent" class="example-icon">     
+      <span class="material-symbols-outlined">
+       logout
+       </span> 
+    </button>
+   </div>
+        
 </mat-toolbar>

@@ -25,7 +25,8 @@ export class DialogCompanyComponent implements OnInit {
     companySize:['',Validators.required],
     address:['',Validators.required],
     notes:[''],
-    createddate:[new Date]
+    createddate:[new Date],
+    assignedDiscount:[]
   })
 
   ngOnInit(): void {    
@@ -36,7 +37,8 @@ export class DialogCompanyComponent implements OnInit {
     debugger;
     if(this.companyData.valid){
       var item = this.companyData.value;
-      var postData: Companies={id:item.id,name:item.name,address:item.address,contactPerson:item.contactPerson,createdDate:item.createddate,email:item.email,updatedTime:new Date,isBlocked:false,notes:item.notes,companySize:item.companySize};     
+      var postData: Companies={id:item.id,name:item.name,address:item.address,contactPerson:item.contactPerson,createdDate:item.createddate,email:item.email,updatedTime:new Date,
+        isBlocked:false,notes:item.notes,companySize:item.companySize,assignedDiscount:item.assignedDiscount};     
       
       if(this.dialogdata){
         this.compService.updateCompany(postData.id,postData).subscribe({

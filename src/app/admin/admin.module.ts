@@ -62,6 +62,11 @@ import { ServicerequestsReportComponent } from './Components/Reports/servicerequ
 import { QuotationComponent } from './Components/Finance/quotation/quotation.component';
 import { QuotationdisplayComponent } from './Components/Finance/quotationdisplay/quotationdisplay.component';
 import { TicketsresponseviolationratioComponent } from './Components/charts/ticketsresponseviolationratio/ticketsresponseviolationratio.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 @NgModule({
   declarations: [
     AdminLayoutComponent,
@@ -126,10 +131,16 @@ import { TicketsresponseviolationratioComponent } from './Components/charts/tick
     MatDatepickerModule,
     MatNativeDateModule,
     NgxChartsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatButtonToggleModule, 
+    MatExpansionModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    EditorModule
   ],
   providers:[
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    {provide: TINYMCE_SCRIPT_SRC, useValue: '/tinymce/tinymce.min.js'}
   ]
 })
 export class AdminModule { }

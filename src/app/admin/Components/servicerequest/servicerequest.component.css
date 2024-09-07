@@ -21,3 +21,24 @@
     background-color: #bdb9b9;
     border-radius: 10px;  
  }
+
+ .mat-expansion-panel-header.mat-expanded {
+    height: 45px;
+}
+
+.mat-tab-body-content {
+    height: 100%;
+    overflow: initial;
+}
+
+.attchmentLinks{
+    font-size: 16px;
+    padding:10px;
+    text-decoration: inherit;
+}
+
+.messages{
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 35px;
+}

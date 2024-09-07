@@ -10,6 +10,7 @@ export class Companies{
     public address:string
     public companySize:string
     public notes:string
+    public assignedDiscount:number
       
     constructor(
         id:number,
@@ -21,7 +22,8 @@ export class Companies{
         email:string,
         address:string,
         companySize:string,
-        notes:string
+        notes:string,
+        assignedDiscount:number
     ){
         this.id = id,
         this.name = name,
@@ -33,6 +35,7 @@ export class Companies{
         this.address = address,
         this.companySize = companySize,
         this.notes = notes
+        this.assignedDiscount = assignedDiscount
     }
 }
 

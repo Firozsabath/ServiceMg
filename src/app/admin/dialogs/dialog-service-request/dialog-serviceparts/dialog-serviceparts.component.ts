@@ -24,13 +24,14 @@ export class DialogServicepartsComponent implements OnInit {
 
     pData: ServiceParts[];
     serviceParts = this.fb.group({
-      usedParts:this.fb.array([this.createUsedPart()])
+      usedParts:this.fb.array([])
     })
     
     serviceID:any;
     options: InventoryDP[];
     filteredOptions: Observable<InventoryDP[]>;
     partsList:FormArray;
+    
   ngOnInit(): void {
     debugger;
     this.serviceID = this.dialogdata.id;
@@ -41,14 +42,9 @@ export class DialogServicepartsComponent implements OnInit {
           description:p.description +' '+'('+p.quantityOnHand+' Pieces Left)'
         }));
       }
-    )   
-    // this.filteredOptions = this.myControl.valueChanges.pipe(
-    //   startWith<string | InventoryDP>(''),
-    //   map(value => typeof value === 'string' ? value : value.partsID),
-    //   map(id => id ? this._filter(id) : this.options.slice())
-    // );
+    )
 
-     //this.addUsedPart();    
+    //this.addUsedPart();
   }
 
   private _filter(value: any){
@@ -61,8 +57,14 @@ export class DialogServicepartsComponent implements OnInit {
     return this.options.filter(option => option.description.toLowerCase().includes(filterValue));
   }
 
-  displayFn(value?: InventoryDP): string | undefined {
-    return value ? value.description : undefined;
+  displayFn(value?: InventoryDP | number): string | undefined { 
+    if(typeof value === 'number'){
+      var dp = this.options.find(p=>p.partsID === value).description;
+      return dp;
+    }else{
+      return value ? value.description : undefined;
+    }
+    
   }
  
 
@@ -73,15 +75,18 @@ export class DialogServicepartsComponent implements OnInit {
   }
 
   addServiceParts(){
-
+    debugger;
     this.pData = this.serviceParts.value.usedParts as ServiceParts[]
     console.log(this.serviceParts);
-    // this.sParts.postUsedParts(this.pData).subscribe(
-    //   (data:any)=>{
-    //     this._snackbar.open("Created Successfully!","Ok");
-    //     this.dialogRef.close(true);
-    //   }
-    // )
+    if(this.serviceParts.valid){
+      this.sParts.postUsedParts(this.pData).subscribe(
+      (data:any)=>{
+        this._snackbar.open("Created Successfully!","Ok");
+        this.dialogRef.close(true);
+      }
+    )
+    }
+    
   }
 
 
@@ -90,6 +95,7 @@ export class DialogServicepartsComponent implements OnInit {
   }
 
   createUsedPart(): FormGroup {
+    
     return this.fb.group({
       serviceId: [this.serviceID],
       //partsId: new FormControl(''),
@@ -103,6 +109,8 @@ export class DialogServicepartsComponent implements OnInit {
       //CustomValidator
       quantityUsed: ['',Validators.required]
     });
+
+   
   }
     
   addUsedPart(): void {
@@ -124,9 +132,9 @@ export class DialogServicepartsComponent implements OnInit {
     map(id => id ? this._filter(id) : this.options.slice())
   );
 
-  this.usedParts.push(autocompleteGroup);
+  //this.usedParts.push(autocompleteGroup);
 
-   // this.usedParts.push(this.createUsedPart());
+   this.usedParts.push(this.createUsedPart());
   }
 
   removeUsedPart(index: number): void {

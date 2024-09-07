@@ -2,13 +2,14 @@ import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Branches } from 'src/app/models/Branches';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BranchesopsService {
 
-  apiUrl = "https://localhost:7053/api/";
+  apiUrl = environment.baseApiUrl;
   constructor(private http:HttpClient) { }
 
   getBranches():Observable<any>{
@@ -33,10 +34,12 @@ export class BranchesopsService {
     return this.http.delete<any>(this.apiUrl+`Branches/${id}`);
   }
 
-  upload(file: File): Observable<HttpEvent<any>> {
+  upload(file: File,brID,type): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
     formData.append('file', file);
+    formData.append('branchID', brID);
+    formData.append('ftype', type);
 
     const req = new HttpRequest('POST', `${this.apiUrl}Branches/upload`, formData, {
       reportProgress: true,

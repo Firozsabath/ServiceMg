@@ -7,3 +7,7 @@
     color: gold;
     font-weight: bold;
 }
+
+.example-spacer {
+    flex: 1 1 auto;
+  }

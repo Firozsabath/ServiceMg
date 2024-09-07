@@ -7,9 +7,9 @@ import { Companiesdropdown } from 'src/app/models/Companies';
 import { ConfirmDialogModel } from 'src/app/models/ConfirmDialogModel';
 import { BranchesopsService } from 'src/app/service/branches/branchesops.service';
 import { CompaniesopService } from 'src/app/service/companies/companiesop.service';
+import { environment } from 'src/environments/environment';
 import { DialogBranchesComponent } from '../../dialogs/dialog-branches/dialog-branches.component';
 import { DialogConfirmBoxComponent } from '../../dialogs/dialog-confirm-box/dialog-confirm-box.component';
-
 @Component({
   selector: 'app-branches-list',
   templateUrl: './branches-list.component.html',
@@ -21,7 +21,9 @@ export class BranchesListComponent implements OnInit {
   
   selectedValue:any;
   companyList:Companiesdropdown[];
-  constructor(private branchService:BranchesopsService,private compServices:CompaniesopService, private fb:FormBuilder, private dialog:MatDialog, private _snackBar:MatSnackBar) { 
+  constructor(private branchService:BranchesopsService,private compServices:CompaniesopService, private fb:FormBuilder, 
+    private dialog:MatDialog, private _snackBar:MatSnackBar) { 
+
   } 
   Loginform = this.fb.group({
     compid:['',[Validators.required]]   
@@ -45,7 +47,7 @@ export class BranchesListComponent implements OnInit {
     this.branchService.getBranches().subscribe(
       (data:any)=>{
         this.branches = data;
-        //console.log(this.branches);
+        console.log(this.branches);
       }
     )
   }
@@ -60,7 +62,14 @@ export class BranchesListComponent implements OnInit {
 
   onSearch(){
     console.log(this.selectedValue);
-    this.getBranchesbyCompany(this.selectedValue);
+    if(this.selectedValue){
+      this.getBranchesbyCompany(this.selectedValue);
+    }   
+  }
+
+  getImgUrl(url:string){
+    var durl= environment.staticFileUrl //'https://localhost:7053/';
+      return durl+url;
   }
 
   addBranch(){

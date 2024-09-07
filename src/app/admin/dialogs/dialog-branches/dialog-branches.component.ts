@@ -19,7 +19,8 @@ export class DialogBranchesComponent implements OnInit {
   progress = 0;
   message = '';
 
-  fileName = 'Select File';
+  fileName = 'Select a doc1';
+  fileName2 = 'Select a doc2';
   fileInfos: any;
   constructor(private fb:FormBuilder,@Inject(MAT_DIALOG_DATA) public dialogdata: any, private compServices:CompaniesopService, private branchService:BranchesopsService,private dialogRef:MatDialogRef<DialogBranchesComponent>, private _snackbar:MatSnackBar) { }
 
@@ -28,7 +29,7 @@ export class DialogBranchesComponent implements OnInit {
   selectedValue:any;  
   branchData = this.fb.group({
       id:[0],
-      companyID:[Validators.required],
+      companyID:[0,Validators.required],
       branchName:['',Validators.required],
       contactNumber:['',Validators.required],
       trnNumber:['',Validators.required],
@@ -55,6 +56,7 @@ export class DialogBranchesComponent implements OnInit {
   }
 
   addBranches(){
+    console.log(this.branchData);
     if(this.branchData.valid){
       var item = this.branchData.value;
       this.braPostData = {id:item.id,branchName:item.branchName,companyID:item.companyID,contactNumber:item.contactNumber,contactPerson:item.contactPerson,trnNumber:item.trnNumber,createdTime:item.createdTime,updateTime:new Date,doc1:item.doc1,doc2:item.doc2};
@@ -89,12 +91,13 @@ export class DialogBranchesComponent implements OnInit {
     }
   }
   
-  upload(): void {
+  upload(type:string): void {
     this.progress = 0;
     this.message = '';
-
+    var brID = this.branchData.value.id;
+    //console.log();
     if (this.currentFile) {
-      this.branchService.upload(this.currentFile).subscribe(
+      this.branchService.upload(this.currentFile,brID,type).subscribe(
         (event: any) => {
           if (event.type === HttpEventType.UploadProgress) {
             this.progress = Math.round((100 * event.loaded) / event.total);

@@ -20,18 +20,27 @@ export class QuotationComponent implements OnInit {
   selectedCompany:any;
   myControl = new FormControl('');
   public quationsItems: FormArray;
+  fontStyle?: string;
   options: InventoryDP[];
-    filteredOptions: Observable<InventoryDP[]>;
+  filteredOptions: Observable<InventoryDP[]>;
+  showmanualCompany:boolean=false;
+  showAutoCompany:boolean=false;
+  showButtons:boolean=false;
   constructor(private fb:FormBuilder,private ticketServices: ServicerequestopService, private invService: InventoryopService,
      private quotationService: QuotationOpService, private router: Router) { }
   quotation = this.fb.group({
     quotationID:[0],
-    companyID:[],
+    companyID:[0],
     //machineID:[],
+    companyName:[''],
+    companyAddress:[''],
+    trn:[''],
     dateCreated:[new Date()],
     totalAmount:[0],
     validUntil:[new Date()],
     quotationNum:[''],
+    serviceCharges:[0],
+    PaymentTerms:[''],
     quotationItems:this.fb.array([])
   });
   ngOnInit(): void {
@@ -103,6 +112,19 @@ export class QuotationComponent implements OnInit {
     console.log(this.quotation.value);
     this.quotationService.setQuotation(this.quotation.value);
     this.router.navigate(['/admin/fin/quotationview']);
+  }
+
+  showHideBelowDiv(){
+    //console.log(this.fontStyle);
+    this.showButtons = true;
+    if(this.fontStyle === 'manual'){
+      this.showmanualCompany = false;
+      this.showAutoCompany = true;   
+    }
+    else if(this.fontStyle === 'auto'){
+      this.showmanualCompany = true; 
+      this.showAutoCompany = false;    
+    }
   }
 
 }

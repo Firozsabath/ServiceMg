@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -55,7 +55,7 @@ export class ServicerequestsallComponent implements OnInit {
   }
 
   addTicket(){
-    let dialogRef = this.dialog.open(DialogServiceRequestComponent,{width:"30vw"});
+    let dialogRef = this.dialog.open(DialogServiceRequestComponent,{width:"60vw"});
     dialogRef.afterClosed().subscribe({
       next:(val)=>{
         if(val){
@@ -67,7 +67,7 @@ export class ServicerequestsallComponent implements OnInit {
   }
 
   editTicket(request:any){
-    let dialogRef = this.dialog.open(DialogServiceRequestComponent,{width:"30vw",data:request});
+    let dialogRef = this.dialog.open(DialogServiceRequestComponent,{width:"60vw",data:request});
     dialogRef.afterClosed().subscribe({
       next:(val)=>{
         if(val){
@@ -93,6 +93,33 @@ export class ServicerequestsallComponent implements OnInit {
         })
       }
     })
+  }
+
+  length = 50;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+
+  hidePageSize = false;
+  showPageSizeOptions = true;
+  showFirstLastButtons = true;
+  disabled = false;
+
+  pageEvent: PageEvent;
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+
+    alert(this.pageIndex);
+  }
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+    }
   }
 
 }

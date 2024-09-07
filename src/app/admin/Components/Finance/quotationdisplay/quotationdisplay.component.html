@@ -1,7 +1,7 @@
  <span><a mat-raised-button class="requestActionbutton me-3 mb-2" [routerLink]="['/admin/fin/quotation']"><span class="customBackButton material-symbols-outlined">arrow_back</span> Back</a>
 
- <div *ngIf="quotaData">
-    <div class="container" id="quotation" style="padding: 20px; font-family: Arial, sans-serif;">
+ <div *ngIf="quotaData">   
+    <div class="container" id="quotation" style="max-width:1000px;padding: 20px;margin-top:50px; font-family: Arial, sans-serif;border:1px solid #afaaaa;">
         <div class="header">
             <div class="row mb-4">
                 <div class="col col-4">
@@ -30,6 +30,7 @@
               </div>
               <div class="col col-4 text-end">
                 <p><strong>Date:</strong> {{ quotaData.dateCreated | date}}</p> 
+                <p><strong>Quoatation No:</strong> {{ quotaData.quotationNum }}</p> 
                 <p><strong>Validity Date:</strong> {{ quotaData.validUntil | date}}</p>                 
               </div>
           </div>
@@ -44,25 +45,64 @@
             <tr style="text-align: center;">
               <th>Description</th>
               <th>Quantity</th>
+              <th>Availability</th>
               <th>Unit Price</th>
               <th>Total Price</th>
+              <th>Vat %</th>
+              <th>Vat Amount</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of quotaData.quotationItems">
               <td>{{ item.description }}</td>
               <td style="text-align: right;">{{ item.quantityUsed }}</td>
+              <td style="text-align: right;">{{ item.availablility }}</td>
               <td style="text-align: right;">{{ item.amount | number: '1.2-2' }}</td>
               <td style="text-align: right;">{{ item.total | number: '1.2-2' }}</td>
-              <!-- <td>{{item.partsId}}</td>
-              <td>{{item.quantityUsed}}</td> -->
+              <td style="text-align: center;">{{item.vatPercent}}</td>
+              <td style="text-align: right;">{{item.vat | number: '1.2-2'}}</td>
             </tr>
             <tr>
-              <td colspan="3" style="text-align: right; font-weight: bold;">Total Amount</td>
-              <td style="text-align: right; font-weight: bold;">{{ quotaData.totalAmount | number: '1.2-2' }}</td>
+              <td colspan="4" style="text-align: right; font-weight: bold;">Sub Total</td>
+              <td style="text-align: right; font-weight: bold;">{{ quotaData.subTotal | number: '1.2-2' }}</td>
+              <td style="text-align: right; font-weight: bold;">Total Vat</td>
+              <td style="text-align: right; font-weight: bold;">{{ quotaData.totalVat | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td colspan="4" style="text-align: right; font-weight: bold;">Total Amount</td>
+              <td colspan="3" style="text-align: right; font-weight: bold;">Total Amount : {{ quotaData.totalAmount | number: '1.2-2' }} </td>
+            </tr>
+            <tr>
+              <td colspan="4" style="text-align: right; font-weight: bold;">Amount in Words</td>
+              <td colspan="3" style="text-align: right; font-weight: bold;">{{ convertNumberToWords(quotaData.totalAmount) }} </td>
             </tr>
           </tbody>
         </table>
+        <div class="row">
+          <div class="col-8">
+            <p>Looking forward for your business.</p>
+
+            <div class="mb-3">
+              <table>
+                <tr><td>BENEFICIARY : BREWING GADGETS GENERAL TRADING LLC</td></tr>
+                <tr><td>BANK NAME : ABU DHABI COMMERCIAL BANK (ADCB)</td></tr>
+                <tr><td>ACCOUNT NO : 11206665920001</td></tr>
+                <tr><td>IBAN : AE660030011206665920001</td></tr>
+                <tr><td>SWIFT CODE : ADCBAEAAXXX | BRANCH : 252 / AL KARAMAH</td></tr>
+              </table>
+            </div>
+            <p class="m-0">Terms & Conditions</p>
+              <p class="m-0">1.Quotation validity is (14) days from date of issue.</p>
+              <p class="m-0">2.GOODS ONCE SOLD CANNOT BE RETURNED or EXCHANGED</p>
+          </div>
+          <div class="col-4" style="border:1px solid #afaaaa;">
+
+          </div>
+        </div>
+        <div class="row">
+          <h4>Disclaimer:</h4>
+          <p>{{quotaData.paymentTerms}}</p>
+        </div>
       </div>
       <div class="text-center">
         <button mat-flat-button color="primary" (click)="downloadQuotationPDF()">Generate Quotataion</button>

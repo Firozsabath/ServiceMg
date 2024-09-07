@@ -71,6 +71,26 @@
                 <mat-error *ngIf="inventoryData.get('miscellaniousChargeDescription')?.hasError('miscellaniousChargeDescription')">Company Name Required</mat-error> 
               </mat-form-field>
         </div>
+        <div class="row">
+          <mat-form-field appearance="fill">
+              <mat-label>Lead Time(In Weeks)</mat-label>
+              <input matInput formControlName='leadTime'>
+              <mat-error *ngIf="inventoryData.get('leadTime')?.hasError('leadTime')">lead time is required</mat-error> 
+            </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-4"> <mat-checkbox  color='primary' (change)="showandhide()" formControlName="isVatApplied"> Is Vat Applicable</mat-checkbox> </div>
+          <div class="col-12 col-md-8">
+            <div [hidden]="showVat">
+              <mat-form-field appearance="fill">
+                <mat-label>Vat Percentage</mat-label>
+                <input matInput formControlName='vatPercent'>
+                <mat-error *ngIf="inventoryData.get('vatPercent')?.hasError('vatPercent')">Company Name Required</mat-error> 
+              </mat-form-field>
+            </div>
+          </div>
+         
+        </div>
         <div [hidden]="true" class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Enter ID</mat-label>

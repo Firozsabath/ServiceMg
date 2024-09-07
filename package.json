@@ -21,10 +21,12 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "@swimlane/ngx-charts": "^20.5.0",
+    "@tinymce/tinymce-angular": "^7.0.0",
     "bootstrap": "^5.3.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "rxjs": "~7.5.0",
+    "tinymce": "^7.2.1",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"

@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col col-12 col-md-6">
+        <h1>Companies</h1>
+    </div>   
+</div>
+<mat-form-field>
+<mat-label>Filter</mat-label>
+<input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>  
+</mat-form-field>
+<div class="row p-3">
+<div class="mat-elevation-z8 p-0">
+  <table mat-table [dataSource]="dataSource" id="tblCompanies" matSort >  
+   
+    <ng-container matColumnDef="id">
+      <th [hidden]="true" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.id}} </td>       
+    </ng-container>  
+    
+    
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
+      <td width="20%" mat-cell *matCellDef="let row"><span><img class="rounded-circle custom_rounded profimg p-1" style="width:15%; margin-right: 5px;" src="../assets/Images/logo1.jpg" alt="Card image cap"></span> {{row.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="contactPerson">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact Person </th>
+      <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.contactPerson}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.email}}</td>
+    </ng-container>     
+    
+    <ng-container matColumnDef="createdDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+      <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.createdDate}} </td>
+    </ng-container> 
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+</div>

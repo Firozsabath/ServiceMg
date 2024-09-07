@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ServiceParts, ServicePartsVM } from 'src/app/models/ServiceParts';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicepartsopService {
 
-  apiUrl = "https://localhost:7053/api/";
+  apiUrl = environment.baseApiUrl;
   constructor(private http:HttpClient) { }
 
   getAllUsedParts():Observable<any>{

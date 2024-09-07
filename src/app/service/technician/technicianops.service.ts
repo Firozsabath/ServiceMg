@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Technicians } from 'src/app/models/Technicians';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Technicians } from 'src/app/models/Technicians';
 
 export class TechnicianopsService {
 
-  apiUrl = "https://localhost:7053/api/";
+  apiUrl = environment.baseApiUrl;
   constructor(private http:HttpClient) { }
 
   getTechnicians():Observable<any>{    

@@ -18,7 +18,7 @@ import { DialogTechnicianComponent } from '../../dialogs/dialog-technician/dialo
 })
 export class TechniciansComponent implements OnInit {
 
-  displayedColumns: string[] = ['id','name','position','createdDate','Actions'];
+  displayedColumns: string[] = ['id','name','position','email','createdDate','Actions'];
   dataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) msort: MatSort;
@@ -31,6 +31,7 @@ export class TechniciansComponent implements OnInit {
   getTechnicians(){
       this.techServcies.getTechnicians().subscribe(
         (data:any)=>{
+          console.log(data);
           this.dataSource = new MatTableDataSource(data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.msort;

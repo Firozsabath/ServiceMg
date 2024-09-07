@@ -19,6 +19,7 @@ export class DialogInventoryComponent implements OnInit {
   inventoryData:FormGroup;
   vendorList:any;
   selectedVendor:any;
+  showVat:boolean=true;
   constructor(private fb:FormBuilder,@Inject(MAT_DIALOG_DATA) public dialogdata: any,
     private invService: InventoryopService,private vendService: VendorsopService,
    private dialogRef:MatDialogRef<DialogInventoryComponent>, private _snackbar:MatSnackBar) { 
@@ -33,14 +34,16 @@ export class DialogInventoryComponent implements OnInit {
       miscellaniousCost:[],
       productCost:[],
       reOrderLevel:[],
-      leadTime:[0],
+      leadTime:[],
       lastReorderQuantity:[0],
       //categoryID:[0],
       miscellaniousChargeDescription:[''],
       createddate:[new Date],
       updatedDate:[new Date],
-      skuID:['',Validators.required]
+      skuID:['',Validators.required],
       //lastReorderDate:[new Date],
+      isVatApplied:[false,Validators.required],
+      vatPercent:[0]
     });
 
     this.inventoryData.valueChanges.subscribe(
@@ -53,6 +56,9 @@ export class DialogInventoryComponent implements OnInit {
   ngOnInit(): void {
 
     this.inventoryData.patchValue(this.dialogdata)
+    if(this.dialogdata.isVatApplied){
+      this.showVat = !this.showVat;
+    }
     if(this.dialogdata){
       this.selectedVendor = this.dialogdata.vendorid;
     }
@@ -94,6 +100,10 @@ export class DialogInventoryComponent implements OnInit {
     var mc = Number(this.inventoryData.get('miscellaniousCost').value);
     var total = uc+mc;
     this.inventoryData.get('productCost').setValue(total,{emitEvent:false});    
+  }
+
+  showandhide(){
+    this.showVat = !this.showVat;
   }
 
 }

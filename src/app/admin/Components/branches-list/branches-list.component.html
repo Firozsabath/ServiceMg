@@ -48,6 +48,12 @@
                 <div class="col col-md-3">
                     <span class="fw-bold">Created Date :</span> <span> {{branch.createdTime | date: 'dd/MM/yyyy'}}</span>
                 </div>
+                <div class="col col-md-3" *ngIf="branch.doc1!=null">
+                  <a [href]="getImgUrl(branch.doc1)" target="_blank"><span class="fw-bold">doc 1</span></a>
+                </div>
+                <div class="col col-md-3" *ngIf="branch.doc2!=null">
+                  <a [href]="getImgUrl(branch.doc2)" target="_blank"><span class="fw-bold">doc 2</span></a>
+                </div>
             </div>
           <p>
           

@@ -30,8 +30,16 @@ export class DialogRequeststatusupdateComponent implements OnInit {
       this.requestData = this.fb.group({
         serviceStatusID :[],
         technicianComment:[''],
-        serviceID:[]
+        serviceID:[],
+        technicianID:[]
       })
+
+      if(localStorage.getItem('userId') != null){
+        var techID:number = +localStorage.getItem('userId');
+        this.requestData.get('technicianID').setValue(techID);
+      }
+      
+      
       this.requestService.getDropdowns().subscribe(
         (data:any)=>{
           this.dropDowns = data;        

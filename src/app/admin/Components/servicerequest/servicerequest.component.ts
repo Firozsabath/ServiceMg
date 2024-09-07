@@ -6,9 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmDialogModel } from 'src/app/models/ConfirmDialogModel';
 import { ServiceParts } from 'src/app/models/ServiceParts';
-import { ServiceRequests, ServiceRequestsVM } from 'src/app/models/ServiceRequests';
+import { ServiceRequestAttachments, ServiceRequests, ServiceRequestsVM, TechnicianNotesVM } from 'src/app/models/ServiceRequests';
 import { ServicepartsopService } from 'src/app/service/serviceparts/servicepartsop.service';
 import { ServicerequestopService } from 'src/app/service/serviceRequests/servicerequestop.service';
+import { environment } from 'src/environments/environment';
 import { DialogConfirmBoxComponent } from '../../dialogs/dialog-confirm-box/dialog-confirm-box.component';
 import { DialogPartsupdateComponent } from '../../dialogs/dialog-service-request/dialog-partsupdate/dialog-partsupdate.component';
 import { DialogRequeststatusupdateComponent } from '../../dialogs/dialog-service-request/dialog-requeststatusupdate/dialog-requeststatusupdate.component';
@@ -29,15 +30,18 @@ export class ServicerequestComponent implements OnInit {
   ticketID:any;
   ticket:ServiceRequestsVM; 
   usedParts: ServiceParts[];
+  technicianNotes: TechnicianNotesVM[];
+  attachments:ServiceRequestAttachments[];
   displayedColumns: string[] = ['id','serviceid','partsid','quantity','Actions'];
   dataSource: any;
-
+  panelOpenState:boolean=true;
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.ticketID = params['ticketid'] || 0;
-      console     
+      //console     
       this.getTicketInfo(this.ticketID);
       this.getUsedPartsByService(this.ticketID); 
+      //console.log(this.technicianNotes);
     });
 
     
@@ -47,7 +51,11 @@ export class ServicerequestComponent implements OnInit {
     this.ticketService.getTicketByID(id).subscribe({
       next:(data:any)=>{
         this.ticket = data;
-        console.log(this.ticket);
+        this.technicianNotes = data.notes;
+        this.attachments = data.attachments;
+        //console.log(this.technicianNotes);
+
+        console.log(this.attachments);
       }
     })
   }
@@ -56,7 +64,7 @@ export class ServicerequestComponent implements OnInit {
         (data:any)=>{
           this.usedParts = data;
           this.dataSource = new MatTableDataSource(this.usedParts);
-          console.log(this.usedParts);
+          //console.log(this.usedParts);
         }
       )
   }
@@ -136,6 +144,11 @@ export class ServicerequestComponent implements OnInit {
 
     return `${hours} hours, ${minutes} minutes`;
     }
+  }
+
+  getImgUrl(url:string){
+    var durl= environment.staticFileUrl //'https://localhost:7053/';
+      return durl+url;
   }
 
 }

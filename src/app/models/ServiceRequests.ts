@@ -35,3 +35,27 @@ export class ServiceRequestsVM{
     public respondMessage:string;
     public technicianComment:string
 }
+
+export class TechnicianNotesVM{
+    public status:string;
+    public technicianName:string;
+    public notes:string;
+    public createdDate:Date;
+    /**
+     *
+     */
+    constructor(init? : Partial<TechnicianNotesVM>) {       
+        
+    }
+}
+
+export class ServiceRequestAttachments{
+    public id:number;
+    public requestID:number;
+    public filePath:string;
+    public fileName:string;
+
+    constructor(init? : Partial<ServiceRequestAttachments>) {       
+        
+    }
+}

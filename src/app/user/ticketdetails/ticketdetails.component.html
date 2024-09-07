@@ -1,67 +1,282 @@
 
-<div>    
-    <div class="row">
-        <div class="col col-12 col-md-6">
-            <h1><span><a mat-mini-fab color="default" class="me-3" [routerLink]="['/user/tickets']"><span class="material-symbols-outlined">arrow_back</span></a></span>Ticket Details</h1>
+<div style="padding: 15px;">
+    <div>    
+        <div class="row">
+            <div class="col col-12 col-md-6">
+                <h1>Ticket Details</h1>
+            </div>
+            <!-- <div class="col col-12 col-md-6">
+                <button mat-flat-button color="accent" class="float-end custombutton" (click)="onUpdate(ticket)"><span class="material-symbols-outlined">edit</span> update status</button>
+            </div> -->
         </div>
-        <div class="col col-12 col-md-6">
-            <button mat-flat-button color="accent" class="float-end custombutton" (click)="onUpdate(ticket)"><span class="material-symbols-outlined">edit</span> update status</button>
-        </div>
+       
     </div>
-   
-</div>
-<div>
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                {{ticket.subject}}
-            </mat-card-title>
-            <mat-card-subtitle>
-               <span>Machine Name: </span> {{ticket.machine}}
-            </mat-card-subtitle>           
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
+    <div>
+        <span><a mat-raised-button class="requestActionbutton me-3 mb-2" [routerLink]="['/user/tickets']"><span class="customBackButton material-symbols-outlined">arrow_back</span> Back</a>
+    </span>
+    <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab label="Details">
+            
+            <div class="mb-3 mt-3">
+                <h2> {{ticket.subject}}</h2>
+                <p>
+                    <span class="headermachine me-3"><span class="headericon material-symbols-outlined me-1 mb-2">coffee_maker</span> {{ticket.machine}} </span>
+                    <span><button mat-flat-button class="requestActionbutton me-2 mb-2" (click)="onUpdateStatus(ticket.id,'status')"><span class="headericon material-symbols-outlined">edit</span> update status</button></span>                
+                    <span><button mat-flat-button class="requestActionbutton me-2 mb-2" (click)="onUpdateStatus(ticket.id,'respond')"><span class="headericon material-symbols-outlined">add_comment</span> Respond</button></span>
+                    <span><button mat-flat-button class="requestActionbutton mb-2" (click)="addUsedParts(ticket.id)"><span class="headericon material-symbols-outlined">add</span> Add Parts</button></span>
+                </p>
+            </div>
             <div class="row">
-                <div class="col col-12 col-md-8">
-                    <div class="row">
-                        <div class="col col-12 col-md-12">
-                            <h3 class="fw-bold">Description:</h3>
-                            <p><span>{{ticket.description}}</span></p>
-                        </div>
-                        <div class="col col-12 col-md-12">
-                            <h3 class="fw-bold">Technician Assigned:</h3>
-                            <p><span>{{ticket.technician}}</span></p>
-                        </div>
-                    </div>
+                <div class="col-col-12 col-md-8">
+                    <mat-card>
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col col-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col col-12 col-md-12">
+                                            <h3 class="fw-bold">Description:</h3>
+                                            <p innerHTML = "{{ticket.description}}"><span></span></p>
+                                        </div>
+                                        <div class="col col-12 col-md-12">
+                                            <h3 class="fw-bold">Technician's Comment:</h3>
+                                            <p><span>{{ticket.technicianComment}}</span></p>
+                                        </div>
+                                        <div class="col col-12 col-md-12">
+                                            <h3 class="fw-bold">Technician's Response:</h3>
+                                            <p><span>{{ticket.respondMessage}}</span></p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>                       
+                            </div> 
+                            <mat-divider></mat-divider>
+                                <div class="row mt-3">
+                                    <div class="col col-12 col-md-12">
+                                        <div  class="mat-elevation-z8 p-0">
+                                            <table mat-table [dataSource]="dataSource">  
+                                                <ng-container matColumnDef="id">
+                                                    <th [hidden]="true" mat-header-cell *matHeaderCellDef> ID </th>
+                                                    <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.id}} </td>
+                                                  </ng-container>
+                                              
+                                                  
+                                                  <ng-container matColumnDef="serviceid">
+                                                    <th [hidden]="true" mat-header-cell *matHeaderCellDef> Service </th>
+                                                    <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.serviceID}}</td>
+                                                  </ng-container>
+                                                  <ng-container matColumnDef="partsid">
+                                                    <th mat-header-cell *matHeaderCellDef> parts </th>
+                                                    <td mat-cell *matCellDef="let row" width="60%" > {{row.partName}}</td>
+                                                  </ng-container>
+                                                  <ng-container matColumnDef="quantity">
+                                                    <th mat-header-cell *matHeaderCellDef> quantity Used </th>
+                                                    <td mat-cell *matCellDef="let row" width="20%" class="text-center"> {{row.quantityUsed}}</td>
+                                                  </ng-container>
+                                                  <ng-container matColumnDef="Actions">
+                                                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                                    <td mat-cell *matCellDef="let element" width="20%" class="text-center"> 
+                                                      <button mat-mini-fab color="default"  class="me-2" (click)="editItem(element)"><span class="material-symbols-outlined">edit</span></button>
+                                                      <button mat-mini-fab color="default"  (click)="deleteItem(element.id,element.serviceID)"><span class="material-symbols-outlined">delete</span></button>
+                                                      </td>
+                                                  </ng-container>
+                                                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                            </table>
+                                        </div>
+                                    </div>                                  
+                                </div>                  
+                        </mat-card-content>
+                    </mat-card>    
                 </div>
-                <div class="col col-12 col-md-4 ticketspecific">
-                    <div class="row">
-                        <div class="col col-12 col-md-12">
-                            <h3 class="fw-bold">Ticket category:</h3>
-                            <p><span>{{ticket.serviceType}}</span></p>
-                        </div>
-                        <div class="col col-12 col-md-12">
-                            <h3 class="fw-bold">Ticket priority:</h3>
-                            <p><span>{{ticket.priority}}</span></p>
-                        </div>
-                        <div class="col col-12 col-md-12">
-                            <h3 class="fw-bold">Ticket status:</h3>
-                            <p><span>{{ticket.serviceStatus}}</span></p>
-                        </div>
-                        <div class="col col-12 col-md-12">
-                            <h3 class="fw-bold">Ticket created date:</h3>
-                            <p><span>{{ticket.requestedDate}}</span></p>
-                        </div>
-                        <div class="col col-12 col-md-12">
-                            <h3 class="fw-bold">Ticket due date:</h3>
-                            <p><span>{{ticket.estimatedCompleteDate}}</span></p>
-                        </div>
+                <div class="col-col-12 col-md-4">
+                    <div class="mb-3">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <span>Details</span>
+                            </mat-panel-title>               
+                            </mat-expansion-panel-header>
+                            <mat-divider></mat-divider>
+                            <div class="row mt-3">
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Category:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.serviceType}}</span></p>
+                                </div>
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Technician:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.technician}}</span></p>
+                                </div>  
+            
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Priority:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.priority}}</span></p>
+                                </div>  
+            
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Responded Time:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{formatTimeDifference(ticket.respondedinHours)}}</span></p>
+                                </div>  
+            
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Status:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.serviceStatus}}</span></p>
+                                </div> 
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Created date:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.requestedDate}}</span></p>
+                                </div>                  
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Due date:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.estimatedCompleteDate}}</span></p>
+                                </div> 
+                               
+                            </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </div>
+
+                    <div class="mb-3" *ngIf="attachments.length > 0">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <span>Attchments</span>
+                            </mat-panel-title>               
+                            </mat-expansion-panel-header>
+                            <mat-divider></mat-divider>
+                            <div class="row mt-3">
+                                <div class="col-12 mb-3" *ngFor="let file of attachments">
+                                    <a class="attchmentLinks" [href]="getImgUrl(file.filePath)" target="_blank"><span class="fw-bold">{{file.fileName}}</span></a>
+                                </div>                                
+                               
+                            </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                    
+                    <!-- <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>
+                                <span>Details</span>
+                            </mat-card-title>                   
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Category:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.serviceType}}</span></p>
+                                </div>
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Technician:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.technician}}</span></p>
+                                </div>  
+    
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Priority:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.priority}}</span></p>
+                                </div>  
+    
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Responded Time:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{formatTimeDifference(ticket.respondedinHours)}}</span></p>
+                                </div>  
+    
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Status:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.serviceStatus}}</span></p>
+                                </div> 
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Created date:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.requestedDate}}</span></p>
+                                </div>                  
+                                <div class="col col-12 col-md-5">
+                                    <h3 class="fw-bold">Due date:</h3>                                
+                                </div>
+                                <div class="col col-12 col-md-7">
+                                    <p><span>{{ticket.estimatedCompleteDate}}</span></p>
+                                </div> 
+                               
+                            </div>
+                           
+                        </mat-card-content>
+                    </mat-card>     -->
+                    
                 </div>
             </div>
-           
-        </mat-card-content>
-    </mat-card>    
-   
+
+        </mat-tab>
+        <mat-tab label="Notes History">
+            <div class="mt-3">
+                <mat-accordion class="example-headers-align customcomponentheight">
+                    <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span>Notes History</span>
+                        </mat-panel-title>               
+                        </mat-expansion-panel-header>
+                        <mat-divider class="mb-3"></mat-divider>
+                        <div *ngFor="let nt of technicianNotes" class="mb-3">
+                            <mat-card class="p-1">
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <span style="font-size: 13px;">{{nt.technicianName}}</span>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-divider></mat-divider>
+                                <mat-card-content>
+                                    <div class="row">
+                                        <div class="col col-12 mb-3">
+                                            <span class="mediumpriority">{{nt.status}}</span>
+                                            <span class="float-end">{{nt.createdDate | date}}</span>
+                                        </div>
+                                        <div class="col col-12">
+                                            <span>{{nt.notes}}</span>                                               
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            
+        </mat-tab>        
+      </mat-tab-group>
+
+       
+        
+       
+    </div>
 </div>
+

@@ -1,11 +1,19 @@
 export class PriorityLevels{
     public id:number;
     public description:string;
+
+    constructor(init? : Partial<PriorityLevels>) {       
+        Object.assign(this,init);
+    }
 }
 
 export class RequestTypes{
     public id:number;
     public description:string;
+
+    constructor(init? : Partial<RequestTypes>) {       
+        Object.assign(this,init);
+    }
 }
 
 export class drp{
@@ -16,6 +24,10 @@ export class drp{
 export class ServiceStatuses{
     public id:number;
     public description:string;
+
+    constructor(init? : Partial<ServiceStatuses>) {       
+        Object.assign(this,init);
+    }
 }
 
 export class TicketsDropdownDTO{

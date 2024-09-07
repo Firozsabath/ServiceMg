@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { AuthenticationserviceService } from 'src/app/service/auth/authenticationservice.service';
 
 @Component({
   selector: 'app-headerbar',
@@ -7,14 +9,20 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class HeaderbarComponent implements OnInit {
 
- 
-  logbtnHide = true;
-  constructor() { }
+  userEmailId :string;
+  logoutbtnHide = true;
+  constructor(private authService: AuthenticationserviceService, private _router: Router) { }
 
   @Output()
   open: EventEmitter<boolean> = new EventEmitter()
 
   ngOnInit(): void {
+    debugger;
+    var token = localStorage.getItem('token');
+    this.userEmailId = localStorage.getItem('userEmail');
+    if(token!=null){
+      this.logoutbtnHide = false;
+    }
   }
 
   clickMenu() {
@@ -22,7 +30,7 @@ export class HeaderbarComponent implements OnInit {
     //console.log(this.logbtnHide);
   }
 
-  logout(){
-
+  logout(){    
+    this.authService.logout();    
   }
 }

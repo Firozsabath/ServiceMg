@@ -15,20 +15,22 @@
                 <div class="col col-12 col-md-7">
                     <mat-form-field  class="example-full-width">
                         <mat-label>Select Parts</mat-label>
-                        <input type="text"
-                               placeholder="Pick one"
-                               aria-label="Number"
+                        <!-- <input 
                                matInput                                
                                [formControl]="myControl"
-                               [matAutocomplete]="auto">
+                               [matAutocomplete]="auto"                               
+                                >  -->
+                                <input matInput formControlName="partsId" [matAutocomplete]="auto">
                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event,i)">
                             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                                 {{option.description}}
                               </mat-option>
                         </mat-autocomplete>
-                        <!-- <span class="text-danger" *ngIf="getContactsFormGroup(i).controls['partsId'].touched && getContactsFormGroup(i).controls['partsId'].hasError('required')">
-                            Label is required! </span> -->
-                          <mat-error *ngIf="getContactsFormGroup(i).controls['partsId'].touched && getContactsFormGroup(i).controls['partsId'].hasError('required')">
+                          <mat-error *ngIf="getContactsFormGroup(i).controls['partsId'].touched && getContactsFormGroup(i).controls['partsId'].hasError('required')">Parts is Required</mat-error>   
+                          <!-- <mat-error *ngIf="getContactsFormGroup(i).controls['partsId'].touched && getContactsFormGroup(i).controls['partsId'].hasError('partUnavailable')">
+                            Part is unavailable
+                          </mat-error> -->
+                          <mat-error *ngIf="part.get('partsId').hasError('partUnavailable')">
                             Part is unavailable
                           </mat-error>
                       </mat-form-field>

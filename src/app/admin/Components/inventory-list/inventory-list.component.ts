@@ -15,7 +15,7 @@ import { DialogInventoryComponent } from '../../dialogs/dialog-inventory/dialog-
 })
 export class InventoryListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id','name','skuid','manufacturer','vendor','quantity','unitcost','miscellanious','totalcost','createdDate','Actions'];
+  displayedColumns: string[] = ['id','name','skuid','manufacturer','vendor','quantity','unitcost','miscellanious','totalcost','createdDate','vatapplied','Actions'];
   dataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) msort: MatSort;
@@ -32,7 +32,7 @@ export class InventoryListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.msort;
-          console.log(data);
+          //console.log(data);
       }
     )
   }

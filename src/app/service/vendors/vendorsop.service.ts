@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vendors } from 'src/app/models/Vendors';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VendorsopService {
 
-  apiUrl = "https://localhost:7053/api/";
+  apiUrl = environment.baseApiUrl;
   constructor(private http:HttpClient) { }
 
   getVendors():Observable<any>{

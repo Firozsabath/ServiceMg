@@ -27,7 +27,10 @@ export class DialogServiceRequestComponent implements OnInit {
   priorities:any;
   requestTypesList:any;
   statusesList:any;
-  isPosting:Boolean = true;
+  isPosting:Boolean = true;  
+  //settings: EditorSettings;
+  editorConfig={base_url:'/tinymce', suffix:'.min', plugins:'lists link image table wordcount'}
+  selectedFiles: File[] = [];
   constructor(private fb:FormBuilder,@Inject(MAT_DIALOG_DATA) public dialogdata: any,private requestService: ServicerequestopService, private machineService:MachinesopService,private techService: TechnicianopsService, private dialogRef:MatDialogRef<DialogServiceRequestComponent>, private _snackbar:MatSnackBar) { 
 
     // this.requestData.valueChanges.subscribe(
@@ -95,22 +98,24 @@ export class DialogServiceRequestComponent implements OnInit {
     machineID:[Validators.required],
     technicianID:[Validators.required],
     requestedDate:[new Date(),Validators.required],
-    complatedDate:[Validators.required],
+    //complatedDate:[Validators.required],
     estimatedCompleteDate:[new Date,Validators.required],
     description:['',Validators.required],
     subject:['',Validators.required],
-    customerFeedback:['',Validators.required],
+    customerFeedback:[''],
     serviceTypeID:[Validators.required],
     priorityID:[Validators.required],
     serviceStatusID:[Validators.required],
+    requestID:[''],
+    documents: [null, Validators.required]
   });
 
   get serviceControls() {return this.requestData.controls;}
 
   addticketrequest(){
-    //debugger;
+    debugger;
     console.log(this.requestData.value);
-    if(this.requestData.valid){
+    if(this.requestData.valid){      
       if(this.dialogdata){
         this.requestService.updateRequest(this.requestData.value.id,this.requestData.value).subscribe(
           (data:any)=>{
@@ -120,7 +125,29 @@ export class DialogServiceRequestComponent implements OnInit {
         )
       }
       else{
-        this.requestService.postRequest(this.requestData.value).subscribe(
+        const formData = new FormData();       
+        formData.append('ID',this.requestData.get('id')?.value.toString());
+        formData.append('MachineID',this.requestData.get('machineID')?.value || '')
+        formData.append('TechnicianID',this.requestData.get('technicianID')?.value || '')
+        formData.append('RequestedDate', this.formatDate(this.requestData.get('requestedDate')?.value.toString()) || '')
+        formData.append('ComplatedDate','')
+        formData.append('EstimatedCompleteDate',this.formatDate(this.requestData.get('estimatedCompleteDate')?.value.toString()) || '')
+        formData.append('Subject',this.requestData.get('subject')?.value || '')
+        formData.append('Description',this.requestData.get('description')?.value || '')
+        formData.append('CustomerFeedback',this.requestData.get('customerFeedback')?.value || '')
+        formData.append('ServiceTypeID',this.requestData.get('serviceTypeID')?.value || '')
+        formData.append('PriorityID',this.requestData.get('priorityID')?.value || '')
+        formData.append('ServiceStatusID',this.requestData.get('serviceStatusID')?.value || '')
+        formData.append('RespondTime','')
+        formData.append('RespondedinHours','')
+        formData.append('RespondMessage','')
+        formData.append('TechnicianComment','')
+        formData.append('RequestID',this.requestData.get('requestID')?.value || '')
+        for (let file of this.selectedFiles) {
+          formData.append('Documents', file, file.name);
+        }
+
+        this.requestService.postRequest(formData).subscribe(
           (data:any)=>{
             this._snackbar.open("Created Successfully!","Ok");
                 this.dialogRef.close(true);
@@ -144,6 +171,22 @@ export class DialogServiceRequestComponent implements OnInit {
     }   
     
     this.requestData.get('estimatedCompleteDate').patchValue(date);    
+  }
+
+  onFileSelected(event: any): void {
+    if (event.target.files) {
+      this.selectedFiles = Array.from(event.target.files);
+      console.log(this.selectedFiles);
+    }
+  }
+
+  formatDate(date: string | Date): string {
+    const d = new Date(date);
+    const month = '' + (d.getMonth() + 1);
+    const day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-');
   }
 
 }

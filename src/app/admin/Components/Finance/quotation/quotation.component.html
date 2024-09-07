@@ -2,9 +2,19 @@
     <h1 class="mb-3">Quotation Generation</h1>
 
     <div class="container">
+
+      <section class="mb-4">
+        <h4 class="fw-bold">Select a type of quotation</h4>
+        <mat-button-toggle-group [(ngModel)]="fontStyle" (click)="showHideBelowDiv();" aria-label="Font Style">
+          <mat-button-toggle value="auto">Auto</mat-button-toggle>
+          <mat-button-toggle value="manual">Manual</mat-button-toggle>
+          <!-- <mat-button-toggle value="underline">Underline</mat-button-toggle> -->
+        </mat-button-toggle-group>       
+      </section>
+
         <form [formGroup]="quotation" (ngSubmit)="viewQuot()">          
 
-            <div class="row mb-4">
+            <div class="row mb-4" *ngIf="showmanualCompany">
               <div class="col col-12 col-md-4">
                 <mat-form-field appearance="fill">
                     <mat-label>Valididty Date</mat-label>
@@ -13,7 +23,7 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>              
-            </div>
+              </div>
                 <div class="col col-12 col-md-4">
                     <mat-form-field appearance="fill">
                         <mat-label>Select a Company</mat-label>
@@ -35,7 +45,50 @@
                           <mat-option *ngFor="let machine of drps.requestMachines" [value]="machine.id">{{machine.name}}</mat-option>
                         </mat-select>
                       </mat-form-field>
-                </div> -->
+                </div> -->                
+            </div>
+            <div class="row" *ngIf="showAutoCompany">
+              <div class="col col-12 col-md-6">
+                <mat-form-field  appearance="fill" >
+                  <mat-label>Company Name</mat-label>
+                  <input matInput formControlName="companyName">                                   
+                </mat-form-field> 
+              </div>
+              <div class="col col-12 col-md-6">
+                <mat-form-field  appearance="fill" >
+                  <mat-label>Company Address</mat-label>
+                  <input matInput formControlName="companyAddress">                                   
+                </mat-form-field> 
+              </div>
+              <div class="col col-12 col-md-6">
+                <mat-form-field  appearance="fill" >
+                  <mat-label>Trn Number</mat-label>
+                  <input matInput formControlName="trn">                                   
+                </mat-form-field> 
+              </div>
+              <div class="col col-12 col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Valididty Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName='validUntil'>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>              
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col col-12"> 
+                <mat-form-field  appearance="fill" >
+                  <mat-label>Payment Terms</mat-label>
+                  <textarea matInput formControlName="PaymentTerms"> </textarea>                                  
+                </mat-form-field> 
+              </div>
+              <div class="col col-12 col-md-6"> 
+                <mat-form-field  appearance="fill" >
+                  <mat-label>Service Charges</mat-label>
+                  <input matInput formControlName="serviceCharges">                                 
+                </mat-form-field> 
+              </div>
             </div>
             <div class="row">
                 <div formArrayName="quotationItems">
@@ -69,11 +122,11 @@
                             </div>
                         </div>
                     </div>
-                    <button mat-flat-button color="primary" type="button" class="float-end" (click)="addItem()">Add Used Part</button>
+                    <button mat-flat-button color="primary" type="button" class="float-end" (click)="addItem()" *ngIf="showButtons">Add Used Part</button>
                   </div>
             </div>
             <div>
-                <button mat-flat-button type="submit" color="primary">View Quotaion</button>
+                <button mat-flat-button type="submit" color="primary" *ngIf="showButtons">View Quotaion</button>
             </div>
         </form>
         

@@ -67,7 +67,7 @@ export class VendorsListComponent implements OnInit {
   }
 
   deleteVendor(id:string){
-    const message = `Are you sure you want to delete the company?`;
+    const message = `Are you sure you want to delete the Vendor?`;
     var dialogData = new ConfirmDialogModel("Confirm Action",message);
     let diRef = this.dialog.open(DialogConfirmBoxComponent,{width:"25vw",data:dialogData})
 

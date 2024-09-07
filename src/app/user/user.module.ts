@@ -24,13 +24,20 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TicketdetailsComponent } from './ticketdetails/ticketdetails.component';
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { CompniesComponent } from './compnies/compnies.component';
 
 @NgModule({
   declarations: [
     RequestlistComponent,
     UserLayoutComponent,
-    TicketdetailsComponent
+    TicketdetailsComponent,
+    CompniesComponent
   ],
   imports: [
     CommonModule,    
@@ -54,7 +61,16 @@ import { TicketdetailsComponent } from './ticketdetails/ticketdetails.component'
     MatSelectModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
+    MatTabsModule,
+    MatCheckboxModule,
+    EditorModule
+  ],
+  providers:[
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    {provide: TINYMCE_SCRIPT_SRC, useValue: '/tinymce/tinymce.min.js'}
   ]
 })
 export class UserModule { }
