@@ -56,16 +56,18 @@ export class DialogInventoryComponent implements OnInit {
   ngOnInit(): void {
 
     this.inventoryData.patchValue(this.dialogdata)
-    if(this.dialogdata.isVatApplied){
-      this.showVat = !this.showVat;
-    }
+    
     if(this.dialogdata){
       this.selectedVendor = this.dialogdata.vendorid;
+      if(this.dialogdata.isVatApplied){
+        this.showVat = !this.showVat;
+      }
     }
 
     this.vendService.getVendors().subscribe(
       (data:any)=>{
         this.vendorList = data;
+        console.log(this.vendorList);
       }
     )
 

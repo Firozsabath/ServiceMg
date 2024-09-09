@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +13,9 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { LoaderInterceptor } from './Interceptors/loader.interceptor';
+import { AuthInterceptorInterceptor } from './Interceptors/auth-interceptor.interceptor';
+import { SharedModuleModule } from './shared-module/shared-module.module';
 @NgModule({
   declarations: [
     AppComponent 
@@ -29,9 +32,14 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    EditorModule
+    EditorModule,
+    SharedModuleModule
   ],
-  providers: [{provide: TINYMCE_SCRIPT_SRC, useValue: '/tinymce/tinymce.min.js'}],
+  providers: [
+    {provide: TINYMCE_SCRIPT_SRC, useValue: '/tinymce/tinymce.min.js'},
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
   exports:[
     MatToolbarModule,

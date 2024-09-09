@@ -63,21 +63,23 @@ export class DialogRequeststatusupdateComponent implements OnInit {
 
   updateticketStatus(){
       console.log(this.requestData.value);
-      if(this.dialogdata){
-        if(this.dialogdata.type == 'status'){
-          this.requestService.updateStatus(this.requestData.value.serviceID,this.requestData.value).subscribe(
-            (data:any)=>{
-              this._snackbar.open("Updated Successfully!","Ok");
-                  this.dialogRef.close(true);
-            }
-          )
-        }else if(this.dialogdata.type == 'respond'){
-          this.requestService.resondRequest(this.requestData.value.serviceID,this.requestData.value).subscribe(
-            (data:any)=>{
-              this._snackbar.open("Updated Successfully!","Ok");
-                  this.dialogRef.close(true);
-            }
-          )
+      if(this.requestData.valid){
+        if(this.dialogdata){
+          if(this.dialogdata.type == 'status'){
+            this.requestService.updateStatus(this.requestData.value.serviceID,this.requestData.value).subscribe(
+              (data:any)=>{
+                this._snackbar.open("Updated Successfully!","Ok");
+                    this.dialogRef.close(true);
+              }
+            )
+          }else if(this.dialogdata.type == 'respond'){
+            this.requestService.resondRequest(this.requestData.value.serviceID,this.requestData.value).subscribe(
+              (data:any)=>{
+                this._snackbar.open("Updated Successfully!","Ok");
+                    this.dialogRef.close(true);
+              }
+            )
+          }
         }
       }
       

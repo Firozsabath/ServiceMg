@@ -31,27 +31,25 @@ export class DialogTechnicianComponent implements OnInit {
     var item = this.technician.value;
     var postData: Technicians={id:item.id,name:item.name,position:item.position,email:item.email,imgUrl:"",createdTime:item.createddate,updateTime:new Date};
       console.log(postData);
+      if(this.technician.valid){
+        if(this.dialoddata){
+          this.techService.updateTechnician(postData.id,postData).subscribe({
+            next:(val:any)=>{
+              this._snackbar.open("Updated Successfull!","OK")
+              this.dialogRef.close(true);
+            }
+          })
 
-      if(this.dialoddata){
-        this.techService.updateTechnician(postData.id,postData).subscribe({
-          next:(val:any)=>{
-            this._snackbar.open("Updated Successfull!","OK")
-            this.dialogRef.close(true);
-          }
-        })
-
-      }else{
-        this.techService.addTechnician(postData).subscribe({
-          next:(val:any)=>{
-            //console.log(val);
-            this._snackbar.open("Created Successfully!","Ok");
-            this.dialogRef.close(true);
-          }
-      });
+        }else{
+          this.techService.addTechnician(postData).subscribe({
+            next:(val:any)=>{
+              //console.log(val);
+              this._snackbar.open("Created Successfully!","Ok");
+              this.dialogRef.close(true);
+            }
+        });
+        }
       }
-
-      
-
   }
 
 }

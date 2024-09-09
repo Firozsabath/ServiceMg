@@ -11,11 +11,14 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { SidebarStudentComponent } from './sidebar-student/sidebar-student.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     HeaderbarComponent,
     SidebarComponent,
-    SidebarStudentComponent
+    SidebarStudentComponent,
+    ProgressSpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -26,12 +29,14 @@ import {MatMenuModule} from '@angular/material/menu';
     MatSidenavModule,
     MatListModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   exports:[
     HeaderbarComponent,
     SidebarComponent,
-    SidebarStudentComponent
+    SidebarStudentComponent,
+    ProgressSpinnerComponent
   ]
 })
 export class SharedModuleModule { }
