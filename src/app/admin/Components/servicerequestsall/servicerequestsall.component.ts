@@ -113,7 +113,7 @@ export class ServicerequestsallComponent implements OnInit {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
 
-    alert(this.pageIndex);
+    //alert(this.pageIndex);
   }
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {

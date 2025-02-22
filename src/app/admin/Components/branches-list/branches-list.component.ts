@@ -21,6 +21,9 @@ export class BranchesListComponent implements OnInit {
   
   selectedValue:any;
   companyList:Companiesdropdown[];
+  filteredCompanies: any;
+  optionsArray = ['Option 1', 'Option 2', 'Option 3', 'Option 4']; // Full options
+  filteredOptions = [...this.optionsArray];
   constructor(private branchService:BranchesopsService,private compServices:CompaniesopService, private fb:FormBuilder, 
     private dialog:MatDialog, private _snackBar:MatSnackBar) { 
 
@@ -39,8 +42,14 @@ export class BranchesListComponent implements OnInit {
           id:p.id,
           name:p.name
         }));
+
+        this.filteredCompanies = [...this.companyList];
       }
     )
+  }
+
+  updateFilteredCompanies(filtered: any[]) {
+    this.filteredCompanies = filtered;
   }
 
   getAllBranches(){

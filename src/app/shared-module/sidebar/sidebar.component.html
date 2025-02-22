@@ -9,34 +9,13 @@
     <a mat-list-item routerLink="/admin/tickets" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">event_note</span>Service Requests</a> 
     <a mat-list-item routerLink="/admin/companieslist" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">
       add_business
-      </span> Companies</a> 
-    <a mat-list-item routerLink="/admin/branches" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">component_exchange</span>Branches</a> 
+      </span> Customers</a> 
+    <a mat-list-item routerLink="/admin/branches" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">component_exchange</span>Locations</a> 
     <a mat-list-item routerLink="/admin/machines" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">coffee_maker</span>Machines</a> 
     <a mat-list-item routerLink="/admin/techinicians" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">person_apron</span> Techinicians</a>    
     <!-- <a mat-list-item routerLink="/admin/companieslist"><span class="material-symbols-outlined me-1">
       settings
       </span> App Settings</a>  -->
-      <mat-expansion-panel [class.mat-elevation-z0]="true" class="customexpansionMenu">
-        <mat-expansion-panel-header>
-          <span class="material-symbols-outlined me-1">
-            settings
-            </span> App Settings
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/admin/users" routerLinkActive="highlightCard">
-            <span>Manage Users</span>
-          </a>
-            <a mat-list-item routerLink="/admin/reqcategories" routerLinkActive="highlightCard">
-                <span>Request Categories</span>
-            </a>
-            <a mat-list-item routerLink="/admin/reqTypes" routerLinkActive="highlightCard">
-                <span>Request Types</span>
-            </a>
-            <a mat-list-item routerLink="/admin/reqpriorities" routerLinkActive="highlightCard">
-              <span>Request Priorities</span>
-          </a>
-        </mat-nav-list>
-    </mat-expansion-panel>
     
       <mat-expansion-panel [class.mat-elevation-z0]="true" class="customexpansionMenu">
         <mat-expansion-panel-header>
@@ -75,8 +54,32 @@
           </mat-panel-title>          
         </mat-expansion-panel-header>
         <a mat-list-item routerLink="/admin/fin/quotation" routerLinkActive="highlightCard">Quotaions</a>
-        <a mat-list-item routerLink="/dashboard/adminAppsUsers" routerLinkActive="highlightCard">Invoices</a>   
+        <a mat-list-item routerLink="/admin/fin/allquots" routerLinkActive="highlightCard">Quotaions List</a>   
+        <a mat-list-item routerLink="/admin/fin/invoicegen" routerLinkActive="highlightCard">Invoices</a>   
+        <a mat-list-item routerLink="/admin/fin/allinvoices" routerLinkActive="highlightCard">Invoices List</a> 
       </mat-expansion-panel>
+
+      <mat-expansion-panel [class.mat-elevation-z0]="true" class="customexpansionMenu">
+        <mat-expansion-panel-header>
+          <span class="material-symbols-outlined me-1">
+            settings
+            </span> App Settings
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/admin/users" routerLinkActive="highlightCard">
+            <span>Manage Users</span>
+          </a>
+            <a mat-list-item routerLink="/admin/reqcategories" routerLinkActive="highlightCard">
+                <span>Request Categories</span>
+            </a>
+            <a mat-list-item routerLink="/admin/reqTypes" routerLinkActive="highlightCard">
+                <span>Request Types</span>
+            </a>
+            <a mat-list-item routerLink="/admin/reqpriorities" routerLinkActive="highlightCard">
+              <span>Request Priorities</span>
+          </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
     
 
    

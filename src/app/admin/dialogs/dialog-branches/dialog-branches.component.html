@@ -1,47 +1,45 @@
 <h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} Branch</h2>
 <form [formGroup]="branchData" (ngSubmit)="addBranches()">
-<mat-dialog-content>    
+<mat-dialog-content>   
+      <div class="row">
+        <mat-form-field appearance="fill">
+            <mat-label>Select Company</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="configsList" formControlName='companyID'>              
+                <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by name.." #userDropdownSearch (input)="onBranchInputChange()">              
+              <mat-option [value]="">
+                Select a Company
+              </mat-option>
+             
+              <mat-option *ngFor="let company of companyList" [value]="company.id">{{company.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div> 
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Branch Name</mat-label>
                 <input matInput formControlName='branchName'>
-                <mat-error *ngIf="branchData.get('branchName')?.hasError('branchName')">Branch Name Required</mat-error>         
+                <mat-error *ngIf="branchData.get('branchName')?.hasError('required')">Branch Name Required</mat-error>         
               </mat-form-field>     
-        </div>    
-        <div class="row">
-            <mat-form-field appearance="fill">
-                <mat-label>Select Company</mat-label>
-                <mat-select [(ngModel)]="selectedValue" name="configsList" formControlName='companyID'>
-                  <mat-option [value]="">
-                    Select a Company
-                  </mat-option>
-                  <mat-option *ngFor="let company of companyList" [value]="company.id">{{company.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
         </div>
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Contact Number</mat-label>
                 <input matInput formControlName='contactNumber'>
-                <mat-error *ngIf="branchData.get('contactNumber')?.hasError('contactNumber')">Email Required</mat-error> 
+                <mat-error *ngIf="branchData.get('contactNumber')?.hasError('required')">Contat Number Required</mat-error> 
               </mat-form-field>
         </div>
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>TRN Number</mat-label>
                 <input matInput formControlName='trnNumber'>
-                <div class="invalid-feedback" *ngIf="branchData.get('trnNumber')?.hasError('trnNumber')">
-                    <sup>*</sup>Please enter your city name
-                  </div>                
+                <mat-error *ngIf="branchData.get('trnNumber')?.hasError('required')">TRN Number Required</mat-error>             
               </mat-form-field>
         </div>
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Contact Person</mat-label>
                 <input matInput formControlName='contactPerson'>
-                <div class="invalid-feedback" *ngIf="branchData.get('contactPerson')?.hasError('contactPerson')">
-                    <sup>*</sup>Please enter your company size
-                  </div>                
+                <mat-error *ngIf="branchData.get('contactPerson')?.hasError('required')">Contact Required</mat-error>                 
               </mat-form-field>
         </div>
         <div class="row" *ngIf="dialogdata">

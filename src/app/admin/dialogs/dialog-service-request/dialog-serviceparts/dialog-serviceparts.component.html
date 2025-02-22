@@ -18,8 +18,7 @@
                         <!-- <input 
                                matInput                                
                                [formControl]="myControl"
-                               [matAutocomplete]="auto"                               
-                                >  -->
+                               [matAutocomplete]="auto">  -->
                                 <input matInput formControlName="partsId" [matAutocomplete]="auto">
                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event,i)">
                             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">

@@ -1,7 +1,31 @@
 
 
 <div class="mat-elevation-z8 p-3 customcomponentheight">
-    <p class="fw-bold">Tickets by category</p>
+    <div>
+        <p class="fw-bold">Tickets by category</p>
+        <button class="float-end" mat-icon-button [matMenuTriggerFor]="periodMenu">
+            <span class="material-symbols-outlined">
+                more_vert
+                </span>
+        </button>
+    </div>
+    
+      <mat-menu #periodMenu="matMenu">
+        <button mat-menu-item (click)="onPeriodChange('30')">Last 30 Days</button>
+        <button mat-menu-item (click)="onPeriodChange('60')">Last 60 Days</button>
+        <button mat-menu-item (click)="onPeriodChange('90')">Last 3 Months</button>
+      </mat-menu>
+    <!-- <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-select [(ngModel)]="selectedPeriod" (selectionChange)="onPeriodChange()">
+                  <mat-option value="30">Last 30 Days</mat-option>
+                  <mat-option value="60">Last 60 Days</mat-option>
+                  <mat-option value="90">Last 3 Months</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+    </div>     -->
     <ngx-charts-bar-vertical
 (window:resize)="onResize($event)"
               [view]="view"

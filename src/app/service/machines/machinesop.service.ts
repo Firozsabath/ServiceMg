@@ -18,6 +18,9 @@ export class MachinesopService {
   getMachineByID(id:number):Observable<any>{
     return this.http.get<any>(this.apiUrl+`Machines/${id}`);
   }
+  getContractBYMachine(id:number):Observable<any>{
+    return this.http.get<any>(this.apiUrl+`Machines/GetContractInfo/${id}`);
+  }
   getMachineByBranch(id:number){
     return this.http.get<any>(this.apiUrl+`Machines/GetBYBranch/${id}`);
   }

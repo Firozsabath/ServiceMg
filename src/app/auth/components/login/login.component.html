@@ -2,7 +2,7 @@
     <!-- <img src="../assets/Images/Coffe_Machine1.jpg"> -->
     <div class="lginbg">
         <div class="card p-4">
-            <img class="card-img-top rounded-circle custom_rounded profimg" src="../assets/Images/logo1.jpg" alt="Card image cap">
+            <img class="card-img-top profimg" src="../../../../../assets/Images/Bean-Blance_Logo.png" alt="Card image cap">
             <div class="card-body text-center">
                 <h5 class="card-title text-center">Welcome</h5>            
                 <p class="card-text small font-weight-bold">Login using your  credentials.</p>                
@@ -11,10 +11,10 @@
             <mat-card>
                 <form [formGroup]="Loginform" (ngSubmit)="OnSubmit(signInForm)" #signInForm="ngForm">
                     <mat-form-field appearance="outline">
-                        <mat-label>Email</mat-label>
+                        <mat-label>User Name</mat-label>
                         <input matInput placeholder="Enter Your EmailID" name="EmailID" id="EmailID"  formControlName = 'username'>
-                        <mat-error *ngIf="Allcontrols?.username?.errors?.email&&submitted">Invalid EmailID</mat-error>
-                        <mat-error *ngIf="Allcontrols?.username?.errors?.required&&submitted">EmailID Required</mat-error>                               
+                        <!-- <mat-error *ngIf="Allcontrols?.username?.errors?.email&&submitted">Invalid User Name</mat-error> -->
+                        <mat-error *ngIf="Allcontrols?.username?.errors?.required&&submitted">User Name Required</mat-error>                               
                     </mat-form-field>
     
                     <mat-form-field appearance="outline">

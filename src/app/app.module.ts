@@ -18,7 +18,7 @@ import { AuthInterceptorInterceptor } from './Interceptors/auth-interceptor.inte
 import { SharedModuleModule } from './shared-module/shared-module.module';
 @NgModule({
   declarations: [
-    AppComponent 
+    AppComponent,   
   ],
   imports: [
     BrowserModule,
@@ -45,7 +45,7 @@ import { SharedModuleModule } from './shared-module/shared-module.module';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatFormFieldModule,
+    MatFormFieldModule,   
   ]
 })
 export class AppModule { }

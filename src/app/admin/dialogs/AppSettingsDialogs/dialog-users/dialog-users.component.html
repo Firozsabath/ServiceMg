@@ -12,7 +12,9 @@
             <mat-form-field appearance="fill">
                 <mat-label>User Name</mat-label>
                 <input matInput formControlName='username'>
-                <mat-error *ngIf="userData.get('username')?.hasError('username')">manufacturer Required</mat-error> 
+                <mat-error *ngIf="userData.get('username')?.hasError('required')">
+                  Role is required.
+                </mat-error>
               </mat-form-field>
         </div>
         <div class="row">           
@@ -24,15 +26,24 @@
                   </mat-option>
                   <mat-option *ngFor="let role of roles" [value]="role.name">{{role.normalizedName}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="userData.get('role')?.hasError('required')">
+                  Role is required.
+                </mat-error>
               </mat-form-field>
         </div>
         <div [hidden]="isUpdate" class="row">
             <mat-form-field appearance="fill">
                 <mat-label>password</mat-label>
-                <input matInput formControlName='password'>
-                <div class="invalid-feedback" *ngIf="userData.get('password')?.hasError('password')">
-                    <sup>*</sup>Please enter your city name
-                  </div>                
+                <input matInput type="password" formControlName='password'>                
+                  <mat-error *ngIf="userData.get('password')?.hasError('required')">
+                    Password is required.
+                  </mat-error>
+                  <mat-error *ngIf="userData.get('password')?.hasError('minlength')">
+                    Password must be at least 8 characters long.
+                  </mat-error>
+                  <mat-error *ngIf="userData.get('password')?.hasError('pattern')">
+                    Password must include at least one uppercase letter, one lowercase letter, one number, and one special character.
+                  </mat-error>                   
               </mat-form-field>
         </div>
        

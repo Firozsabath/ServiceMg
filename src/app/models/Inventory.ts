@@ -28,6 +28,7 @@ export class Inventory{
 export class InventoryDP{
     public partsID:number;
     public description:string;
+    public skuID:string;
     /**
      *
      */

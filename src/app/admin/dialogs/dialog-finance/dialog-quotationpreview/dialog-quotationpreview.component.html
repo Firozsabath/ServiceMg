@@ -1,0 +1,131 @@
+
+ <button mat-icon-button class="float-end" (click)="closeDialog()">
+    <span class="material-symbols-outlined">
+        close
+        </span>
+  </button>
+
+    <div *ngIf="quotaData">   
+        <div class="container" id="quotation" style="max-width:1000px;padding: 20px;margin-top:50px; font-family: Arial, sans-serif;">
+            <div class="header">
+                <div class="row mb-4">
+                    <div class="col col-4">
+                        <img src="../../../../../assets/Images/Bean-Blance_Logo.png" style="width:85%;">    
+                    </div>
+                    <div class="col col-4 text-center">                    
+                        <h2 class="fw-bold" style="font-size: 25px;margin-top:15px;">Quotation</h2>
+                    </div>
+                    <div class="col col-4 text-end">
+                      <p class="m-0 p-0 fw-bold" style="font-size: 12px;">Bean Balance Catering Equipment Trading LLC</p>
+    
+                        <p class="m-0 p-0" style="font-size: 12px;">Ras Al Khor 2</p>
+                        <!-- <p class="m-0 p-0" style="font-size: 12px;">P.O Box 1213211</p> -->
+                        <p class="m-0 p-0" style="font-size: 12px;">Dubai, UAE</p>
+                        <p class="m-0 p-0" style="font-size: 12px;">+971 56 997 8495</p>
+                        <p class="m-0 p-0" style="font-size: 12px;">+971 56 997 8496</p>
+                        <p class="m-0 p-0" style="font-size: 12px;">+971 56 997 8497</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                  <div class="col col-4">
+                    <p><strong>Customer:</strong> {{ quotaData.companyName }}</p>
+                    <p><strong>Address:</strong> {{ quotaData.companyAddress }}</p>
+                    <div *ngIf="quotaData.companyID>0">
+                      <p><strong>Branch:</strong> {{ quotaData.branch }}</p>
+                      <p><strong>TRN:</strong> {{ quotaData.trn }}</p>
+                    <p><strong>Machine:</strong> {{ quotaData.machine }}</p>
+                    </div>
+                  </div>
+                  <div class="col col-4 text-center">
+                      
+                  </div>
+                  <div class="col col-4 text-end">
+                    <p><strong>Date:</strong> {{ quotaData.dateCreated | date}}</p> 
+                    <p><strong>TRN:</strong> 104733734800003 </p> 
+                    <p><strong>Quotation No:</strong> {{ quotaData.quotationNum }}</p> 
+                    <p><strong>Validity Date:</strong> {{ quotaData.validUntil | date}}</p>                 
+                    <p><strong>Created By:</strong> {{userEmailId}}</p>                 
+                  </div>
+              </div>
+            </div>
+        
+            <!-- <h1 style="text-align: center;">Quotation</h1> -->
+            
+            <!-- <p><strong>Customer:</strong> {{ quotaData.companyID }}</p> -->
+          
+            <table border="1" width="100%" class="table table-bordered" style="border-collapse: collapse; margin-top: 20px;border:1px solid;">
+              <thead>
+                <tr style="text-align: center;">
+                  <th>Description</th>
+                  <th>Sku ID</th>
+                  <th>Quantity</th>
+                  <th>Availability</th>
+                  <th>Unit Price (AED)</th>
+                  <th>Taxable Amount (AED)</th>
+                  <th>Vat %</th>
+                  <th>Vat Amount (AED)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of quotaData.quotationItems">
+                  <td>{{ item.description }}</td>
+                  <td style="text-align: center;">{{ item.skuId }}</td>
+                  <td style="text-align: right;">{{ item.quantityUsed }}</td>
+                  <td style="text-align: right;">{{ item.availablility }}</td>
+                  <td style="text-align: right;">{{ item.amount | number: '1.2-2' }}</td>
+                  <td style="text-align: right;">{{ item.total | number: '1.2-2' }}</td>
+                  <td style="text-align: center;">{{item.vatPercent}}</td>
+                  <td style="text-align: right;">{{item.vat | number: '1.2-2'}}</td>
+                </tr>
+                <tr *ngIf="quotaData.itemDiscount">
+                  <td colspan="5" style="text-align: right; font-weight: bold;">Discount on Items</td>
+                  <td colspan="3" style="text-align: right; font-weight: bold;">Total discount : {{ quotaData.itemDiscount | number: '1.2-2' }} </td>
+                </tr>
+                <tr>
+                  <td colspan="5" style="text-align: right; font-weight: bold;">Sub Total</td>
+                  <td style="text-align: right; font-weight: bold;">{{ quotaData.subTotal | number: '1.2-2' }}</td>
+                  <td style="text-align: right; font-weight: bold;">Total Vat</td>
+                  <td style="text-align: right; font-weight: bold;">{{ quotaData.totalVat | number: '1.2-2' }}</td>
+                </tr>
+                <tr>
+                  <td colspan="5" style="text-align: right; font-weight: bold;">Total Amount</td>
+                  <td colspan="3" style="text-align: right; font-weight: bold;">Total Amount : {{ quotaData.totalAmount | number: '1.2-2' }} </td>
+                </tr>
+                <tr>
+                  <td colspan="5" style="text-align: right; font-weight: bold;">Amount in Words</td>
+                  <td colspan="3" style="text-align: right; font-weight: bold;">{{ convertNumberToWords(quotaData.totalAmount) }} </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="col-8">
+                <p>Looking forward for your business.</p>
+    
+                <div class="mb-3">
+                  <table>
+                    <tr><td>BENEFICIARY : Bean Balance Catering Equipment trading LLC</td></tr>
+                    <tr><td>BANK NAME : RAK Bank</td></tr>
+                    <tr><td>ACCOUNT NO : 0553 4753 25001</td></tr>
+                    <tr><td>IBAN : AE7304 0000 05534 7532 5001</td></tr>
+                    <tr class="d-none"><td>SWIFT CODE : ADCBAEAAXXX | BRANCH : 252 / AL KARAMAH</td></tr>
+                  </table>
+                </div>
+                <p class="m-0">Terms & Conditions</p>
+                  <p class="m-0">1.Quotation validity is (14) days from date of issue.</p>
+                  <p class="m-0">2.GOODS ONCE SOLD CANNOT BE RETURNED or EXCHANGED</p>
+              </div>
+              <div class="col-4">
+                    <img src="../../../../../assets/Images/beanBStamp.jpeg" style="width:85%;">
+              </div>
+            </div>
+            <div class="row">
+              <h4>Disclaimer:</h4>
+              <p>{{quotaData.paymentTerms}}</p>
+            </div>
+          </div>
+          <div class="text-center my-4">
+            <button mat-flat-button color="primary" (click)="downloadQuotationPDF()">Generate Quotataion</button>        
+          </div>
+     </div>
+

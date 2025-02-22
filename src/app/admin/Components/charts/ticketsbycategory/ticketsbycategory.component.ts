@@ -12,6 +12,7 @@ export class TicketsbycategoryComponent implements OnInit {
 
   view: [number, number] = [700, 300];
   dataset : Chart[];
+  selectedPeriod: string = '30'; // Default to last 30 days
   constructor(private ticketService:ServicerequestopService) {
     //this.view = [innerWidth / 1.3, 700];
    }
@@ -43,12 +44,20 @@ export class TicketsbycategoryComponent implements OnInit {
   showLabels = true;    
 
   getDetails(){
-    this.ticketService.getTicketsByCategory().subscribe(
+    this.ticketService.getTicketsByCategory(7).subscribe(
       (data:any)=>{
         this.dataset = data;
         //console.log(this.dataset);
       }
     )
+  }
+
+  onPeriodChange(days:any){
+    this.ticketService.getTicketsByCategory(days).subscribe(
+      (data:any)=>{
+        this.dataset = data;       
+        console.log(this.dataset); 
+      });
   }
 
   onSelect(event) {

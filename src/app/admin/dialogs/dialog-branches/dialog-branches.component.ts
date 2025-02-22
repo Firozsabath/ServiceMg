@@ -1,5 +1,5 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -26,7 +26,9 @@ export class DialogBranchesComponent implements OnInit {
 
   braPostData:Branches;
   companyList:Companiesdropdown[];
+  _companyList:Companiesdropdown[];
   selectedValue:any;  
+  @ViewChild('userDropdownSearch') searchBranchDropdown: ElementRef;
   branchData = this.fb.group({
       id:[0],
       companyID:[0,Validators.required],
@@ -50,6 +52,7 @@ export class DialogBranchesComponent implements OnInit {
           id:p.id,
           name:p.name
         }));
+        this._companyList = this.companyList;
       }
     )
 
@@ -122,4 +125,16 @@ export class DialogBranchesComponent implements OnInit {
     }
   }
 
+  onBranchInputChange(){
+    console.log(this.searchBranchDropdown.nativeElement.value);
+    const searchQuery = this.searchBranchDropdown.nativeElement.value ? this.searchBranchDropdown.nativeElement.value.toLowerCase() : '';
+    this.companyList = this._companyList.filter(c=>{
+      const nm:String = c.name.toLowerCase();
+      return nm.indexOf(searchQuery) > -1;
+    });
+  }
+
+  
+
 }
+

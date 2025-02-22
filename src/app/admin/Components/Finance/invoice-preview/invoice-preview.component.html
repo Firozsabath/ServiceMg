@@ -1,0 +1,125 @@
+<span><a mat-raised-button class="requestActionbutton me-3 mb-2" [routerLink]="['/admin/fin/allinvoices']"><span class="customBackButton material-symbols-outlined">arrow_back</span> Back</a>
+
+ <div *ngIf="invoiceData">
+    <div class="container" id="invoice" style="max-width:1000px;padding: 20px;margin-top:50px; font-family: Arial, sans-serif;">
+        <div class="header">
+            <div class="row mb-4">
+                <div class="col col-4">
+                    <img src="../../../../../assets/Images/Bean-Blance_Logo.png" style="width:85%;">    
+                </div>
+                <div class="col col-4 text-center">
+                    <h2 class="fw-bold" style="font-size: 30px;margin-top:15px;">Tax Invoice</h2>
+                </div>
+                <div class="col col-4 text-end">
+                  <p class="m-0 p-0 fw-bold" style="font-size: 12px;">Bean Balance Catering Equipment Trading LLC</p>
+
+                    <p class="m-0 p-0" style="font-size: 12px;">Ras Al Khor 2</p>
+                    <!-- <p class="m-0 p-0" style="font-size: 12px;">P.O Box 1213211</p> -->
+                    <p class="m-0 p-0" style="font-size: 12px;">Dubai, UAE</p>
+                    <p class="m-0 p-0" style="font-size: 12px;">+971 56 997 8495</p>
+                    <p class="m-0 p-0" style="font-size: 12px;">+971 56 997 8496</p>
+                    <p class="m-0 p-0" style="font-size: 12px;">+971 56 997 8497</p>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col col-4">
+                <p><strong>Customer:</strong> {{ invoiceData.companyName }}</p>                
+                <p><strong>Address:</strong> {{ invoiceData.companyAddress }}</p>
+                <div *ngIf="invoiceData.companyID>0">
+                  <p><strong>Branch:</strong> {{ invoiceData.branch }}</p>
+                  <p><strong>TRN:</strong> {{ invoiceData.trn }}</p>
+                <p><strong>Machine:</strong> {{ invoiceData.machine }}</p>
+                </div>
+              </div>
+              <div class="col col-4 text-center">
+                  
+              </div>
+              <div class="col col-4 text-end">
+                <p><strong>Date:</strong> {{ invoiceData.dateCreated | date}}</p> 
+                <p><strong>Invoice No:</strong> {{ invoiceData.quotationNum }}</p> 
+                <p><strong>TRN:</strong> 104733734800003 </p> 
+                <!-- <p><strong>Validity Date:</strong> {{ invoiceData.validUntil | date}}</p>                  -->
+                <p><strong>Created By:</strong> {{userEmailId}}</p>                 
+              </div>
+          </div>
+        </div>
+    
+        <!-- <h1 style="text-align: center;">Quotation</h1> -->
+        
+        <!-- <p><strong>Customer:</strong> {{ invoiceData.companyID }}</p> -->
+      
+        <table border="1" width="100%" class="table table-bordered" style="border-collapse: collapse; margin-top: 20px;border:1px solid;">
+          <thead>
+            <tr style="text-align: center;">
+              <th>Description</th>
+              <th>Sku ID</th>
+              <th>Quantity</th>
+              <!-- <th>Availability</th> -->
+              <th>Unit Price</th>
+              <th>Total Price</th>
+              <th>Vat %</th>
+              <th>Vat Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of invoiceData.quotationItems">
+              <td>{{ item.description }}</td>
+              <td style="text-align: center;">{{ item.skuId }}</td>
+              <td style="text-align: right;">{{ item.quantityUsed }}</td>
+              <!-- <td style="text-align: right;">{{ item.availablility }}</td> -->
+              <td style="text-align: right;">{{ item.amount | number: '1.2-2' }}</td>
+              <td style="text-align: right;">{{ item.total | number: '1.2-2' }}</td>
+              <td style="text-align: center;">{{item.vatPercent}}</td>
+              <td style="text-align: right;">{{item.vat | number: '1.2-2'}}</td>
+            </tr>
+            <tr *ngIf="invoiceData.itemDiscount">
+              <td colspan="4" style="text-align: right; font-weight: bold;">Discount on Items</td>
+              <td colspan="3" style="text-align: right; font-weight: bold;">Total discount : {{ invoiceData.itemDiscount | number: '1.2-2' }} </td>
+            </tr>
+            <tr>
+              <td colspan="4" style="text-align: right; font-weight: bold;">Sub Total</td>
+              <td style="text-align: right; font-weight: bold;">{{ invoiceData.subTotal | number: '1.2-2' }}</td>
+              <td style="text-align: right; font-weight: bold;">Total Vat</td>
+              <td style="text-align: right; font-weight: bold;">{{ invoiceData.totalVat | number: '1.2-2' }}</td>
+            </tr>
+            <tr>
+              <td colspan="5" style="text-align: right; font-weight: bold;">Total Amount</td>
+              <td colspan="3" style="text-align: right; font-weight: bold;">Total Amount : {{ invoiceData.totalAmount | number: '1.2-2' }} </td>
+            </tr>
+            <tr>
+              <td colspan="5" style="text-align: right; font-weight: bold;">Amount in Words</td>
+              <td colspan="3" style="text-align: right; font-weight: bold;">{{ convertNumberToWords(invoiceData.totalAmount) }} </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-8">
+            <p>Looking forward for your business.</p>
+
+            <div class="mb-3 d-none">
+              <table>
+                <tr><td>BENEFICIARY : BREWING GADGETS GENERAL TRADING LLC</td></tr>
+                <tr><td>BANK NAME : ABU DHABI COMMERCIAL BANK (ADCB)</td></tr>
+                <tr><td>ACCOUNT NO : 11206665920001</td></tr>
+                <tr><td>IBAN : AE660030011206665920001</td></tr>
+                <tr><td>SWIFT CODE : ADCBAEAAXXX | BRANCH : 252 / AL KARAMAH</td></tr>
+              </table>
+            </div>
+            <p class="m-0">Terms & Conditions</p>
+              <p class="m-0">1.Quotation validity is (14) days from date of issue.</p>
+              <p class="m-0">2.GOODS ONCE SOLD CANNOT BE RETURNED or EXCHANGED</p>
+          </div>
+          <div class="col-4">
+                <img src="../../../../../assets/Images/beanBStamp.jpeg" style="width:85%;">
+          </div>
+        </div>
+        <div class="row">
+          <h4>Disclaimer:</h4>
+          <p>{{invoiceData.paymentTerms}}</p>
+        </div>
+      </div>
+      <div class="text-center my-4">
+        <button mat-flat-button color="primary" (click)="downloadQuotationPDF()">Generate Invoice</button>        
+      </div>
+ </div>

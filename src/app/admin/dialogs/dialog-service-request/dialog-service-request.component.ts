@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime } from 'rxjs';
-import { PriorityLevels, TicketsDropdownDTO } from 'src/app/models/PriorityLevels';
+import { PriorityLevels, TicketsDropdownDTO, TicketsReportDropdownDTO } from 'src/app/models/PriorityLevels';
 import { MachinesopService } from 'src/app/service/machines/machinesop.service';
 import { ServicerequestopService } from 'src/app/service/serviceRequests/servicerequestop.service';
 import { TechnicianopsService } from 'src/app/service/technician/technicianops.service';
@@ -23,11 +23,18 @@ export class DialogServiceRequestComponent implements OnInit {
   selectedRequestTypes:any;
   selectedRequestStatus:any;
   technicianList:any;
-  dropDowns: TicketsDropdownDTO;
+  dropDowns: TicketsReportDropdownDTO;
   priorities:any;
   requestTypesList:any;
   statusesList:any;
   isPosting:Boolean = true;  
+  selectedBranch:any;
+  selectedCompany:any;
+  companies:any;
+  branches:any;
+  showContrcatInfo:boolean = false;
+  mcontractInfo:any;
+  isContractExpired:boolean = false;
   //settings: EditorSettings;
   editorConfig={base_url:'/tinymce', suffix:'.min', plugins:'lists link image table wordcount'}
   selectedFiles: File[] = [];
@@ -40,6 +47,10 @@ export class DialogServiceRequestComponent implements OnInit {
     // );
   }
 
+  filteredCompanies:any[];
+  filteredBranches:any[];
+  filteredMachines:any[];
+
   ngOnInit(): void {
     //debugger;   
     this.requestData.patchValue(this.dialogdata);
@@ -50,6 +61,8 @@ export class DialogServiceRequestComponent implements OnInit {
       this.selectedPriority = this.dialogdata.priorityID;
       this.selectedRequestTypes = this.dialogdata.serviceTypeID;
       this.selectedRequestStatus = this.dialogdata.serviceStatusID;
+      this.selectedCompany = this.dialogdata.companyID;
+      this.selectedBranch = this.dialogdata.branchID;
       this.isPosting = false;
     }
 
@@ -66,9 +79,10 @@ export class DialogServiceRequestComponent implements OnInit {
           id:p.id,
           name:p.name+'-'+p.branchName
         }));
+       //console.log(data);
+       this.filteredMachines = [...this.machineList];
       }
     )
-
     this.techService.getTechnicians().subscribe(
       (data:any)=>{
         this.technicianList = data.map(p=>({
@@ -78,12 +92,16 @@ export class DialogServiceRequestComponent implements OnInit {
       }
     )
 
-    this.requestService.getDropdowns().subscribe(
+    this.requestService.getReportDropdowns().subscribe(
       (data:any)=>{
         this.dropDowns = data;        
         this.priorities = this.dropDowns.priorities; 
         this.requestTypesList = this.dropDowns.requestTypes;
         this.statusesList = this.dropDowns.statuses;
+        this.branches = this.dropDowns.requestBranches;
+
+        this.filteredCompanies = [...this.dropDowns.requestCompanies];
+        this.filteredBranches = [...this.branches];
       }
     );
 
@@ -95,7 +113,9 @@ export class DialogServiceRequestComponent implements OnInit {
 
   requestData = this.fb.group({
     id:[0],
-    machineID:[Validators.required],
+    machineID:['',Validators.required],
+    companyID:[0,Validators.required],
+    branchId:[0,Validators.required],
     technicianID:[Validators.required],
     requestedDate:[new Date(),Validators.required],
     //complatedDate:[Validators.required],
@@ -104,13 +124,23 @@ export class DialogServiceRequestComponent implements OnInit {
     subject:['',Validators.required],
     customerFeedback:[''],
     serviceTypeID:[Validators.required],
-    priorityID:[Validators.required],
+    priorityID:['',Validators.required],
     serviceStatusID:[Validators.required],
     requestID:[''],
-    documents: [null, Validators.required]
+    documents: [null]
   });
 
   get serviceControls() {return this.requestData.controls;}
+
+  updateFilteredDrops(drpType:string, filtered: any[]) {
+    if(drpType == 'companies'){
+      this.filteredCompanies = filtered;
+    }else if(drpType == 'machines'){
+      this.filteredMachines = filtered;
+    }else if(drpType == 'branches'){
+      this.filteredBranches = filtered;
+    }
+  }
 
   addticketrequest(){
     debugger;
@@ -127,7 +157,7 @@ export class DialogServiceRequestComponent implements OnInit {
       else{
         const formData = new FormData();       
         formData.append('ID',this.requestData.get('id')?.value.toString());
-        formData.append('MachineID',this.requestData.get('machineID')?.value || '')
+        formData.append('MachineID',this.requestData.get('machineID')?.value || '0')
         formData.append('TechnicianID',this.requestData.get('technicianID')?.value || '')
         formData.append('RequestedDate', this.formatDate(this.requestData.get('requestedDate')?.value.toString()) || '')
         formData.append('ComplatedDate','')
@@ -188,5 +218,68 @@ export class DialogServiceRequestComponent implements OnInit {
 
     return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-');
   }
+
+  onSelectCompany(companyID:any){
+    //console.log(companyID.value);
+    if(companyID.value == undefined){
+      this.requestService.getReportDropdowns().subscribe(
+        (data:any)=>{
+          this.dropDowns = data;
+          this.filteredBranches = this.dropDowns.requestBranches;
+        }
+      );
+    }else{
+      this.requestService.getReportDropdowns().subscribe(
+        (data:any)=>{
+          this.dropDowns = data;
+          this.filteredBranches = this.dropDowns.requestBranches.filter((i)=>i.foreignID == companyID.value);
+        }
+      );
+    }
+    
+  }
+
+  onSelectBranches(branchID:any){
+   if(branchID.value == undefined){
+    this.machineService.getMachines().subscribe(
+      (data:any)=>{
+        this.filteredMachines = data;
+      }
+    );
+   }else{
+    this.machineService.getMachines().subscribe(
+      (data:any)=>{
+        this.filteredMachines = data.filter((p)=>p.branchID == branchID.value);
+      }
+    );
+   }    
+
+  }
+
+  onSelectMachine(eve:any){
+    const mID = eve.value;
+    if(mID != null && mID != undefined){
+      this.machineService.getContractBYMachine(mID).subscribe(
+        (data:any)=>{
+          this.mcontractInfo = data;
+          if(this.mcontractInfo.id != 0){
+            this.showContrcatInfo = true;
+            var expdate = new Date(this.mcontractInfo.contractEndDate);
+            var todayDate = new Date();
+            if(expdate<todayDate){
+                this.isContractExpired = true;
+            }else{
+              this.isContractExpired = false;
+            }
+          }
+        }
+      );
+    }
+    else{
+      this.showContrcatInfo = false;
+    }
+  }
+
+
 
 }

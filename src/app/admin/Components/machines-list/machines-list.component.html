@@ -1,32 +1,100 @@
 <h1>Machines</h1>
     <form [formGroup]="machineData">
-        <div class="row">
-            <div class="col col-10 col-md-5">                         
+        <div class="row mb-4">
+            <div class="col col-10 col-md-3">                         
                   
                   <mat-form-field appearance="fill">
                     <mat-label>Select a branch</mat-label>
-                    <mat-select [(ngModel)]="selectedBranch" name="branchList" formControlName='branchID'>
+                    <mat-select [(ngModel)]="selectedBranch" name="branchList" formControlName='branchID' (selectionChange)="onSearch($event)">
+                      <div appAppsearchabledp [items]="branchList" [filterProperty]="'branchName'" (filteredItems)="updateFilteredBranches($event)">
+                        <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by company.." >
+                      </div>
                       <mat-option [value]="">
                         Select a Branch
                       </mat-option>
-                      <mat-option *ngFor="let branch of branchList" [value]="branch.branchID">{{branch.branchName}} - {{branch.companyName}}</mat-option>
+                      <mat-option *ngFor="let branch of filteredBranch" [value]="branch.branchID">{{branch.branchName}} - {{branch.companyName}}</mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
-            <div class="col col-2 col-md-4">
-              <button type="button" mat-raised-button color="primary" (click)="onSearch()" class="me-3 custombutton">          
+            <div class="col col-2 col-md-9 text-end">
+              <!-- <button type="button" mat-raised-button color="primary" (click)="onSearch()" class="me-3 custombutton">          
                 Get Machines
-              </button>      
+              </button>       -->
               
               <button type="button" mat-raised-button color="primary" (click)="addBranch()" class="me-3 custombutton">          
                 <span class="material-symbols-outlined">add</span> Add a new Machine
               </button> 
             </div>
+
           </div> 
     </form>    
 
-<div >
-    <mat-card *ngFor="let machine of machines" class="example-card mb-3">
+<div class="mat-elevation-z8 p-0">
+
+  <table mat-table [dataSource]="dataSource" id="tblCompanies" matSort class="mat-elevation-z8 demo-table">  
+     
+    <ng-container matColumnDef="id">
+      <th [hidden]="true" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.id}} </td>       
+    </ng-container>  
+    
+    
+    <ng-container matColumnDef="model">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
+      <td width="10%" mat-cell *matCellDef="let row"> {{row.model}}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="skuid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> SkuID # </th>
+      <td width="10%" mat-cell *matCellDef="let row" class="text-center"> {{row.skuID}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="manufacturer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer </th>
+      <td width="15%" mat-cell *matCellDef="let row" class="text-center"> {{row.manufacturer}}</td>
+    </ng-container>   
+    
+    <ng-container matColumnDef="contractType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Contract Type </th>
+      <td width="15%" mat-cell *matCellDef="let row" class="text-center"> {{row.contractType}}</td>
+    </ng-container>  
+
+    <ng-container matColumnDef="installationdate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Installation Date </th>
+      <td width="10%" mat-cell *matCellDef="let row" class="text-center"> {{row.installationDate | date: 'dd/MM/yyyy'}}</td>
+    </ng-container> 
+    
+    <ng-container matColumnDef="contractenddate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Contract End Date </th>
+      <td width="10%" mat-cell *matCellDef="let row" class="text-center"> {{row.contractEndDate | date: 'dd/MM/yyyy'}}</td>
+    </ng-container>  
+    
+    <ng-container matColumnDef="createddate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+      <td width="10%" mat-cell *matCellDef="let row" class="text-center"> {{row.createdTime | date: 'dd/MM/yyyy'}} </td>
+    </ng-container> 
+    
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td width="20%" mat-cell *matCellDef="let element" class="text-center"> 
+        <button mat-mini-fab color="primary" class="me-2" (click)="editMachine(element)"><span class="material-symbols-outlined">edit</span></button>
+        <button mat-mini-fab color="primary"  (click)="deleteMachine(element.id)"><span class="material-symbols-outlined">delete</span></button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter</td>
+    </tr>
+
+    
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+    <!-- <mat-card *ngFor="let machine of machines" class="example-card mb-3">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image">
             <img class="card-img-top rounded-circle custom_rounded profimg" src="../assets/Images/logo1.jpg" alt="Card image cap">
@@ -51,11 +119,11 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-flat-button color="primary" class="me-3">View</button>
+          
           <button mat-flat-button color="accent" (click)="editMachine(machine)" class="me-3">Update</button>
           <button mat-flat-button color="warn" (click)="deleteMachine(machine.id)">Delete</button>
         </mat-card-actions>      
-      </mat-card>
+      </mat-card> -->
 
 </div>
 

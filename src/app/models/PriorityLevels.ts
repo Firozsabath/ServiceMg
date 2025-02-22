@@ -19,6 +19,8 @@ export class RequestTypes{
 export class drp{
     public id:number;
     public name:string;
+    public foreignID:number;
+
 }
 
 export class ServiceStatuses{

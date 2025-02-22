@@ -19,8 +19,8 @@ export class ServicerequestopService {
     return this.http.get<any>(this.apiUrl+`ServiceRequest/${id}`);
   }
 
-  getTicketsByCategory():Observable<any>{
-    return this.http.get<any>(this.apiUrl+"ServiceRequest/GetByCategory");
+  getTicketsByCategory(days:number):Observable<any>{
+    return this.http.get<any>(this.apiUrl+`ServiceRequest/GetByCategory/${days}`);
   }
 
   getTicketsRatioByStatus():Observable<any>{

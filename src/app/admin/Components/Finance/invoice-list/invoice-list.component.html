@@ -1,0 +1,64 @@
+<div class="row mb-4">
+    <div class="col col-12 col-md-6">
+        <h1>Invoices</h1>
+    </div>
+    <div class="col col-12 col-md-6">
+      <button mat-raised-button color="primary" (click)="addNewInvoice()" class="me-3 float-end custombutton"><span class="material-symbols-outlined">add</span> Generate a new Invoice </button>          
+    </div>
+</div>
+<!-- <mat-form-field>
+<mat-label>Filter</mat-label>
+<input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>  
+</mat-form-field> -->
+<div class="row p-3">
+<div class="mat-elevation-z8 p-0">
+  <table mat-table [dataSource]="dataSource" id="tblCompanies" matSort >  
+   
+    <ng-container matColumnDef="id">
+      <th [hidden]="true" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td [hidden]="true" mat-cell *matCellDef="let row"> {{row.invoiceID}} </td>       
+    </ng-container>  
+    
+    <ng-container matColumnDef="quotationNum">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Num </th>
+        <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.invoiceNumber}}</td>
+      </ng-container>
+    <ng-container matColumnDef="companyName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
+      <td width="20%" mat-cell *matCellDef="let row" class="text-center"> {{row.companyName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateCreated">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </th>
+      <td width="15%" mat-cell *matCellDef="let row" class="text-center"> {{row.createdAt | date}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Status </th>
+      <td width="15%" mat-cell *matCellDef="let row" class="text-center"> {{row.status}}</td>
+    </ng-container>     
+    
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+      <td width="10%" mat-cell *matCellDef="let row" class="text-center"> {{row.totalAmount |currency:'AED '}} </td>
+    </ng-container> 
+    
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td width="20%" mat-cell *matCellDef="let element" class="text-center">         
+        <a mat-mini-fab color="primary" matTooltip="Download Quotation" title="download" class="me-2" [href]="getImgUrl(element.filePath)" target="_blank"><span class="material-symbols-outlined">download</span></a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    
+    <!-- <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr> -->
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+</div>

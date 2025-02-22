@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BranchessDropdown } from 'src/app/models/Branches';
@@ -18,22 +18,26 @@ export class DialogMachinesComponent implements OnInit {
 
   machPostData:Machines;
   branchList:BranchessDropdown[];
+  private _branchList:BranchessDropdown[];
   selectedBranch:any;
   contractType:any;
-  selectContract:any;
+  selectedContract:any;
+  @ViewChild('userDropdownSearch') searchBranchDropdown: ElementRef;
+
   machFormData = this.fb.group({
     id:[0],
-    branchID:[Validators.required],
+    branchID:[0,Validators.required],
     name:['',Validators.required],
     model:['',Validators.required],
     manufacturer:['',Validators.required],
     createdTime:[new Date],
     updatedTime:[new Date],
     installationDate:[],
-    contractEndDate:[Validators.required],
+    contractEndDate:[],
     contractTypeID:[1,Validators.required],
     skuID:['',Validators.required]
   })
+  
   
   ngOnInit(): void {
     if(this.dialogdata){
@@ -41,14 +45,15 @@ export class DialogMachinesComponent implements OnInit {
         this.selectedBranch = this.dialogdata.branchID
       }
       if(this.dialogdata.contractTypeID != ''){
-        this.selectContract = this.dialogdata.contractTypeID
+        this.selectedContract = this.dialogdata.contractTypeID
       }
       this.machFormData.patchValue(this.dialogdata)
     }
 
     this.branchService.getBranchListWithCompnay().subscribe(
       (data:any)=>{
-        this.branchList = data;        
+        this.branchList = data;    
+        this._branchList = data;
       }
     )
 
@@ -57,10 +62,21 @@ export class DialogMachinesComponent implements OnInit {
         this.contractType = data;
       }
     )
+
+    this.machFormData.get('contractTypeID').valueChanges.subscribe((val)=>{
+      const fd = this.machFormData.get('contractEndDate')
+        if(val == 1 || val == 2){
+            fd.setValidators([Validators.required]);
+        }else{
+          fd.clearValidators();
+        }
+        fd.updateValueAndValidity();
+    });
+
   }
 
   addMachines(){
-    console.log(this.machFormData.value);
+    console.log(this.machFormData);
     if(this.machFormData.valid){
       var item =this.machFormData.value;
       this.machPostData = {id:item.id,branchID:item.branchID,manufacturer:item.manufacturer,model:item.model,
@@ -87,4 +103,23 @@ export class DialogMachinesComponent implements OnInit {
    
   }
 
+  onSelectContract(ev:any){
+    var contractType = ev.value;
+    console.log(contractType);
+    const fd = this.machFormData.get('contractEndDate')
+    if(contractType != 3){
+        fd.setValidators([Validators.required]);
+    }else{
+      fd.clearValidators();
+    }
+  }
+  
+  onBranchInputChange(){
+    console.log(this.searchBranchDropdown.nativeElement.value);
+    const searchQuery = this.searchBranchDropdown.nativeElement.value ? this.searchBranchDropdown.nativeElement.value.toLowerCase() : '';
+    this.branchList = this._branchList.filter(c=>{
+      const nm:String = c.companyName.toLowerCase();
+      return nm.indexOf(searchQuery) > -1;
+    });
+  }
 }

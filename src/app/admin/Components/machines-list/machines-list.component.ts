@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Branches, BranchessDropdown } from 'src/app/models/Branches';
 import { Companies, Companiesdropdown } from 'src/app/models/Companies';
 import { ConfirmDialogModel } from 'src/app/models/ConfirmDialogModel';
@@ -18,11 +21,17 @@ import { DialogMachinesComponent } from '../../dialogs/dialog-machines/dialog-ma
 })
 export class MachinesListComponent implements OnInit {
 
+  displayedColumns: string[] = ['id','model','skuid','manufacturer','contractType','createddate','installationdate','contractenddate','Actions'];
+  dataSource: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) msort: MatSort;
+
   constructor(private fb:FormBuilder, private machineServices:MachinesopService, private branchService:BranchesopsService, private dialog:MatDialog, private _snackBar:MatSnackBar) { }
 
   selectedCompany:any;
   selectedBranch:any;
   branchList:BranchessDropdown[];
+  filteredBranch:any;
   machines:MachinesVM[];  
   machineData = this.fb.group({
     branchID:[Validators.required]
@@ -34,9 +43,15 @@ export class MachinesListComponent implements OnInit {
     this.branchService.getBranchListWithCompnay().subscribe(
       (data:any)=>{
         this.branchList = data;
-        //console.log(this.branchList);
+        console.log(this.branchList);
+        this.filteredBranch = [...this.branchList];
+       
       }
     )   
+  }
+
+  updateFilteredBranches(filtered:any[]){
+    this.filteredBranch = filtered;
   }
 
   getAllMachines(){
@@ -44,15 +59,24 @@ export class MachinesListComponent implements OnInit {
       (data:any)=>{
         this.machines = data;        
         console.log(this.machines);
+        this.dataSource = new MatTableDataSource(this.machines);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.msort;
       }
     );
   }
 
-  onSearch(){
+  onSearch(slBranch:any){
     //console.log(this.selectedBranch);
+    if(this.selectedBranch == undefined){
+      this.selectedBranch = 0;
+    }
     this.machineServices.getMachineByBranch(this.selectedBranch).subscribe(
       (data:any)=>{
         this.machines = data;
+        this.dataSource = new MatTableDataSource(this.machines);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.msort;
       }
     )
   }

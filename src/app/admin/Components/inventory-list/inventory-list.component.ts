@@ -40,7 +40,7 @@ export class InventoryListComponent implements OnInit {
   addItem(){
     var tech:Inventory;
 
-    let dialogRef = this.dialogP.open(DialogInventoryComponent,{width:"30vw",data:tech});
+    let dialogRef = this.dialogP.open(DialogInventoryComponent,{width:"45vw",data:tech});
   
     dialogRef.afterClosed().subscribe({
       next:(val)=>{
@@ -57,7 +57,7 @@ export class InventoryListComponent implements OnInit {
   }
 
   editItem(data:any){
-    let dialogRef = this.dialogP.open(DialogInventoryComponent,{width:"30vw",data:data});
+    let dialogRef = this.dialogP.open(DialogInventoryComponent,{width:"45vw",data:data});
     dialogRef.afterClosed().subscribe({
       next:(val)=>{
         if(val){

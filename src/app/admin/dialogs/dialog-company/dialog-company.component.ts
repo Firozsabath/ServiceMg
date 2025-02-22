@@ -22,7 +22,7 @@ export class DialogCompanyComponent implements OnInit {
     name:['',Validators.required],
     contactPerson:['',Validators.required],
     email:['',[Validators.required,Validators.email]],
-    companySize:['',Validators.required],
+    companySize:[''],
     address:['',Validators.required],
     notes:[''],
     createddate:[new Date],

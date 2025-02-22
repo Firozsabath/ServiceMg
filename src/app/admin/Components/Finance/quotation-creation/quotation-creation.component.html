@@ -1,0 +1,31 @@
+<form [formGroup]="form">
+    <div formArrayName="partsArray">
+      <div *ngFor="let part of partsArray.controls; let i = index" [formGroupName]="i">
+        
+        <!-- Searchable Dropdown -->
+        <mat-form-field>
+          <input matInput placeholder="Search by SKUID" formControlName="searchInput" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" 
+            (optionSelected)="partsArray.at(i).patchValue({ partsID: $event.option.value.partsID })">
+            <mat-option *ngFor="let option of (filteredOptions[i] | async)" [value]="option">
+              {{ option.skuID }} - {{ option.description }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+  
+        <!-- Selected Part ID (Hidden) -->
+        <input type="hidden" formControlName="partsID">
+  
+        <!-- Quantity Input -->
+        <mat-form-field>
+          <input matInput type="number" placeholder="Quantity" formControlName="quantity">
+        </mat-form-field>
+  
+        <!-- Remove Button -->
+        <button mat-button color="warn" (click)="partsArray.removeAt(i)">Remove</button>
+  
+      </div>
+    </div>
+  
+    <button mat-raised-button color="primary" (click)="addPart()">Add Item</button>
+  </form>

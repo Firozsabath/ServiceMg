@@ -1,6 +1,15 @@
 <h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} Item</h2>
 <form [formGroup]="inventoryData" (ngSubmit)="addItem()">
 <mat-dialog-content>    
+
+        <div class="row">
+          <mat-form-field appearance="fill">
+              <mat-label>SKU ID</mat-label>
+              <input matInput formControlName='skuID'>
+              <mat-error *ngIf="inventoryData.get('skuID')?.hasError('skuID')">Company Name Required</mat-error> 
+            </mat-form-field>
+        </div>
+
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Item Description</mat-label>
@@ -31,14 +40,7 @@
                   <mat-option *ngFor="let vendor of vendorList" [value]="vendor.id">{{vendor.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field appearance="fill">
-              <mat-label>SKU ID</mat-label>
-              <input matInput formControlName='skuID'>
-              <mat-error *ngIf="inventoryData.get('skuID')?.hasError('skuID')">Company Name Required</mat-error> 
-            </mat-form-field>
-      </div>
+        </div>     
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>QuantityOnHand</mat-label>

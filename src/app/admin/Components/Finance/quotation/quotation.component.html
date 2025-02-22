@@ -27,29 +27,49 @@
                 <div class="col col-12 col-md-4">
                     <mat-form-field appearance="fill">
                         <mat-label>Select a Company</mat-label>
-                        <mat-select [(ngModel)]="selectedCompany" name="companyList" formControlName='companyID'>
+                        <mat-select [(ngModel)]="selectedCompany" name="companyList" formControlName='companyID' (selectionChange)="onSelectCompany($event)">
+                          <div  appAppsearchabledp [items]="drps.requestCompanies" [filterProperty]="'name'" (filteredItems)="updateFilteredDrops('companies',$event)">
+                            <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by machine.." >
+                          </div>
                           <mat-option [value]="">
                             Select a Company
                           </mat-option>
-                          <mat-option *ngFor="let comp of drps.requestCompanies" [value]="comp.id">{{comp.name}}</mat-option>
+                          <mat-option *ngFor="let comp of filteredCompanies" [value]="comp.id">{{comp.name}}</mat-option>
                         </mat-select>
                       </mat-form-field>
-                </div>           
-                <!-- <div class="col col-12 col-md-4">
+                </div>     
+                <div class="col col-12 col-md-4">
+                  <mat-form-field appearance="fill">
+                      <mat-label>Select a Branch</mat-label>
+                      <mat-select [(ngModel)]="selectedBranch" name="branchList" formControlName='branchID' (selectionChange)="onSelectBranches($event)">
+                        <div  appAppsearchabledp [items]="drps.requestBranches" [filterProperty]="'name'" (filteredItems)="updateFilteredDrops('branches',$event)">
+                          <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by machine.." >
+                        </div>
+                        <mat-option [value]="">
+                          Select a Company
+                        </mat-option>
+                        <mat-option *ngFor="let branch of filteredBranches" [value]="branch.id">{{branch.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+              </div>          
+                 <div class="col col-12 col-md-4">
                     <mat-form-field appearance="fill">
                         <mat-label>Select a machine</mat-label>
                         <mat-select [(ngModel)]="selectedMachine" name="machineList" formControlName='machineID'>
+                          <div  appAppsearchabledp [items]="drps.requestMachines" [filterProperty]="'name'" (filteredItems)="updateFilteredDrops('machines',$event)">
+                            <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by machine.." >
+                          </div>
                           <mat-option [value]="">
                             Select a Machine
                           </mat-option>
-                          <mat-option *ngFor="let machine of drps.requestMachines" [value]="machine.id">{{machine.name}}</mat-option>
+                          <mat-option *ngFor="let machine of filteredMachines" [value]="machine.id">{{machine.name}}</mat-option>
                         </mat-select>
                       </mat-form-field>
-                </div> -->                
+                </div>             
             </div>
             <div class="row" *ngIf="showAutoCompany">
               <div class="col col-12 col-md-6">
-                <mat-form-field  appearance="fill" >
+                <mat-form-field  appearance="fill">
                   <mat-label>Company Name</mat-label>
                   <input matInput formControlName="companyName">                                   
                 </mat-form-field> 
@@ -91,11 +111,14 @@
               </div>
             </div>
             <div class="row">
-                <div formArrayName="quotationItems">
+                <!-- <div formArrayName="quotationItems">
                     <div *ngFor="let part of quotationItems.controls; let i = index" [formGroupName]="i">
                         <div class="row">                        
                             <div class="col col-12 col-md-7">
-                                <mat-form-field  appearance="fill"  class="example-full-width">
+
+                             
+
+                                 <mat-form-field  appearance="fill"  class="example-full-width">
                                     <mat-label>Select Parts</mat-label>
                                     <input type="text"
                                            placeholder="Pick one"
@@ -103,13 +126,15 @@
                                            matInput                                
                                            [formControl]="myControl"
                                            [matAutocomplete]="auto">
-                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event,i)">
+                                           <input matInput formControlName="partsId" [matAutocomplete]="auto">                                           
+                                    <mat-autocomplete autoActiveFirstOption auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event,i)">
                                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                                             {{option.description}}
                                           </mat-option>
                                     </mat-autocomplete>
                                   </mat-form-field>
-                               
+
+                                  
                             </div>
                             <div class="col col-12 col-md-3">
                                 <mat-form-field  appearance="fill" >
@@ -122,11 +147,54 @@
                             </div>
                         </div>
                     </div>
-                    <button mat-flat-button color="primary" type="button" class="float-end" (click)="addItem()" *ngIf="showButtons">Add Used Part</button>
+                    <button mat-flat-button color="primary" type="button" class="float-end" (click)="addItem()" *ngIf="showButtons">Add Parts</button>
+                  </div> -->
+
+                  <div formArrayName="quotationItems">
+                    <div *ngFor="let part of quotationItems.controls; let i = index" [formGroupName]="i" class="row">
+                      
+                      <div class="col-md-6">
+                        <mat-form-field>
+                          <input type="text" matInput placeholder="Search by SKUID" formControlName="searchInput" 
+                          [matAutocomplete]="auto">
+                          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPart" (optionSelected)="onSelectPart($event, i)">
+                            <mat-option *ngFor="let option of (filteredOptions[i] | async)" [value]="option">
+                              {{ option.skuID }} - {{ option.description }}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        <!-- (optionSelected)="quotationItems.at(i).patchValue({ partsID: $event.option.value.partsID })" -->
+                        <!-- Selected Part ID (Hidden) -->
+                        <!-- <input type="hidden" formControlName="partsID"> -->
+                        <mat-error *ngIf="quotationItems.at(i).get('partsID')?.hasError('required')">
+                          Part selection is required!
+                        </mat-error>
+                      </div>
+                      <div class="col-md-4">
+                        <!-- Quantity Input -->
+                      <mat-form-field>
+                        <input matInput type="number" placeholder="Quantity" formControlName="quantityUsed">
+                      </mat-form-field>
+                      </div>
+                      <div class="col-md-2">
+                         <!-- Remove Button -->
+                      <!-- <button mat-button color="warn" (click)="quotationItems.removeAt(i)">Remove</button> -->
+                      <button mat-flat-button color="warn" type="button" (click)="removeItem(i)">Remove</button>
+                      </div>
+                     
+                
+                    </div>
                   </div>
+                
+                  <!-- <button mat-raised-button color="primary" (click)="addPart()">Add Item</button> -->      
+                  <div class="text-end">
+
+                  </div>            
+                  
             </div>
-            <div>
-                <button mat-flat-button type="submit" color="primary" *ngIf="showButtons">View Quotaion</button>
+            <button mat-flat-button color="primary" type="button" class="float-end" (click)="addItem()" *ngIf="showButtons">Add Parts</button>
+            <div class="mt-3">
+                <button mat-flat-button type="submit" color="primary" *ngIf="showButtons">Pre-View & Generate Quotaion</button>
             </div>
         </form>
         

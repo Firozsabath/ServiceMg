@@ -3,6 +3,7 @@ export class quotation{
     public  quotationID :number;
 public companyID :number;
 public machineID :number;
+public branchID : number;
 public companyName :string;
 public companyAddress :string;
 public trn :string;
@@ -10,6 +11,7 @@ public dateCreated :Date;
 public totalAmount : number;
 public validUntil :Date;
 public quotationNum :string;
+public createdUser :string;
 
 public quotataionItems:QuotationItems[]; 
 

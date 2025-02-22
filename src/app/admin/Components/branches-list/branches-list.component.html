@@ -6,10 +6,15 @@
                   <mat-form-field appearance="fill">
                     <mat-label>Select Company</mat-label>
                     <mat-select [(ngModel)]="selectedValue" name="configsList" formControlName='compid'>
+                      <!-- <p appSearchable (options)="optionsArray" (filteredOptions)="filteredOptions"></p> -->
+                      <div  appAppsearchabledp [items]="companyList" [filterProperty]="'name'" (filteredItems)="updateFilteredCompanies($event)">
+                        <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by company.." >
+                      </div>
+                      
                       <mat-option [value]="">
                         Select a Company
                       </mat-option>
-                      <mat-option *ngFor="let company of companyList" [value]="company.id">{{company.name}}</mat-option>
+                      <mat-option *ngFor="let company of filteredCompanies" [value]="company.id">{{company.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
@@ -60,7 +65,7 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-flat-button color="primary" class="me-3">View</button>
+          <!-- <button mat-flat-button color="primary" class="me-3">View</button> -->
           <button mat-flat-button color="accent" (click)="editBranch(branch)" class="me-3">Update</button>
           <button mat-flat-button color="warn" (click)="deleteBranch(branch.id)">Delete</button>
         </mat-card-actions>

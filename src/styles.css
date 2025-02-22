@@ -68,11 +68,11 @@ h1::after{
   }
   
   th{
-    background-color: #3C4F76;    
+    background-color: #fff;    
     }
     th.mat-header-cell{
         text-align: center !important;
-        color: white;
+        color: black;
     }
      .mat-cell, .mat-header-cell {    
         border-right: 1px solid #e0e0e0;
@@ -91,13 +91,13 @@ h1::after{
     letter-spacing: normal;
     outline: 0;
     justify-content: center !important;
-    color: white;
+    /* color: white; */
     }
     .mat-cell{
         padding-left: 5px !important;
     }
     .mat-sort-header-arrow{
-        color: white;
+        color: black;
     }
 
      /* Below styling for global table style Ends */

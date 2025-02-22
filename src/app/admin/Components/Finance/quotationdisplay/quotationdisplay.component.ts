@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { id } from '@swimlane/ngx-charts';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { quotation, QuotationItems, quotItems } from 'src/app/models/Quotation';
@@ -11,30 +13,33 @@ import { QuotationOpService } from 'src/app/service/Quotation/quotation-op.servi
 })
 export class QuotationdisplayComponent implements OnInit {
 
-  constructor(private quotService:QuotationOpService) { }
+  constructor(private quotService:QuotationOpService, private route: ActivatedRoute) { }
   quotation:any;
   ids:number[]; 
   items:quotItems[];
   quotItems:QuotationItems[];
   quotaData:any;
   quotPrintData:quotation;
+  quotID : any;
+  userEmailId : string;
   ngOnInit(): void {
-    this.quotService.currentQuotation.subscribe(
-      (quot:any)=> {
-        this.quotation= quot;              
-      }
-    )
-    this.items = this.quotation.quotationItems
-    this.ids = this.items.map(i=>i.partsId);
-    console.log(this.ids); 
-      debugger;
-    this.quotService.getQuotInfo(this.quotation).subscribe(
-      (data:any)=>{
-          this.quotaData = data;
-          this.quotaData.quotationNum = this.generateUniqueNumber();
-          console.log(this.quotaData);
-      }
-    )
+    this.userEmailId = localStorage.getItem('userEmail');
+      this.quotService.currentQuotation.subscribe(
+        (quot:any)=> {
+          this.quotation= quot;              
+        }
+      )
+      this.items = this.quotation.quotationItems
+      this.ids = this.items.map(i=>i.partsId);
+      console.log(this.ids); 
+        debugger;
+      this.quotService.getQuotInfo(this.quotation).subscribe(
+        (data:any)=>{
+            this.quotaData = data;
+            this.quotaData.quotationNum = this.generateUniqueNumber();
+            console.log(this.quotaData);
+        }
+      )       
   }
 
 
@@ -57,15 +62,7 @@ export class QuotationdisplayComponent implements OnInit {
       this.generatePdf();
     }
 
-    //console.log(this.quotaData);
-    this.quotPrintData = this.quotaData as quotation;
-    this.quotItems = this.quotPrintData.quotataionItems;
-    console.log(this.quotPrintData);
-    this.quotService.postQuotation(this.quotPrintData).subscribe(
-        (data:any)=>{
-            
-        }
-    )
+   
 
 
     
@@ -116,14 +113,36 @@ export class QuotationdisplayComponent implements OnInit {
 
     // Add image to the PDF with compression
     pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight, undefined, 'FAST');
-    pdf.save('document.pdf');
+
+    this.quotPrintData = this.quotaData as quotation;
+    this.quotItems = this.quotPrintData.quotataionItems;
+    console.log(this.quotPrintData);
+
+    pdf.save(`quot_${this.quotPrintData.quotationNum}.pdf`);
+
+      const pdfBlob = pdf.output('blob'); // Create PDF blob
+      const formData = new FormData();
+      
+     
+      // Append file (as blob)
+      formData.append('file', pdfBlob, `quot_${this.quotPrintData.quotationNum}.pdf`);
+      this.quotPrintData.createdUser = this.userEmailId;
+      // Append model (as JSON string)
+      formData.append('invoice', JSON.stringify(this.quotPrintData));
+
+      //console.log(this.quotaData);      
+      this.quotService.postQuotation(formData).subscribe(
+          (data:any)=>{
+              
+          }
+      )
+
     }
     catch(error){
       console.error('Error generating PDF:', error);
     }
     
 };
-
 
   generateUniqueNumber(): string {
     const year = new Date().getFullYear().toString();

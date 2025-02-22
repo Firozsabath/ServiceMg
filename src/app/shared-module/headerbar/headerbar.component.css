@@ -1,5 +1,6 @@
 .mat-toolbar.mat-primary{
-    background-color: #3C4F76;
+    /* background-color: #3C4F76; */
+    background-color: #14402c;
     color: #fff;
 }
 
@@ -11,3 +12,11 @@
 .example-spacer {
     flex: 1 1 auto;
   }
+
+  .mat-toolbar-row, .mat-toolbar-single-row {
+    height: 100px;
+}
+
+.logo{
+    width:40%;
+}

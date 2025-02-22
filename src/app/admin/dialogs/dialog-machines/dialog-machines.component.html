@@ -1,25 +1,30 @@
 
 <h2 mat-dialog-title>{{dialogdata ? 'Edit': 'Add'}} Machine</h2>
 <form [formGroup]="machFormData" (ngSubmit)="addMachines()">
-<mat-dialog-content>    
-        <div class="row">
-            <mat-form-field appearance="fill">
-                <mat-label>Machine Name</mat-label>
-                <input matInput formControlName='name'>
-                <mat-error *ngIf="machFormData.get('name')?.hasError('name')">Branch Name Required</mat-error>         
-              </mat-form-field>     
-        </div>    
-        <div class="row">
+<mat-dialog-content> 
+          <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Select a branch</mat-label>
                 <mat-select [(ngModel)]="selectedBranch" name="branchList" formControlName='branchID'>
+                  <mat-option>
+                    <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by name.." #userDropdownSearch (input)="onBranchInputChange()">
+                  </mat-option>
+                 
                   <mat-option [value]="">
                     Select a Branch
                   </mat-option>
                   <mat-option *ngFor="let branch of branchList" [value]="branch.branchID">{{branch.branchName}} - {{branch.companyName}}</mat-option>
                 </mat-select>
               </mat-form-field>
-        </div>
+        </div>   
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Manufacturer</mat-label>
+                <input matInput formControlName='name'>
+                <mat-error *ngIf="machFormData.get('name')?.hasError('name')">Branch Name Required</mat-error>         
+              </mat-form-field>     
+        </div>    
+       
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Enter Model</mat-label>
@@ -36,7 +41,7 @@
       </div>
         <div class="row">
             <mat-form-field appearance="fill">
-                <mat-label>Manufacturer</mat-label>
+                <mat-label>Serial No</mat-label>
                 <input matInput formControlName='manufacturer'>
                 <div class="invalid-feedback" *ngIf="machFormData.get('manufacturer')?.hasError('manufacturer')">
                     <sup>*</sup>Please enter manufacturer name
@@ -54,7 +59,7 @@
 
               <mat-form-field appearance="fill">
                 <mat-label>Select a Contract Type</mat-label>
-                <mat-select [(ngModel)]="selectedBranch" name="contractList" formControlName='contractTypeID'>
+                <mat-select [(ngModel)]="selectedContract" name="contractList" formControlName='contractTypeID'>
                   <mat-option [value]="">
                     Select a Branch
                   </mat-option>

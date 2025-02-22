@@ -2,6 +2,93 @@
 <h2 mat-dialog-title>{{dialogdata ? 'Update': 'Add'}} Service Request</h2>
 <form [formGroup]="requestData" (ngSubmit)="addticketrequest()">
 <mat-dialog-content>    
+
+      <div class="row">
+        <div class="col col-12 col-md-6">
+          <mat-form-field appearance="fill">
+              <mat-label>Select a Customer</mat-label>
+              <mat-select [(ngModel)]="selectedCompany" name="companyList" formControlName='companyID'  (selectionChange)="onSelectCompany($event)">
+                <div  appAppsearchabledp [items]="dropDowns.requestCompanies" [filterProperty]="'name'" (filteredItems)="updateFilteredDrops('companies',$event)">
+                  <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by company.." >
+                </div>
+                <mat-option [value]="">
+                  Select a Customer
+                </mat-option>
+                <mat-option *ngFor="let comp of filteredCompanies" [value]="comp.id">{{comp.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+      </div>
+      <div class="col col-12 col-md-6">
+          <mat-form-field appearance="fill">
+              <mat-label>Select a Location</mat-label>
+              <mat-select [(ngModel)]="selectedBranch" name="branchList" formControlName='branchId' (selectionChange)="onSelectBranches($event)">
+                <div  appAppsearchabledp [items]="branches" [filterProperty]="'name'" (filteredItems)="updateFilteredDrops('branches',$event)">
+                  <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by company.." >
+                </div>
+                <mat-option [value]="">
+                  Select a Location
+                </mat-option>
+                <mat-option *ngFor="let branch of filteredBranches" [value]="branch.id">{{branch.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Assign a machine</mat-label>
+            <mat-select [(ngModel)]="selectMachine" name="machineList" formControlName='machineID' (selectionChange)="onSelectMachine($event)">
+              <div  appAppsearchabledp [items]="machineList" [filterProperty]="'name'" (filteredItems)="updateFilteredDrops('machines',$event)">
+                <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by machine.." >
+              </div>
+              <mat-option [value]="">
+                Select a Machine
+              </mat-option>
+              <mat-option *ngFor="let machine of filteredMachines" [value]="machine.id">{{machine.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> 
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Assign a Technician</mat-label>
+            <mat-select [(ngModel)]="selectedTechnician" name="technicianList" formControlName='technicianID'>
+              <mat-option [value]="">
+                Select a Technician
+              </mat-option>
+              <mat-option *ngFor="let techs of technicianList" [value]="techs.id">{{techs.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>                  
+      </div>     
+      <div class="row p-2" *ngIf="showContrcatInfo">
+        <p *ngIf="!isContractExpired" style="font-weight:500;color:green;font-size:15px;">The selected machine's contract type is : <span style="font-weight: bold;">{{mcontractInfo.description}}</span>  and contract expiration on : <span style="font-weight: bold;">{{mcontractInfo.contractEndDate}}</span></p>
+        <p *ngIf="isContractExpired" style="font-weight:500;color:red;font-size:15px;">The selected machine's contract expired, contract type is : <span style="font-weight: bold;">{{mcontractInfo.description}}</span>  and contract expiration on : <span style="font-weight: bold;">{{mcontractInfo.contractEndDate}}</span></p>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Priority Level</mat-label>
+            <mat-select [(ngModel)]="selectedPriority" name="priorityList" formControlName='priorityID'>
+              <mat-option [value]="">
+                Select a priority
+              </mat-option>
+              <mat-option *ngFor="let priority of priorities" [value]="priority.id">{{priority.description}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Request Type</mat-label>
+            <mat-select [(ngModel)]="selectedRequestTypes" name="requestTypeList" formControlName='serviceTypeID'>
+              <mat-option [value]="">
+                Select a request type
+              </mat-option>
+              <mat-option *ngFor="let requestType of requestTypesList" [value]="requestType.id">{{requestType.description}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
         <div class="row">
             <mat-form-field appearance="fill">
                 <mat-label>Subject</mat-label>
@@ -20,55 +107,7 @@
           <editor [init]="editorConfig" formControlName='description'></editor>
           
         </div>    
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <mat-form-field appearance="fill">
-              <mat-label>Assign a Technician</mat-label>
-              <mat-select [(ngModel)]="selectedTechnician" name="technicianList" formControlName='technicianID'>
-                <mat-option [value]="">
-                  Select a Technician
-                </mat-option>
-                <mat-option *ngFor="let techs of technicianList" [value]="techs.id">{{techs.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-12 col-md-6">
-            <mat-form-field appearance="fill">
-              <mat-label>Assign a machine</mat-label>
-              <mat-select [(ngModel)]="selectMachine" name="machineList" formControlName='machineID'>
-                <mat-option [value]="">
-                  Select a Machine
-                </mat-option>
-                <mat-option *ngFor="let machine of machineList" [value]="machine.id">{{machine.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>           
-        </div>     
-
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <mat-form-field appearance="fill">
-              <mat-label>Priority Level</mat-label>
-              <mat-select [(ngModel)]="selectedPriority" name="priorityList" formControlName='priorityID'>
-                <mat-option [value]="">
-                  Select a priority
-                </mat-option>
-                <mat-option *ngFor="let priority of priorities" [value]="priority.id">{{priority.description}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-12 col-md-6">
-            <mat-form-field appearance="fill">
-              <mat-label>Request Type</mat-label>
-              <mat-select [(ngModel)]="selectedRequestTypes" name="requestTypeList" formControlName='serviceTypeID'>
-                <mat-option [value]="">
-                  Select a request type
-                </mat-option>
-                <mat-option *ngFor="let requestType of requestTypesList" [value]="requestType.id">{{requestType.description}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
+        
       
         <div class="row">
           <mat-form-field [hidden]="isPosting" appearance="fill">

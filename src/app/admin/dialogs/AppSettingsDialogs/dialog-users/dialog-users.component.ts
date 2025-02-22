@@ -16,7 +16,7 @@ export class DialogUsersComponent implements OnInit {
   userData:FormGroup;
   roles:any;
   selectedRole:any;
-  isUpdate:boolean = false;
+  isUpdate:boolean = false;  
   constructor(private fb:FormBuilder,@Inject(MAT_DIALOG_DATA) public dialogdata: any,private authService: AuthenticationserviceService, private dialogRef:MatDialogRef<DialogUsersComponent>, private _snackbar:MatSnackBar) { 
 
     this.userData = this.fb.group({
@@ -24,7 +24,15 @@ export class DialogUsersComponent implements OnInit {
       email:['',[Validators.required,Validators.email]],
       username:['',Validators.required],
       role:['',Validators.required],
-      password:['',Validators.required],
+      password:['',
+      [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(
+          '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+        ),
+      ],
+    ],
     })
 
   }

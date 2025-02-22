@@ -67,6 +67,16 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { InvoiceComponent } from './Components/Finance/invoice/invoice.component';
+import { AppsearchabledpDirective } from './directives/appsearchabledp.directive';
+import { QuotationListComponent } from './components/finance/quotation-list/quotation-list.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatMenuModule} from '@angular/material/menu';
+import { InvoicePreviewComponent } from './Components/Finance/invoice-preview/invoice-preview.component';
+import { InvoiceListComponent } from './Components/Finance/invoice-list/invoice-list.component';
+import { DialogQuotationpreviewComponent } from './dialogs/dialog-finance/dialog-quotationpreview/dialog-quotationpreview.component';
+import { DialogInvoicepreviewComponent } from './dialogs/dialog-finance/dialog-invoicepreview/dialog-invoicepreview.component';
+import { QuotationCreationComponent } from './Components/finance/quotation-creation/quotation-creation.component';
 @NgModule({
   declarations: [
     AdminLayoutComponent,
@@ -104,7 +114,9 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
     ServicerequestsReportComponent,
     QuotationComponent,
     QuotationdisplayComponent,
-    TicketsresponseviolationratioComponent
+    TicketsresponseviolationratioComponent,
+    InvoiceComponent,   
+    AppsearchabledpDirective, QuotationListComponent, InvoicePreviewComponent, InvoiceListComponent, DialogQuotationpreviewComponent, DialogInvoicepreviewComponent, QuotationCreationComponent
   ],
   imports: [    
     CommonModule,
@@ -136,7 +148,9 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
     MatExpansionModule,
     MatTabsModule,
     MatCheckboxModule,
-    EditorModule
+    EditorModule,
+    MatTooltipModule,
+    MatMenuModule
   ],
   providers:[
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},

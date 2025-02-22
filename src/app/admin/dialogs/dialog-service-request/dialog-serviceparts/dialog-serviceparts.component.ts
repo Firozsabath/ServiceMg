@@ -71,7 +71,8 @@ export class DialogServicepartsComponent implements OnInit {
   onOptionSelected(event: any, index: number): void {    
     const selectedValue = event.option.value;
     const selectedId = selectedValue.partsID;
-    this.usedParts.at(index).get('partsId').setValue(selectedId);
+    //this.usedParts.at(index).get('partsId').setValue(selectedId);
+    this.getContactsFormGroup(index).controls['partsId'].setValue(selectedId);
   }
 
   addServiceParts(){
@@ -126,7 +127,7 @@ export class DialogServicepartsComponent implements OnInit {
     quantityUsed: ['',Validators.required]
   });
 
-  this.filteredOptions = this.myControl.valueChanges.pipe(
+  this.filteredOptions = this.myControl.valueChanges.pipe(    
     startWith<string | InventoryDP>(''),
     map(value => typeof value === 'string' ? value : value.partsID),
     map(id => id ? this._filter(id) : this.options.slice())

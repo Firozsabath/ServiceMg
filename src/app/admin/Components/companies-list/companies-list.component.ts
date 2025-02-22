@@ -54,7 +54,7 @@ export class CompaniesListComponent implements OnInit {
 
   addCompany(){
     //var company:Companies;
-    let dialogRef = this.dialog.open(DialogCompanyComponent,{width:"30vw"});
+    let dialogRef = this.dialog.open(DialogCompanyComponent,{width:"65vw"});
     dialogRef.afterClosed().subscribe({
       next:(val)=>{
         if(val){
@@ -67,7 +67,7 @@ export class CompaniesListComponent implements OnInit {
 
   editCompany(comp:any){   
     console.log(comp);
-    let dialogRef = this.dialog.open(DialogCompanyComponent,{width:"30vw",data:comp});
+    let dialogRef = this.dialog.open(DialogCompanyComponent,{width:"65vw",data:comp});
     dialogRef.afterClosed().subscribe({
       next:(val)=>{
         if(val){
