@@ -1,112 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+/* Shared design tokens and components. Material theme is configured in angular.json. */
+@import './styles/workspace.css';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: IBM Plex Sans, "IBM Plex Sans", sans-serif; }
-
-
-.mat-form-field{
-    width: 100%;
-}
-
-.mat-table{
-    width: 100%;    
-}
-
-.custombutton{
-    padding:8px 15px 8px 15px !important;
-}
-
-.customcomponentheight{
-    overflow: auto;
-    height: 365px;
-}
-
-h1::after{
-    content: ' ';
-    display: block;
-    width: 65px;
-    padding-top: 1px;
-    padding-bottom: 2px;
-    border-bottom: 4px solid #3C4F76;
-}
-
-.lowpriority{
-    padding: 4px 14px;
-    border-radius: 10%;
-    background: #e3eced;
-    color: #0d6efd;
-    font-weight: bold;
-}
-.highpriorioty{
-    padding: 4px 14px;
-    border-radius: 10%;
-    background: #ecf2f3;
-    color: #dc3545;
-    font-weight: bold;
-}
-.mediumpriority{
-    padding: 4px 14px;
-    border-radius: 10%;
-    background: #ecf2f3;
-    color: #ff4081;
-    font-weight: bold;
-}
-
-.export-container {
-    text-align: right;
-    margin-bottom: 20px;
-  }
-  
-
-  /* Below styling for global table style */
-  table {
-    width: 100%;
-  }
-  
-  .mat-row {
-    height: auto;
-  }
-  
-  th{
-    background-color: #fff;    
-    }
-    th.mat-header-cell{
-        text-align: center !important;
-        color: black;
-    }
-     .mat-cell, .mat-header-cell {    
-        border-right: 1px solid #e0e0e0;
-     }
-    .mat-row, .mat-header-row {
-        border-bottom: 1px solid red; 
-    } 
-  /* Optional: Remove right border from the last cell if not needed */
-  .mat-cell:last-child, .mat-header-cell:last-child {
-    border-right: none;
-  }
- .mat-sort-header-container {
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    letter-spacing: normal;
-    outline: 0;
-    justify-content: center !important;
-    /* color: white; */
-    }
-    .mat-cell{
-        padding-left: 5px !important;
-    }
-    .mat-sort-header-arrow{
-        color: black;
-    }
-
-     /* Below styling for global table style Ends */
-
-     .customBackButton{
-        font-size: 12px;
-        background: #747a74;
-        border-radius: 50%;
-        padding: 2px;
-        color: white;
-     }
-  
+body { margin: 0; font-family: var(--sm-font); color: var(--sm-text); background: var(--sm-canvas); }
+.mat-form-field { width: 100%; }
+.mat-table { width: 100%; }
+.custombutton { padding: 8px 15px !important; }
+.customcomponentheight { overflow: auto; height: 365px; }
+.export-container { text-align: right; margin-bottom: 20px; }
+.customBackButton { font-size: 12px; background: var(--sm-forest); border-radius: 8px; padding: 4px; color: white; }
+.lowpriority, .mediumpriority, .highpriorioty { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: 500; font-size: 12px; }
+.lowpriority { background: var(--sm-success-soft); color: var(--sm-success); }
+.mediumpriority { background: var(--sm-warning-soft); color: var(--sm-warning); }
+.highpriorioty { background: var(--sm-danger-soft); color: var(--sm-danger); }

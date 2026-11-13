@@ -20,7 +20,18 @@ import { DialogServiceRequestComponent } from '../../dialogs/dialog-service-requ
 export class ServicerequestsallComponent implements OnInit {
 
   constructor(private fb:FormBuilder,private ticketServices: ServicerequestopService , private machineServices:MachinesopService, private dialog:MatDialog, private _snackBar:MatSnackBar) { }
-  displayedColumns: string[] = ['id','No','requestid','subject','machine','technician','estimatedCompleteDate','requestedDate','priority','serviceStatus','requestType','Actions'];
+  displayedColumns: string[] = [
+    'requestid',
+    'subject',
+    'company',
+    'technician',
+    'priority',
+    'requestType',
+    'serviceStatus',
+    'estimatedCompleteDate',
+    'requestedDate',
+    'Actions'
+  ];
   dataSource: any;
   priorityBG:string;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -33,19 +44,22 @@ export class ServicerequestsallComponent implements OnInit {
   }
   
 
-  getAllTickets(){
-    this.ticketServices.getTickets().subscribe(
-      (data:any)=>{
-        console.log(data);
-        this.priorityBG = data.priority=="Low"? "lowpriority" : data.priority=="High"? "highpriorioty":"";        
-        this.dataSource = new MatTableDataSource(data);
+  getAllTickets() {
+    this.ticketServices.getTickets().subscribe({
+      next: (data: any) => {
+        this.dataSource = new MatTableDataSource(data || []);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.msort;
+      },
+      error: (error) => {
+        this._snackBar.open('Error loading service requests', 'Close', { duration: 3000 });
+        console.error('Error loading service requests:', error);
+        this.dataSource = new MatTableDataSource([]);
       }
-    )
+    });
   }
 
-  applyFilter(event: Event){
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -120,6 +134,67 @@ export class ServicerequestsallComponent implements OnInit {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
+  }
+
+  getPendingRequests(): number {
+    return this.dataSource.data.filter(request => 
+      request.serviceStatus === 'Pending' || 
+      request.serviceStatus === 'In Progress'
+    ).length;
+  }
+
+  getHighPriorityRequests(): number {
+    return this.dataSource.data.filter(request => 
+      request.priority === 'High'
+    ).length;
+  }
+
+  getCompletedRequests(): number {
+    return this.dataSource.data.filter(request => 
+      request.serviceStatus === 'Completed'
+    ).length;
+  }
+
+  getPriorityIcon(priority: string): string {
+    switch (priority) {
+      case 'High': return 'priority_high';
+      case 'Medium': return 'priority';
+      case 'Low': return 'low_priority';
+      default: return 'priority';
+    }
+  }
+
+  getStatusIcon(status: string): string {
+    switch (status) {
+      case 'New': return 'fiber_new';
+      case 'In Progress': return 'pending';
+      case 'Completed': return 'task_alt';
+      case 'Cancelled': return 'cancel';
+      default: return 'help';
+    }
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'New': return 'status-new';
+      case 'In Progress': return 'status-in-progress';
+      case 'Completed': return 'status-completed';
+      case 'Cancelled': return 'status-cancelled';
+      default: return '';
+    }
+  }
+
+  isOverdue(date: string): boolean {
+    if (!date) return false;
+    const dueDate = new Date(date);
+    const today = new Date();
+    return dueDate < today;
+  }
+
+  clearFilter(input: HTMLInputElement): void {
+    input.value = '';
+    const event = new Event('keyup');
+    input.dispatchEvent(event);
   }
 
 }

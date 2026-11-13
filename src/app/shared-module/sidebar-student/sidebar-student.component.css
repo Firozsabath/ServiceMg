@@ -1,4 +1,1 @@
-.mat-nav-list .mat-list-item{
-    font-size: 15px;
-    font-weight: 700;
-}
+:host { display: flex; flex-direction: column; min-height: 100%; }

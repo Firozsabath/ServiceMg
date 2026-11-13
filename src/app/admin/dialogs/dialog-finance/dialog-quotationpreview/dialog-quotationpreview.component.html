@@ -10,7 +10,7 @@
             <div class="header">
                 <div class="row mb-4">
                     <div class="col col-4">
-                        <img src="../../../../../assets/Images/Bean-Blance_Logo.png" style="width:85%;">    
+                        <span class="document-label">SERVICE DOCUMENT</span>    
                     </div>
                     <div class="col col-4 text-center">                    
                         <h2 class="fw-bold" style="font-size: 25px;margin-top:15px;">Quotation</h2>
@@ -116,13 +116,25 @@
                   <p class="m-0">2.GOODS ONCE SOLD CANNOT BE RETURNED or EXCHANGED</p>
               </div>
               <div class="col-4">
-                    <img src="../../../../../assets/Images/beanBStamp.jpeg" style="width:85%;">
+                    <div class="document-signature">Authorized signature</div>
               </div>
             </div>
-            <div class="row">
-              <h4>Disclaimer:</h4>
+            <div *ngIf="quotaData.paymentTerms" class="row">
+              <h4>Payment Terms:</h4>
               <p>{{quotaData.paymentTerms}}</p>
             </div>
+            <div *ngIf="quotaData.disclaimer" class="row">
+              <h4>Disclaimer:</h4>
+              <p>{{quotaData.disclaimer}}</p>
+            </div>
+            <div *ngIf="quotaData.notes" class="row">
+              <h4>Notes:</h4>
+              <p>{{quotaData.notes}}</p>
+            </div>
+            <!-- <div class="row">
+              <h4>Disclaimer:</h4>
+              <p>{{quotaData.paymentTerms}}</p>
+            </div> -->
           </div>
           <div class="text-center my-4">
             <button mat-flat-button color="primary" (click)="downloadQuotationPDF()">Generate Quotataion</button>        

@@ -37,7 +37,7 @@
   .message {
     background-color: #ddd;
     padding: 15px;
-    color: #333;
+    color: var(--sm-text);
     border: #aaa solid 1px;
     border-radius: 4px;
     margin-bottom: 10px;

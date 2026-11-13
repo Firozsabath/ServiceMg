@@ -47,7 +47,7 @@ export class DialogInvoicepreviewComponent implements OnInit {
         }
       )
     }else if(this.invData){
-        //console.log(this.invData);
+        console.log(this.invData);
         this.invoiceService.getInvoiceInfo(this.invData).subscribe(
           (data:any)=>{
               this.invoiceData = data;
@@ -149,10 +149,13 @@ export class DialogInvoicepreviewComponent implements OnInit {
 
   generateUniqueNumber(num:any): string {
     const year = new Date().getFullYear().toString();
-    var month = new Date().getMonth().toString() + 1;
-  month = month.toString().padStart(2, '0');
+    
+    const month = new Date().getMonth() + 1;
+     const monthfmted = month.toString().padStart(2, '0');
+ 
+    
     //const randomNum = Math.floor(Math.random() * 900000) + 100000; // Generate a 6-digit random number
-    return 'Inv-'+year+'-'+month+'-'+num.toString(); // Pad with zeros if necessary
+    return 'Inv-'+year+'-'+monthfmted+'-'+num.toString(); // Pad with zeros if necessary
   }
 
   convertNumberToWords(data) {

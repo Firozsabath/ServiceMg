@@ -39,7 +39,7 @@ export class TicketsbystatusComponent implements OnInit {
     name: 'myScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#9370DB', '#87CEFA', '#910909', '#90EE90'],
+    domain: ['#b79562', '#6f9194', '#a43f3b', '#71844b'],
   };
   //pie
   showLabels = true;    

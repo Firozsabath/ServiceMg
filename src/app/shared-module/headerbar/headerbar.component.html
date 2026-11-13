@@ -1,18 +1,17 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="clickMenu()">
-      <span class="material-symbols-outlined">menu</span>
-   </button>
-   <span class="app-header">
-      <a _ngcontent-uat-c3="" href="index.html" class="logo d-flex align-items-center"><img src="../../../assets/Images/Bean-Blance_Logo.png" alt="" class="logo"></a>
-    </span>
-   <span class="example-spacer"></span>
-   <div fxFlex fxLayoutAlign="flex-end center">
-   <span style="font-size: 14px;margin-right:15px;" [hidden]="logoutbtnHide">Welcome back, {{userEmailId}}</span>
-    <button [hidden]="logoutbtnHide" (click)="logout()" mat-mini-fab color="accent" class="example-icon">     
-      <span class="material-symbols-outlined">
-       logout
-       </span> 
-    </button>
-   </div>
-        
+<mat-toolbar class="workspace-header">
+  <button mat-icon-button class="navigation-toggle" aria-label="Toggle navigation" aria-controls="workspace-navigation" [attr.aria-expanded]="navigationOpen" (click)="clickMenu()">
+    <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+  </button>
+  <a class="workspace-brand" [routerLink]="homeRoute" aria-label="Service Management workspace home">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg>
+    <span>Service<span class="brand-light">Management</span></span>
+  </a>
+  <span class="header-divider" aria-hidden="true"></span>
+  <span class="workspace-caption">Operations workspace</span>
+  <span class="header-spacer"></span>
+  <div class="account" *ngIf="!logoutbtnHide">
+    <span class="account-avatar" aria-hidden="true">{{userInitial}}</span>
+    <span class="account-details"><span class="account-name">{{userEmailId || 'Your account'}}</span><span class="account-role">{{userRole}}</span></span>
+    <button mat-icon-button class="logout-button" (click)="logout()" aria-label="Sign out" title="Sign out"><span class="material-symbols-outlined" aria-hidden="true">logout</span></button>
+  </div>
 </mat-toolbar>

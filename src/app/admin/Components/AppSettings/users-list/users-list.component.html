@@ -45,7 +45,7 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td width="20%" mat-cell *matCellDef="let element" class="text-center"> 
         <button mat-mini-fab color="primary" class="me-2" (click)="editUser(element)"><span class="material-symbols-outlined">edit</span></button>
-        <button mat-mini-fab color="primary"  (click)="deleteUser(element.id)"><span class="material-symbols-outlined">delete</span></button>
+        <button mat-mini-fab color="warn"  (click)="deleteUser(element.id)"><span class="material-symbols-outlined">delete</span></button>
         </td>
     </ng-container>
 

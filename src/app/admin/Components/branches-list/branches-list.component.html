@@ -1,76 +1,127 @@
-<h1>Branches</h1>
-    <form [formGroup]="Loginform">
-        <div class="row">
-            <div class="col col-10 col-md-5">                         
-                  
-                  <mat-form-field appearance="fill">
-                    <mat-label>Select Company</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="configsList" formControlName='compid'>
-                      <!-- <p appSearchable (options)="optionsArray" (filteredOptions)="filteredOptions"></p> -->
-                      <div  appAppsearchabledp [items]="companyList" [filterProperty]="'name'" (filteredItems)="updateFilteredCompanies($event)">
-                        <input type="text" class="p-2" autocomplete="off" matInput placeholder="Search by company.." >
-                      </div>
-                      
-                      <mat-option [value]="">
-                        Select a Company
-                      </mat-option>
-                      <mat-option *ngFor="let company of filteredCompanies" [value]="company.id">{{company.name}}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </div>
-            <div class="col col-2 col-md-4">
-              <button type="button" mat-raised-button color="primary" (click)="onSearch()" class="me-3 custombutton">          
-                Get Branches
-              </button>      
-              
-              <button type="button" mat-raised-button color="primary" (click)="addBranch()" class="me-3 custombutton">          
-                <span class="material-symbols-outlined">add</span> Add a new Branch
-              </button> 
-            </div>
-          </div> 
-    </form>    
+<div class="page-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1>Company Branches</h1>
+    <button mat-raised-button color="primary" class="action-button" (click)="addBranch()">
+      <span class="material-symbols-outlined">add</span>
+      New Branch
+    </button>
+  </div>
 
-<div >
-    <mat-card *ngFor="let branch of branches" class="example-card mb-3">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image">
-            <img class="card-img-top rounded-circle custom_rounded profimg" src="../assets/Images/logo1.jpg" alt="Card image cap">
-          </div>
-          <mat-card-title>{{branch.branchName}}</mat-card-title>
-          <mat-card-subtitle>{{branch.companyID}}</mat-card-subtitle>
-        </mat-card-header>    
-        <mat-card-content>
-            <div class="row">
-                <div class="col col-md-3">
-                    <span class="fw-bold">Contact Number</span> <span> : {{branch.contactNumber}}</span> 
-                </div>
-                <div class="col col-md-3">
-                    <span class="fw-bold">Contact Person :</span> <span>{{branch.contactPerson}}</span>
-                </div>
-                <div class="col col-md-3">
-                    <span class="fw-bold">TRN Number :</span> <span> {{branch.trnNumber}}</span>
-                </div>
-                <div class="col col-md-3">
-                    <span class="fw-bold">Created Date :</span> <span> {{branch.createdTime | date: 'dd/MM/yyyy'}}</span>
-                </div>
-                <div class="col col-md-3" *ngIf="branch.doc1!=null">
-                  <a [href]="getImgUrl(branch.doc1)" target="_blank"><span class="fw-bold">doc 1</span></a>
-                </div>
-                <div class="col col-md-3" *ngIf="branch.doc2!=null">
-                  <a [href]="getImgUrl(branch.doc2)" target="_blank"><span class="fw-bold">doc 2</span></a>
-                </div>
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <mat-form-field class="company-select" appearance="fill">
+          <mat-label>
+            <span class="material-symbols-outlined">business</span>
+            Select Company
+          </mat-label>
+          <mat-select [(ngModel)]="selectedValue" name="configsList" [formControl]="companyControl">
+            <div appAppsearchabledp [items]="companyList" [filterProperty]="'name'" (filteredItems)="updateFilteredCompanies($event)">
+              <mat-form-field class="search-field">
+                <input matInput type="text" placeholder="Search companies..." autocomplete="off">
+              </mat-form-field>
             </div>
-          <p>
+            <mat-option [value]="">All Companies</mat-option>
+            <mat-option *ngFor="let company of filteredCompanies" [value]="company.id">{{company.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <button mat-raised-button color="primary" (click)="onSearch()" class="search-button">
+          <span class="material-symbols-outlined">search</span>
+          Get Branches
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branches Grid -->
+  <div class="branches-grid">
+    <div class="row">
+      <div class="col-md-6" *ngFor="let branch of branches">
+        <mat-card class="branch-card">
+          <mat-card-header>
+            <div mat-card-avatar class="branch-avatar">
+              <span class="material-symbols-outlined">apartment</span>
+            </div>
+            <mat-card-title>{{branch.branchName}}</mat-card-title>
+            <mat-card-subtitle>{{getCompanyName(branch.companyID)}}</mat-card-subtitle>
+          </mat-card-header>
           
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <!-- <button mat-flat-button color="primary" class="me-3">View</button> -->
-          <button mat-flat-button color="accent" (click)="editBranch(branch)" class="me-3">Update</button>
-          <button mat-flat-button color="warn" (click)="deleteBranch(branch.id)">Delete</button>
-        </mat-card-actions>
-        <!-- <mat-divider></mat-divider> -->
-      </mat-card>
+          <mat-card-content>
+            <div class="branch-details">
+              <div class="detail-item">
+                <span class="material-symbols-outlined">phone</span>
+                <span class="detail-label">Contact:</span>
+                <span class="detail-value">{{branch.contactNumber}}</span>
+              </div>
+              
+              <div class="detail-item">
+                <span class="material-symbols-outlined">person</span>
+                <span class="detail-label">Contact Person:</span>
+                <span class="detail-value">{{branch.contactPerson}}</span>
+              </div>
+              
+              <div class="detail-item">
+                <span class="material-symbols-outlined">badge</span>
+                <span class="detail-label">TRN Number:</span>
+                <span class="detail-value">{{branch.trnNumber}}</span>
+              </div>
+              
+              <div class="detail-item">
+                <span class="material-symbols-outlined">calendar_today</span>
+                <span class="detail-label">Created:</span>
+                <span class="detail-value">{{branch.createdTime | date: 'MMM d, y'}}</span>
+              </div>
+            </div>
 
+            <!-- Documents Section -->
+            <div class="documents-section" *ngIf="branch.doc1 || branch.doc2">
+              <mat-divider></mat-divider>
+              <h3>
+                <span class="material-symbols-outlined">folder</span>
+                Documents
+              </h3>
+              <div class="document-links">
+                <a mat-button *ngIf="branch.doc1" [href]="getImgUrl(branch.doc1)" target="_blank">
+                  <span class="material-symbols-outlined">description</span>
+                  Document 1
+                </a>
+                <a mat-button *ngIf="branch.doc2" [href]="getImgUrl(branch.doc2)" target="_blank">
+                  <span class="material-symbols-outlined">description</span>
+                  Document 2
+                </a>
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions align="end">
+            <button mat-button color="primary" (click)="editBranch(branch)">
+              <span class="material-symbols-outlined">edit</span>
+              Edit
+            </button>
+            <button mat-button color="warn" (click)="deleteBranch(branch.id)">
+              <span class="material-symbols-outlined">delete</span>
+              Delete
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- No Data Message -->
+    <div class="no-data-message" *ngIf="!branches?.length">
+      <span class="material-symbols-outlined">store</span>
+      <h3>No branches found</h3>
+      <p *ngIf="selectedValue">No branches found for the selected company</p>
+      <p *ngIf="!selectedValue">Select a company to view its branches</p>
+      <button mat-raised-button color="primary" (click)="addBranch()">
+        <span class="material-symbols-outlined">add</span>
+        Add New Branch
+      </button>
+    </div>
+  </div>
 </div>
 

@@ -38,7 +38,7 @@ export class TicketsbycategoryComponent implements OnInit {
     name: 'myScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB'],
+    domain: ['#355b42', '#71844b', '#b5c697', '#b79562', '#6f9194', '#ac7462'],
   };
   //pie
   showLabels = true;    

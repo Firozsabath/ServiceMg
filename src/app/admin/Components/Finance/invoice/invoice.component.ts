@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -33,9 +33,10 @@ export class InvoiceComponent implements OnInit {
   selectedBranch:any;
   selectedCompany:any;
   myControl = new FormControl('');
-  public invoiceItems: FormArray;  
+  //public invoiceItems: FormArray;  
   options: InventoryDP[];
-  filteredOptions: Observable<InventoryDP[]>; 
+  //filteredOptions: Observable<InventoryDP[]>; 
+  filteredOptions: Observable<any[]>[] = [];
   filteredCompanies:any[];
   filteredBranches:any[];
   filteredMachines:any[];
@@ -46,7 +47,7 @@ export class InvoiceComponent implements OnInit {
      , private dialog:MatDialog, private _snackBar:MatSnackBar
      ) {
 
-      this.invAuto = this.fb.group({
+  this.invAuto = this.fb.group({
     quotID:['',Validators.required]
   })
 
@@ -64,6 +65,8 @@ export class InvoiceComponent implements OnInit {
     quotationNum:[''],
     serviceCharges:[null],
     PaymentTerms:[''],
+    disclaimer:[''],
+    notes:[''],
     invoiceItems:this.fb.array([])
   })
 
@@ -80,7 +83,7 @@ export class InvoiceComponent implements OnInit {
         this.filteredMachines = [...this.drps.requestMachines];
       }
     )
-    this.invoiceItems = this.invManual.get('invoiceItems') as FormArray;
+    //this.invoiceItems = this.invManual.get('invoiceItems') as FormArray;
 
     this.invService.getItems().subscribe(
       (data:any)=>{
@@ -92,23 +95,30 @@ export class InvoiceComponent implements OnInit {
       }
     )   
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith<string | InventoryDP>(''),
-      map(value => typeof value === 'string' ? value : value.partsID),
-      map(id => id ? this._filter(id) : this.options.slice())
+    // this.filteredOptions = this.myControl.valueChanges.pipe(
+    //   startWith<string | InventoryDP>(''),
+    //   map(value => typeof value === 'string' ? value : value.partsID),
+    //   map(id => id ? this._filter(id) : this.options.slice())
+    // );
+  }
+
+  private _filter(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option =>
+      option.skuID.toLowerCase().includes(filterValue)
     );
   }
 
-  private _filter(value: any){
-    //debugger;
-    let filterValue = '';
+  // private _filter(value: any){
+  //   debugger;
+  //   let filterValue = '';
 
-    if (typeof value === "string") {
-      filterValue = value.toLowerCase();
-    }
-    //return this.options.filter(option => option.description.toLowerCase().includes(filterValue));
-    return this.options.filter(option => option.skuID.toLowerCase().includes(filterValue));
-  }
+  //   if (typeof value === "string") {
+  //     filterValue = value.toLowerCase();
+  //   }
+  //   //return this.options.filter(option => option.description.toLowerCase().includes(filterValue));
+  //   return this.options.filter(option => option.skuID.toLowerCase().includes(filterValue));
+  // }
 
   displayFn(value?: InventoryDP | number): string | undefined { 
     if(typeof value === 'number'){
@@ -120,34 +130,70 @@ export class InvoiceComponent implements OnInit {
     
   }
 
-  onOptionSelected(event: any, index: number): void {  
-    debugger;  
-    const selectedValue = event.option.value;
-    const selectedId = selectedValue.partsID;
-    this.invoicesItems.at(index).get('partsId').setValue(selectedId);
+  onOptionSelected(event: any, index: number) {  
+    // debugger;  
+    // const selectedValue = event.option.value;
+    // const selectedId = selectedValue.partsID;
+    // this.invoicesItems.at(index).get('partsId').setValue(selectedId);
+
+    debugger;
+    const selectedPart = event.option.value;
+    const partForm = this.invoicesItems.at(index);
+  
+    partForm.patchValue({
+      partsID: selectedPart.partsID, // Ensure partsID is set for validation
+      searchInput: selectedPart // Display description in input
+    });
+  
+    // Mark the field as touched and update validation
+    partForm.get('partsID')?.markAsTouched();
+    partForm.get('partsID')?.updateValueAndValidity();
+
   }
 
   get invoicesItems(): FormArray {
     return this.invManual.get('invoiceItems') as FormArray;
   }
 
-  createItem(): FormGroup {
-    return this.fb.group({      
-      partsId: ['',
-      {
-        validators: [Validators.required],        
-        updateOn: 'blur'
-      }],
-      quantityUsed: ['',Validators.required]
-    });
-  }
+  // createItem(): FormGroup {
+  //   return this.fb.group({   
+  //     searchInput: [''], // Used for filtering   
+  //     partsId: ['',
+  //     {
+  //       validators: [Validators.required],        
+  //       updateOn: 'blur'
+  //     }],
+  //     quantityUsed: ['',Validators.required]
+  //   });
+  // }
 
   addItem() {
-    this.invoiceItems.push(this.createItem());
+    const index = this.invoicesItems.length;
+
+    const partGroup = this.fb.group({
+      searchInput: [''], // Used for filtering
+      partsID: [null, Validators.required], // Stores partsID
+      quantityUsed: ['', [Validators.required]], // Stores quantity
+    });
+
+    this.invoicesItems.push(partGroup);
+    this.filteredOptions[index] = new Observable<any[]>();
+    setTimeout(() => {
+      debugger;
+      const searchInputControl = partGroup.get('searchInput');
+      if (searchInputControl) {
+        this.filteredOptions[index] = searchInputControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value || ''))
+        );
+      }
+      //this.cdRef.detectChanges();
+    });
+
   }
 
   removeItem(index) {    
-    this.invoiceItems.removeAt(index);
+    this.invoicesItems.removeAt(index);
   }
 
   onSelectCompany(companyID:any){    

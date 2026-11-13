@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Update Invoice Status</h2>
+<div mat-dialog-content>
+  <p>Invoice: <strong>{{ data.invoiceNumber }}</strong></p>
+  
+  <form [formGroup]="statusForm" (ngSubmit)="onSubmit()">
+    <div class="form-content">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="statusId">
+          <mat-option *ngFor="let status of statuses" [value]="status.id">
+            {{ status.statusName }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="statusForm.get('statusId')?.hasError('required')">
+          Status is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width d-none">
+        <mat-label>Notes</mat-label>
+        <textarea matInput formControlName="notes" rows="3" 
+                  placeholder="Add notes about this status change (optional)"></textarea>
+      </mat-form-field>
+    </div>
+    
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="isLoading">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" 
+          [disabled]="statusForm.invalid || isLoading">
+    <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+    <span *ngIf="!isLoading">Update Status</span>
+  </button>
+</div>

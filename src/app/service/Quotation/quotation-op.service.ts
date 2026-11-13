@@ -35,6 +35,19 @@ export class QuotationOpService {
   }
 
   getQuotInfoByID(id:any):Observable<any>{
-    return this.http.get<any>(this.apiUrl+"Quotation/GetQuotDetailsByQuot",{params:{id:id}});
+    return this.http.get<any>(this.apiUrl+"Quotation/GetQuotDetailsForInvoice",{params:{id:id}});
+  }
+
+  getQuotInfoByQuotID(id:any):Observable<any>{
+    return this.http.get<any>(this.apiUrl+"Quotation/GetQuotDetailsByQuotID",{params:{id:id}});
+  }
+
+  getQuotInfoByQuotNum(quotNum:string):Observable<any>{
+    return this.http.get<any>(this.apiUrl+"Quotation/GetQuotDetailsByQuotNum",{params:{quotNum:quotNum}});
+  }
+
+   // delete a invoice statuses
+   deleteQuot(id:number){
+    return this.http.delete<any>(this.apiUrl+`Quotation/${id}`);
   }
 }

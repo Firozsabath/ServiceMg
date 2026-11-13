@@ -14,8 +14,9 @@ import { CompaniesListComponent } from './Components/companies-list/companies-li
 import { InvoiceListComponent } from './Components/Finance/invoice-list/invoice-list.component';
 import { InvoicePreviewComponent } from './Components/Finance/invoice-preview/invoice-preview.component';
 import { InvoiceComponent } from './Components/Finance/invoice/invoice.component';
-import { QuotationCreationComponent } from './Components/finance/quotation-creation/quotation-creation.component';
-import { QuotationListComponent } from './components/finance/quotation-list/quotation-list.component';
+import { QuotationCreationComponent } from './Components/Finance/quotation-creation/quotation-creation.component';
+import { QuotationDataEntryComponent } from './Components/Finance/quotation-data-entry/quotation-data-entry.component';
+import { QuotationListComponent } from './Components/Finance/quotation-list/quotation-list.component';
 import { QuotationComponent } from './Components/Finance/quotation/quotation.component';
 import { QuotationdisplayComponent } from './Components/Finance/quotationdisplay/quotationdisplay.component';
 import { InventoryListComponent } from './Components/inventory-list/inventory-list.component';
@@ -24,6 +25,7 @@ import { ServicerequestsReportComponent } from './Components/Reports/servicerequ
 import { ServicerequestComponent } from './Components/servicerequest/servicerequest.component';
 import { ServicerequestsallComponent } from './Components/servicerequestsall/servicerequestsall.component';
 import { TechniciansComponent } from './Components/technicians/technicians.component';
+import { InvoiceDataEntryComponent } from './Components/Finance/invoice-data-entry/invoice-data-entry.component';
 
 const routes: Routes = [
   {
@@ -118,6 +120,22 @@ const routes: Routes = [
       {
         path:'fin/generateQuot',
         component:QuotationCreationComponent
+      },
+      {
+        path:'fin/quotation-data-entry',
+        component:QuotationDataEntryComponent
+      },
+      {
+        path:'fin/quotation-data-entry/:id',
+        component:QuotationDataEntryComponent
+      },
+      {
+        path:'fin/invoice-data-entry',
+        component:InvoiceDataEntryComponent
+      },
+      {
+        path:'fin/invoice-data-entry/:id',
+        component:InvoiceDataEntryComponent
       }
     ],    
   },

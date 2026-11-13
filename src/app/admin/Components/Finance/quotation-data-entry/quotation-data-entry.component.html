@@ -1,0 +1,390 @@
+<div class="quotation-container">
+  <div class="header-section">
+    <h1>Quotation Management</h1>
+    <p class="text-muted">{{ isEditMode ? 'Edit Quotation: ' + quotationId : 'Create New Quotation' }}</p>
+  </div>
+
+  <mat-card class="main-card">
+    <mat-card-content>
+      <form [formGroup]="quotation">
+        <!-- Type Selection Section -->
+        <div class="section-container">
+          <div class="section-header">
+            <span class="material-symbols-outlined">
+              tune
+              </span>
+            <h2>Quotation Type</h2>
+          </div>
+          
+          <mat-button-toggle-group [(ngModel)]="fontStyle" (click)="showHideBelowDiv();" [ngModelOptions]="{standalone: true}" aria-label="Quotation Type">
+            <mat-button-toggle value="auto">Company Database</mat-button-toggle>
+            <mat-button-toggle value="manual">Manual Entry</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+
+        <!-- Company Information Section -->
+        <div class="section-container" *ngIf="showmanualCompany || showAutoCompany">
+          <div class="section-header">
+            <span class="material-symbols-outlined">
+              store
+              </span>
+            <h2>Company Information</h2>
+          </div>
+
+          <div class="row" *ngIf="showmanualCompany">
+            <div class="col-md-4 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Company</mat-label>
+                <mat-select formControlName="companyID" (selectionChange)="onSelectCompany($event)">
+                  <mat-form-field class="search-field">
+                    <input matInput placeholder="Search companies" 
+                           (keyup)="updateFilteredDrops('companies', $event.target['value'])">
+                  </mat-form-field>
+                  <mat-option [value]="">Select a Company</mat-option>
+                  <mat-option *ngFor="let comp of filteredCompanies" [value]="comp.id">{{comp.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Branch</mat-label>
+                <mat-select formControlName="branchID" (selectionChange)="onSelectBranches($event)">
+                  <mat-option [value]="">Select a Branch</mat-option>
+                  <mat-option *ngFor="let branch of filteredBranches" [value]="branch.id">{{branch.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Machine</mat-label>
+                <mat-select formControlName="machineID">
+                  <mat-option [value]="">Select a Machine</mat-option>
+                  <mat-option *ngFor="let machine of filteredMachines" [value]="machine.id">{{machine.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="showAutoCompany">
+            <div class="col-md-6 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Company Name</mat-label>
+                <input matInput formControlName="companyName">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>TRN Number</mat-label>
+                <input matInput formControlName="trn">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Company Address</mat-label>
+                <textarea matInput formControlName="companyAddress" rows="2"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valid Until</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="validUntil">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Items Section -->
+        <div class="section-container" *ngIf="showButtons">
+          <div class="section-header">
+            <span class="material-symbols-outlined">
+              receipt_long
+              </span>
+            <h2>Line Items</h2>
+          </div>
+
+          <mat-tab-group animationDuration="0ms" class="mb-4">
+            <mat-tab label="Inventory Items">
+              <div class="tab-content">
+                <div class="row align-items-end">
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Search Product</mat-label>
+                      <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" placeholder="Search by SKU ID or description">
+                      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPart" (optionSelected)="onSelectPart($event)">
+                        <mat-option *ngFor="let option of (filteredPartsOptions | async)" [value]="option">
+                          {{ option.displayText || (option.description + ' - ' + option.skuID) }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Quantity</mat-label>
+                      <input matInput type="number" [(ngModel)]="newPart.quantityUsed" [ngModelOptions]="{standalone: true}" min="1" (change)="calculateTotal()">
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Unit Price</mat-label>
+                      <input matInput type="number" [(ngModel)]="newPart.amount" [ngModelOptions]="{standalone: true}" min="0" (change)="calculateTotal()">
+                      <span matSuffix>AED</span>
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>VAT %</mat-label>
+                      <input matInput type="number" [(ngModel)]="newPart.vatPercent" [ngModelOptions]="{standalone: true}" min="0" max="100" (change)="calculateTotal()">
+                      <span matSuffix>%</span>
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <button mat-flat-button color="primary" type="button" (click)="addItemToTable()" class="w-100">
+                      <span class="material-symbols-outlined">
+                        add_circle
+                        </span> Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            
+            <mat-tab label="Custom Items">
+              <div class="tab-content">
+                <div class="row align-items-end">
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Description</mat-label>
+                      <input type="text" matInput [(ngModel)]="customItem.description" [ngModelOptions]="{standalone: true}" placeholder="Enter description (e.g., Service Charge)">
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Quantity</mat-label>
+                      <input matInput type="number" [(ngModel)]="customItem.quantityUsed" [ngModelOptions]="{standalone: true}" min="1" (change)="calculateCustomTotal()">
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Unit Price</mat-label>
+                      <input matInput type="number" [(ngModel)]="customItem.amount" [ngModelOptions]="{standalone: true}" min="0" (change)="calculateCustomTotal()">
+                      <span matSuffix>AED</span>
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>VAT %</mat-label>
+                      <input matInput type="number" [(ngModel)]="customItem.vatPercent" [ngModelOptions]="{standalone: true}" min="0" max="100" (change)="calculateCustomTotal()">
+                      <span matSuffix>%</span>
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="col-md-2 mb-3">
+                    <button mat-flat-button color="accent" type="button" (click)="addCustomItemToTable()" class="w-100">
+                      <span class="material-symbols-outlined">
+                        add_circle
+                        </span> Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+
+          <!-- Items Table -->
+          <div class="table-container">
+            <!-- Debug info -->
+            <p *ngIf="quotationItems.controls.length > 0" class="text-success">Items in table: {{quotationItems.controls.length}}</p>
+            <p *ngIf="quotationItems.controls.length === 0" class="text-warning">No items in table</p>
+            
+            <!-- Material Table -->
+            <table mat-table [dataSource]="dataSource" class="w-100 mat-elevation-z2">
+              <!-- Description Column -->
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let item"> {{item.get('description')?.value}} </td>
+                <td mat-footer-cell *matFooterCellDef colspan="5" class="text-end fw-bold"> Total Amount: </td>
+              </ng-container>
+              
+              <!-- SKU Column -->
+              <ng-container matColumnDef="skuId">
+                <th mat-header-cell *matHeaderCellDef> SKU ID </th>
+                <td mat-cell *matCellDef="let item"> {{item.get('skuId')?.value}} </td>
+              </ng-container>
+              
+              <!-- Quantity Column -->
+              <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                <td mat-cell *matCellDef="let item"> {{item.get('quantityUsed')?.value}} </td>
+              </ng-container>
+              
+              <!-- Unit Price Column -->
+              <ng-container matColumnDef="unitPrice">
+                <th mat-header-cell *matHeaderCellDef> Unit Price </th>
+                <td mat-cell *matCellDef="let item"> {{item.get('amount')?.value | number: '1.2-2'}} AED </td>
+              </ng-container>
+              
+              <!-- VAT % Column -->
+              <ng-container matColumnDef="vatPercent">
+                <th mat-header-cell *matHeaderCellDef> VAT % </th>
+                <td mat-cell *matCellDef="let item"> {{item.get('vatPercent')?.value}}% </td>
+              </ng-container>
+              
+              <!-- VAT Amount Column -->
+              <ng-container matColumnDef="vatAmount">
+                <th mat-header-cell *matHeaderCellDef> VAT Amount </th>
+                <td mat-cell *matCellDef="let item"> {{item.get('vat')?.value | number: '1.2-2'}} AED </td>
+              </ng-container>
+              
+              <!-- Total Column -->
+              <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let item"> {{item.get('total')?.value | number: '1.2-2'}} AED </td>
+                <td mat-footer-cell *matFooterCellDef colspan="2" class="fw-bold"> {{quotation.get('totalAmount')?.value | number: '1.2-2'}} AED </td>
+              </ng-container>
+              
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let item; let i = index">
+                  <button mat-icon-button color="warn" (click)="removeItem(i)" matTooltip="Remove item">
+                    <span class="material-symbols-outlined">
+                      delete
+                      </span>
+                  </button>
+                </td>
+              </ng-container>
+              
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-footer-row *matFooterRowDef="['description', 'total']" [hidden]="quotationItems.controls.length === 0"></tr>
+              
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell text-center" colspan="8">
+                  <div class="empty-state">
+                    <span class="material-symbols-outlined">
+                      shopping_cart
+                      </span>
+                    <p>No items added yet</p>
+                    <p class="text-muted">Add items using the forms above</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            
+            <!-- Fallback Table (will show if Material Table has issues) -->
+            <table *ngIf="quotationItems.controls.length > 0" class="table table-striped mt-4 d-none">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>SKU ID</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                  <th>VAT %</th>
+                  <th>VAT Amount</th>
+                  <th>Total</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of quotationItems.controls; let i = index">
+                  <td>{{item.get('description')?.value}}</td>
+                  <td>{{item.get('skuId')?.value}}</td>
+                  <td>{{item.get('quantityUsed')?.value}}</td>
+                  <td>{{item.get('amount')?.value | number: '1.2-2'}} AED</td>
+                  <td>{{item.get('vatPercent')?.value}}%</td>
+                  <td>{{item.get('vat')?.value | number: '1.2-2'}} AED</td>
+                  <td>{{item.get('total')?.value | number: '1.2-2'}} AED</td>
+                  <td>
+                    <button mat-icon-button color="warn" (click)="removeItem(i)" matTooltip="Remove item">
+                      <span class="material-symbols-outlined">
+                        delete
+                        </span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="6" class="text-end fw-bold">Total Amount:</td>
+                  <td colspan="2" class="fw-bold">{{quotation.get('totalAmount')?.value | number: '1.2-2'}} AED</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Additional Information Section -->
+        <div class="section-container" *ngIf="showButtons">
+          <div class="section-header">
+            <span class="material-symbols-outlined">
+              description
+              </span>
+            <h2>Additional Information</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Payment Terms</mat-label>
+                <textarea matInput formControlName="PaymentTerms" rows="2" placeholder="Enter payment terms..."></textarea>
+              </mat-form-field>
+            </div>
+            
+            <div class="col-md-12 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Disclaimer</mat-label>
+                <textarea matInput formControlName="disclaimer" rows="2" placeholder="Enter disclaimer..."></textarea>
+              </mat-form-field>
+            </div>
+            
+            <div class="col-md-12 mb-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Notes</mat-label>
+                <textarea matInput formControlName="notes" rows="2" placeholder="Enter additional notes..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons" *ngIf="showButtons">
+          <button mat-stroked-button color="warn" type="button" (click)="resetForm()">
+            <span class="material-symbols-outlined">
+              refresh
+              </span> Reset
+          </button>
+          
+          <div class="right-buttons">
+            <!-- <button mat-flat-button color="accent" type="button" (click)="saveQuotation()" class="me-2">
+              <span class="material-symbols-outlined">
+                save
+                </span> {{ isEditMode ? 'Save Changes' : 'Save Quotation' }}
+            </button> -->
+            
+            <button mat-flat-button color="primary" type="button" (click)="viewQuot()">
+              <span class="material-symbols-outlined">
+                preview
+                </span> {{ isEditMode ? 'Update & Preview' : 'Preview & Generate' }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

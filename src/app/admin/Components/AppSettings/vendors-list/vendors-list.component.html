@@ -50,7 +50,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
       <td width="25%" mat-cell *matCellDef="let element" class="text-center"> 
         <button mat-mini-fab color="primary" class="me-2" (click)="editVendor(element)"><span class="material-symbols-outlined">edit</span></button>
-        <button mat-mini-fab color="primary"  (click)="deleteVendor(element.id)"><span class="material-symbols-outlined">delete</span></button>
+        <button mat-mini-fab color="warn"  (click)="deleteVendor(element.id)"><span class="material-symbols-outlined">delete</span></button>
         </td>
     </ng-container>
 

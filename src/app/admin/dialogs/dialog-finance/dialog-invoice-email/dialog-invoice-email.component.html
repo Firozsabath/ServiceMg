@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>
+  <span class="material-symbols-outlined">mail</span>
+  Send Invoice Email
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="emailForm" class="email-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>
+        <span class="material-symbols-outlined">account_circle</span>
+        To
+      </mat-label>
+      <input matInput formControlName="to" placeholder="Recipient email" type="email">
+      <span matSuffix class="material-symbols-outlined">alternate_email</span>
+      <mat-error *ngIf="emailForm.get('to')?.invalid">{{getErrorMessage('to')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>
+        <span class="material-symbols-outlined">group</span>
+        CC
+      </mat-label>
+      <input matInput formControlName="cc" placeholder="CC email addresses" type="email">
+      <span matSuffix class="material-symbols-outlined">alternate_email</span>
+      <mat-error *ngIf="emailForm.get('cc')?.invalid">{{getErrorMessage('cc')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>
+        <span class="material-symbols-outlined">subject</span>
+        Subject
+      </mat-label>
+      <input matInput formControlName="subject" placeholder="Email subject">
+      <mat-error *ngIf="emailForm.get('subject')?.invalid">{{getErrorMessage('subject')}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>
+        <span class="material-symbols-outlined">chat</span>
+        Message
+      </mat-label>
+      <textarea matInput formControlName="message" placeholder="Email message"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="loading">
+    <span class="material-symbols-outlined">close</span>
+    Cancel
+  </button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!emailForm.valid || loading">
+    <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+    <span *ngIf="!loading">
+      <span class="material-symbols-outlined">send</span>
+      Send
+    </span>
+  </button>
+</mat-dialog-actions> 

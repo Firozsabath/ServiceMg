@@ -9,7 +9,7 @@
         <div class="header">
             <div class="row mb-4">
                 <div class="col col-4">
-                    <img src="../../../../../assets/Images/Bean-Blance_Logo.png" style="width:85%;">    
+                    <span class="document-label">SERVICE DOCUMENT</span>    
                 </div>
                 <div class="col col-4 text-center">
                     <h2 class="fw-bold" style="font-size: 30px;margin-top:15px;">Tax Invoice</h2>
@@ -101,26 +101,34 @@
           <div class="col-8">
             <p>Looking forward for your business.</p>
 
-            <div class="mb-3 d-none">
-              <table>
-                <tr><td>BENEFICIARY : BREWING GADGETS GENERAL TRADING LLC</td></tr>
-                <tr><td>BANK NAME : ABU DHABI COMMERCIAL BANK (ADCB)</td></tr>
-                <tr><td>ACCOUNT NO : 11206665920001</td></tr>
-                <tr><td>IBAN : AE660030011206665920001</td></tr>
-                <tr><td>SWIFT CODE : ADCBAEAAXXX | BRANCH : 252 / AL KARAMAH</td></tr>
-              </table>
-            </div>
+           <div class="mb-3">
+                  <table>
+                    <tr><td>BENEFICIARY : Bean Balance Catering Equipment trading LLC</td></tr>
+                    <tr><td>BANK NAME : RAK Bank</td></tr>
+                    <tr><td>ACCOUNT NO : 0553 4753 25001</td></tr>
+                    <tr><td>IBAN : AE7304 0000 05534 7532 5001</td></tr>
+                    <tr class="d-none"><td>SWIFT CODE : ADCBAEAAXXX | BRANCH : 252 / AL KARAMAH</td></tr>
+                  </table>
+                </div>
             <p class="m-0">Terms & Conditions</p>
               <p class="m-0">1.Quotation validity is (14) days from date of issue.</p>
               <p class="m-0">2.GOODS ONCE SOLD CANNOT BE RETURNED or EXCHANGED</p>
           </div>
           <div class="col-4">
-                <img src="../../../../../assets/Images/beanBStamp.jpeg" style="width:85%;">
+                <div class="document-signature">Authorized signature</div>
           </div>
         </div>
-        <div class="row">
-          <h4>Disclaimer:</h4>
+        <div *ngIf="invoiceData.paymentTerms" class="row">
+          <h4>Payment Terms:</h4>
           <p>{{invoiceData.paymentTerms}}</p>
+        </div>
+        <div *ngIf="invoiceData.disclaimer" class="row">
+          <h4>Disclaimer:</h4>
+          <p>{{invoiceData.disclaimer}}</p>
+        </div>
+        <div *ngIf="invoiceData.notes" class="row">
+          <h4>Notes:</h4>
+          <p>{{invoiceData.notes}}</p>
         </div>
       </div>
       <div class="text-center my-4">

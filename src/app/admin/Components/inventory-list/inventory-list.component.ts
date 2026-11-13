@@ -15,7 +15,19 @@ import { DialogInventoryComponent } from '../../dialogs/dialog-inventory/dialog-
 })
 export class InventoryListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id','name','skuid','manufacturer','vendor','quantity','unitcost','miscellanious','totalcost','createdDate','vatapplied','Actions'];
+  displayedColumns: string[] = [
+    'name',
+    'skuid',
+    'manufacturer',
+    'vendor',
+    'quantity',
+    'unitcost',
+    'miscellanious',
+    'totalcost',
+    'createdDate',
+    'vatapplied',
+    'Actions'
+  ];
   dataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) msort: MatSort;
@@ -53,8 +65,15 @@ export class InventoryListComponent implements OnInit {
   }
 
   applyFilter(event:Event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
+
+  
 
   editItem(data:any){
     let dialogRef = this.dialogP.open(DialogInventoryComponent,{width:"45vw",data:data});
@@ -70,6 +89,28 @@ export class InventoryListComponent implements OnInit {
 
   deleteItem(id:number){
 
+  }
+
+  getTotalItems(): number {
+    return this.dataSource?.data?.length || 0;
+  }
+
+  getLowStockItems(): number {
+    return this.dataSource?.data?.filter(item => item.quantityOnHand > 0 && item.quantityOnHand <= 10)?.length || 0;
+  }
+
+  getOutOfStockItems(): number {
+    return this.dataSource?.data?.filter(item => item.quantityOnHand === 0)?.length || 0;
+  }
+
+  getTotalValue(): number {
+    return this.dataSource?.data?.reduce((total, item) => total + (item.productCost * item.quantityOnHand), 0) || 0;
+  }
+
+  clearFilter(input: HTMLInputElement): void {
+    input.value = '';
+    const event = new Event('keyup');
+    input.dispatchEvent(event);
   }
 
 }

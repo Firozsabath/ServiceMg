@@ -1,26 +1,14 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
+  @Output() closeSideNav = new EventEmitter<void>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  @Output() closeSideNav = new EventEmitter();
-  isExpanded = true;
-  showSubmenu: boolean = false;
-  isShowing = false;
-  panelOpenState = false;
-  
-  onToggleClose(){
+  onToggleClose(): void {
     this.closeSideNav.emit();
-    console.log(this.closeSideNav.emit());
   }
-
 }

@@ -1,11 +1,8 @@
-mat-sidenav-container{
-    height: calc(90vh);
-    background-color: white;
-}
-
-mat-sidenav{
-    width:250px;
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    background-color: #EDE0D4;
-    color: white;
-}
+:host { display: block; }
+.workspace-shell { height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+.workspace-container { flex: 1; min-height: 0; background: var(--sm-canvas); }
+.workspace-sidenav { width: 248px; background: var(--sm-sidebar); border-right: 1px solid var(--sm-border); }
+.workspace-main { min-height: 100%; position: relative; }
+.workspace-content { padding: 28px 32px 40px; max-width: 1800px; margin: 0 auto; }
+@media (max-width: 960px) { .workspace-content { padding: 24px 20px; } }
+@media (max-width: 600px) { .workspace-content { padding: 20px 14px 32px; } .workspace-sidenav { width: min(280px, 85vw); } }

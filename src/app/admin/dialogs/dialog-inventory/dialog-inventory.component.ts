@@ -73,6 +73,55 @@ export class DialogInventoryComponent implements OnInit {
 
   }
 
+  onInputChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+    console.log('Input value:', inputValue);
+    this.invService.getItemsBySKUID(inputValue).subscribe(
+      (data:any)=>{
+        if(data){
+          this.inventoryData.patchValue(data);
+          this.dialogdata = data;
+          if(data.isVatApplied){
+            this.showVat = !this.showVat;
+          } 
+        }else{
+          //this.inventoryData.reset({skuID:inputValue});
+          this.dialogdata = null;          
+          this.inventoryData = this.fb.group({
+            partsID:[0],
+            description:['',Validators.required],
+            manufacturer:['',Validators.required],
+            vendorid:['',[Validators.required]],
+            unitCost:[],
+            quantityOnHand:[],
+            miscellaniousCost:[],
+            productCost:[],
+            reOrderLevel:[],
+            leadTime:[],
+            lastReorderQuantity:[0],
+            //categoryID:[0],
+            miscellaniousChargeDescription:[''],
+            createddate:[new Date],
+            updatedDate:[new Date],
+            skuID:[inputValue,Validators.required],
+            //lastReorderDate:[new Date],
+            isVatApplied:[false,Validators.required],
+            vatPercent:[0]
+          });
+
+          this.inventoryData.valueChanges.subscribe(
+            values=>{
+                this.updateTotal();
+            }
+          );
+          
+        }
+        
+      }
+    )
+  }
+
   addItem(){
     debugger;
     var invData = this.inventoryData.value;
@@ -98,10 +147,14 @@ export class DialogInventoryComponent implements OnInit {
   }
 
   updateTotal(){
-    var uc = Number(this.inventoryData.get('unitCost').value);
-    var mc = Number(this.inventoryData.get('miscellaniousCost').value);
-    var total = uc+mc;
-    this.inventoryData.get('productCost').setValue(total,{emitEvent:false});    
+    if(this.inventoryData.get('unitCost').value != null && this.inventoryData.get('miscellaniousCost').value != null){
+      var uc = Number(this.inventoryData.get('unitCost').value);
+      var mc = Number(this.inventoryData.get('miscellaniousCost').value);
+      var total = uc+mc;
+      this.inventoryData.get('productCost').setValue(total,{emitEvent:false});    
+    }
+   
+   
   }
 
   showandhide(){

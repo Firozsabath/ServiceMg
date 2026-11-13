@@ -1,0 +1,356 @@
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.preview-container {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quotation-content {
+  padding: 30px;
+  background: #fff;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-overlay p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.company-info p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Enhanced Table Styles */
+.table {
+  width: 100%;
+  margin-bottom: 2rem;
+  border: 1px solid #dee2e6;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  padding: 15px 12px;
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+  font-size: 0.95rem;
+}
+
+/* Monetary Value Columns */
+.amount-column {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+  background-color: #f8f9fa;
+  font-weight: 500;
+  position: relative;
+}
+
+.amount-column::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, #dee2e6, transparent);
+}
+
+/* Bank Details */
+.bank-details {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.bank-details table {
+  width: 100%;
+}
+
+.bank-details td {
+  padding: 5px 0;
+  font-family: 'Courier New', monospace;
+}
+
+/* Terms and Conditions */
+.terms-conditions {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.terms-conditions p {
+  margin: 5px 0;
+}
+
+/* Additional Information Sections */
+.additional-info {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.additional-info h5 {
+  color: #495057;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.action-buttons button {
+  min-width: 150px;
+  margin: 0 10px;
+}
+
+/* Company Logo */
+.company-logo img {
+  max-width: 85%;
+  height: auto;
+}
+
+/* Responsive Design */
+@media print {
+  .action-buttons,
+  .close-button {
+    display: none !important;
+  }
+
+  .preview-container {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .quotation-content {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .preview-container {
+    padding: 10px;
+  }
+
+  .quotation-content {
+    padding: 15px;
+  }
+
+  .table thead th {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+  }
+
+  .table tbody td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .amount-column {
+    font-size: 0.9rem;
+  }
+
+  .status-badge {
+    padding: 4px 8px;
+    min-width: 80px;
+    font-size: 0.8em;
+  }
+}
+
+/* Status Badge Enhancement */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  min-width: 100px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.status-available {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.status-limited {
+  background-color: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ffcc80;
+}
+
+.status-unavailable {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+/* Totals Section Enhancement */
+.totals-section td {
+  font-size: 1.1em;
+  padding: 15px 12px;
+  background-color: #f8f9fa;
+}
+
+.totals-section tr:last-child td {
+  border-bottom: none;
+}
+
+.amount-in-words {
+  font-style: italic;
+  color: #666;
+  background-color: #fff !important;
+  padding: 20px 12px !important;
+}
+
+/* Hover Effects */
+.table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table tbody tr:hover .amount-column {
+  background-color: #f0f0f0;
+}
+
+/* Center align specific columns */
+.text-center {
+  text-align: center !important;
+}
+
+/* Right align monetary values */
+.text-end {
+  text-align: right !important;
+}
+
+/* Table Footer Total Rows */
+.totals-section tr:not(:last-child) td {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.totals-section td.amount-column {
+  font-weight: 600;
+  color: #2c3e50;
+  background-color: #f4f6f8;
+}
+
+/* Highlight total amount row */
+.totals-section tr:nth-last-child(2) td {
+  background-color: #eef2f7;
+  font-weight: 700;
+  color: #1a237e;
+}
+
+/* Amount in words row */
+.totals-section tr:last-child td {
+  border-top: 2px solid #dee2e6;
+  font-size: 0.95em;
+  color: #555;
+  padding: 20px 12px;
+}
+
+/* Print optimizations */
+@media print {
+  .table {
+    border: 1px solid #000;
+  }
+
+  .table thead th {
+    background-color: #f8f9fa !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .amount-column {
+    background-color: #f8f9fa !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .status-badge {
+    border: 1px solid #000;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Company Details Enhancement */
+.company-details {
+  line-height: 1.6;
+}
+
+.company-details .contact-info {
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* Document Title */
+.document-title {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.document-title h2 {
+  display: inline-block;
+  background: #fff;
+  padding: 0 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.document-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: #dee2e6;
+  z-index: -1;
+}

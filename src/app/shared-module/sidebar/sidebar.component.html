@@ -1,87 +1,29 @@
-<mat-nav-list class="sidenav-list">
-    <a mat-list-item routerLink="/admin/dashboard" routerLinkActive="highlightCard" (click)="onToggleClose()">
-      <span class="material-symbols-outlined me-1">
-        dashboard
-        </span>
-      <span>Admin Dasboard</span>
-    </a>  
-    
-    <a mat-list-item routerLink="/admin/tickets" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">event_note</span>Service Requests</a> 
-    <a mat-list-item routerLink="/admin/companieslist" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">
-      add_business
-      </span> Customers</a> 
-    <a mat-list-item routerLink="/admin/branches" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">component_exchange</span>Locations</a> 
-    <a mat-list-item routerLink="/admin/machines" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">coffee_maker</span>Machines</a> 
-    <a mat-list-item routerLink="/admin/techinicians" routerLinkActive="highlightCard"><span class="material-symbols-outlined me-1">person_apron</span> Techinicians</a>    
-    <!-- <a mat-list-item routerLink="/admin/companieslist"><span class="material-symbols-outlined me-1">
-      settings
-      </span> App Settings</a>  -->
-    
-      <mat-expansion-panel [class.mat-elevation-z0]="true" class="customexpansionMenu">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <span class="material-symbols-outlined me-1">
-              inventory
-              </span> 
-            Inventory
-          </mat-panel-title>          
-        </mat-expansion-panel-header>
-        <a mat-list-item routerLink="/admin/inventory" routerLinkActive="highlightCard">Products</a>
-        <a mat-list-item routerLink="/admin/vendors" routerLinkActive="highlightCard">Vendors  </a>        
-        <a mat-list-item routerLink="/dashboard/Quoations" routerLinkActive="highlightCard">Categories</a>        
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [class.mat-elevation-z0]="true" class="customexpansionMenu">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <span class="material-symbols-outlined me-1">
-              problem
-              </span> 
-            Reports
-          </mat-panel-title>          
-        </mat-expansion-panel-header>
-        <a mat-list-item routerLink="/admin/reports/servicerquests" routerLinkActive="highlightCard">Service Requests</a>
-        <!-- <a mat-list-item routerLink="/admin/vendors" routerLinkActive="highlightCard">Vendors  </a>        
-        <a mat-list-item routerLink="/dashboard/Quoations" routerLinkActive="highlightCard">Categories</a>         -->
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [class.mat-elevation-z0]="true" class="customexpansionMenu">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <span class="material-symbols-outlined">
-              payments
-              </span> Finance
-          </mat-panel-title>          
-        </mat-expansion-panel-header>
-        <a mat-list-item routerLink="/admin/fin/quotation" routerLinkActive="highlightCard">Quotaions</a>
-        <a mat-list-item routerLink="/admin/fin/allquots" routerLinkActive="highlightCard">Quotaions List</a>   
-        <a mat-list-item routerLink="/admin/fin/invoicegen" routerLinkActive="highlightCard">Invoices</a>   
-        <a mat-list-item routerLink="/admin/fin/allinvoices" routerLinkActive="highlightCard">Invoices List</a> 
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [class.mat-elevation-z0]="true" class="customexpansionMenu">
-        <mat-expansion-panel-header>
-          <span class="material-symbols-outlined me-1">
-            settings
-            </span> App Settings
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/admin/users" routerLinkActive="highlightCard">
-            <span>Manage Users</span>
-          </a>
-            <a mat-list-item routerLink="/admin/reqcategories" routerLinkActive="highlightCard">
-                <span>Request Categories</span>
-            </a>
-            <a mat-list-item routerLink="/admin/reqTypes" routerLinkActive="highlightCard">
-                <span>Request Types</span>
-            </a>
-            <a mat-list-item routerLink="/admin/reqpriorities" routerLinkActive="highlightCard">
-              <span>Request Priorities</span>
-          </a>
-        </mat-nav-list>
-    </mat-expansion-panel>
-    
-
-   
-
-   
+<nav class="workspace-navigation" aria-label="Administration navigation">
+  <div class="navigation-intro"><span class="workspace-indicator" aria-hidden="true"></span><div><strong>Operations</strong><span>Administration workspace</span></div></div>
+  <mat-nav-list>
+    <span class="navigation-label">WORKSPACE</span>
+    <a mat-list-item routerLink="/admin/dashboard" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>Overview</a>
+    <span class="navigation-label">SERVICE OPERATIONS</span>
+    <a mat-list-item routerLink="/admin/tickets" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">confirmation_number</span>Service requests</a>
+    <a mat-list-item routerLink="/admin/companieslist" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>Customers</a>
+    <a mat-list-item routerLink="/admin/branches" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">location_on</span>Locations</a>
+    <a mat-list-item routerLink="/admin/machines" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">precision_manufacturing</span>Machines</a>
+    <a mat-list-item routerLink="/admin/techinicians" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">engineering</span>Technicians</a>
+    <span class="navigation-label">INVENTORY</span>
+    <a mat-list-item routerLink="/admin/inventory" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>Products &amp; parts</a>
+    <a mat-list-item routerLink="/admin/vendors" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>Vendors</a>
+    <span class="navigation-label">FINANCE</span>
+    <a mat-list-item routerLink="/admin/fin/quotation-data-entry" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">post_add</span>Create quotation</a>
+    <a mat-list-item routerLink="/admin/fin/allquots" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">request_quote</span>Quotations</a>
+    <a mat-list-item routerLink="/admin/fin/invoice-data-entry" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">note_add</span>Create invoice</a>
+    <a mat-list-item routerLink="/admin/fin/allinvoices" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>Invoices</a>
+    <span class="navigation-label">INSIGHTS</span>
+    <a mat-list-item routerLink="/admin/reports/servicerquests" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">monitoring</span>Service reports</a>
+    <span class="navigation-label">ADMINISTRATION</span>
+    <a mat-list-item routerLink="/admin/users" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>Users</a>
+    <a mat-list-item routerLink="/admin/reqcategories" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">category</span>Request categories</a>
+    <a mat-list-item routerLink="/admin/reqTypes" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">list_alt</span>Request types</a>
+    <a mat-list-item routerLink="/admin/reqpriorities" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="onToggleClose()"><span class="material-symbols-outlined" aria-hidden="true">flag</span>Request priorities</a>
+  </mat-nav-list>
+  <div class="navigation-footer"><span class="material-symbols-outlined" aria-hidden="true">hub</span><span>Everything, connected.<small>Service Management</small></span></div>
+</nav>

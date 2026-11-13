@@ -69,14 +69,21 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { InvoiceComponent } from './Components/Finance/invoice/invoice.component';
 import { AppsearchabledpDirective } from './directives/appsearchabledp.directive';
-import { QuotationListComponent } from './components/finance/quotation-list/quotation-list.component';
+import { QuotationListComponent } from './Components/Finance/quotation-list/quotation-list.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatMenuModule} from '@angular/material/menu';
 import { InvoicePreviewComponent } from './Components/Finance/invoice-preview/invoice-preview.component';
 import { InvoiceListComponent } from './Components/Finance/invoice-list/invoice-list.component';
 import { DialogQuotationpreviewComponent } from './dialogs/dialog-finance/dialog-quotationpreview/dialog-quotationpreview.component';
 import { DialogInvoicepreviewComponent } from './dialogs/dialog-finance/dialog-invoicepreview/dialog-invoicepreview.component';
-import { QuotationCreationComponent } from './Components/finance/quotation-creation/quotation-creation.component';
+import { QuotationCreationComponent } from './Components/Finance/quotation-creation/quotation-creation.component';
+import { DialogInvoiceStatusupdateComponent } from './dialogs/dialog-finance/dialog-invoice-statusupdate/dialog-invoice-statusupdate.component';
+import { InvoicesComponent } from './Components/Finance/invoices/invoices.component';
+import { QuotationDataEntryComponent } from './Components/Finance/quotation-data-entry/quotation-data-entry.component';
+import { DialogQuotationDataPreviewComponent } from './dialogs/dialog-finance/dialog-quotation-data-preview/dialog-quotation-data-preview.component';
+import { InvoiceDataEntryComponent } from './Components/Finance/invoice-data-entry/invoice-data-entry.component';
+import { DialogInvoiceDataPreviewComponent } from './dialogs/dialog-finance/dialog-invoice-data-preview/dialog-invoice-data-preview.component';
+import { DialogInvoiceEmailComponent } from './dialogs/dialog-finance/dialog-invoice-email/dialog-invoice-email.component';
 @NgModule({
   declarations: [
     AdminLayoutComponent,
@@ -116,7 +123,7 @@ import { QuotationCreationComponent } from './Components/finance/quotation-creat
     QuotationdisplayComponent,
     TicketsresponseviolationratioComponent,
     InvoiceComponent,   
-    AppsearchabledpDirective, QuotationListComponent, InvoicePreviewComponent, InvoiceListComponent, DialogQuotationpreviewComponent, DialogInvoicepreviewComponent, QuotationCreationComponent
+    AppsearchabledpDirective, QuotationListComponent, InvoicePreviewComponent, InvoiceListComponent, DialogQuotationpreviewComponent, DialogInvoicepreviewComponent, QuotationCreationComponent, DialogInvoiceStatusupdateComponent, InvoicesComponent, QuotationDataEntryComponent, DialogQuotationDataPreviewComponent, InvoiceDataEntryComponent, DialogInvoiceDataPreviewComponent, DialogInvoiceEmailComponent
   ],
   imports: [    
     CommonModule,

@@ -55,6 +55,8 @@ export class QuotationComponent implements OnInit {
     quotationNum:[''],
     serviceCharges:[null],
     PaymentTerms:[''],
+    disclaimer:[''],
+    notes:[''],
     quotationItems:this.fb.array([])    
   });
   ngOnInit(): void {
@@ -103,7 +105,7 @@ export class QuotationComponent implements OnInit {
       searchInput: selectedPart // Display description in input
     });
   
-    // 🔥 Mark the field as touched and update validation
+    // Mark the field as touched and update validation
     partForm.get('partsID')?.markAsTouched();
     partForm.get('partsID')?.updateValueAndValidity();
   }

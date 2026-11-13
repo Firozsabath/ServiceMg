@@ -1,0 +1,57 @@
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+  min-width: 400px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-dialog-content {
+  margin: 0;
+  padding: 16px;
+}
+
+mat-dialog-actions {
+  padding: 16px;
+  margin: 0;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+h2 {
+  margin: 0;
+  padding: 16px;
+  background-color: var(--sm-subtle);
+  border-bottom: 1px solid var(--sm-border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  font-size: 20px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+mat-label .material-symbols-outlined {
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+button .material-symbols-outlined {
+  margin-right: 4px;
+  font-size: 18px;
+} 

@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$forest: (
+  50: #eef3e9, 100: #dce6d5, 200: #bacdb2, 300: #93ad88,
+  400: #63805c, 500: #355b42, 600: #304f39, 700: #294431,
+  800: #233d35, 900: #192d25,
+  contrast: (50: #233d35, 100: #233d35, 200: #233d35, 300: #233d35,
+    400: white, 500: white, 600: white, 700: white, 800: white, 900: white)
+);
+$sage: (
+  50: #f4f6ed, 100: #e8edda, 200: #d5dfbf, 300: #becd9e,
+  400: #99ad75, 500: #71844b, 600: #657643, 700: #566537,
+  800: #48552f, 900: #354025,
+  contrast: (50: #233d35, 100: #233d35, 200: #233d35, 300: #233d35,
+    400: #233d35, 500: white, 600: white, 700: white, 800: white, 900: white)
+);
+$theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette($forest, 500),
+    accent: mat.define-palette($sage, 700),
+    warn: mat.define-palette(mat.$red-palette, 800)
+  ),
+  typography: mat.define-typography-config($font-family: 'Inter, IBM Plex Sans, sans-serif')
+));
+@include mat.all-component-themes($theme);

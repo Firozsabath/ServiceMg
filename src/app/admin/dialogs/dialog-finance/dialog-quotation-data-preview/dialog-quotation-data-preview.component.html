@@ -1,0 +1,174 @@
+<button mat-icon-button class="close-button" (click)="closeDialog()">
+  <span class="material-symbols-outlined">close</span>
+</button>
+
+<div *ngIf="isLoading" class="loading-overlay">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p>{{ isProcessingData ? 'Processing quotation data...' : 'Generating PDF...' }}</p>
+</div>
+
+<div *ngIf="quotation" class="preview-container">
+  <div id="quotation-preview" class="quotation-content">
+    <!-- Header Section -->
+    <div class="header">
+      <div class="row mb-4">
+        <div class="col-4 company-logo">
+          <span class="document-label">SERVICE DOCUMENT</span>
+        </div>
+        <div class="col-4">
+          <div class="document-title">
+            <h2>Quotation</h2>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="company-details text-end">
+            <p class="fw-bold">Bean Balance Catering Equipment Trading LLC</p>
+            <div class="contact-info">
+              <p>Ras Al Khor 2</p>
+              <p>Dubai, UAE</p>
+              <p>+971 56 997 8495</p>
+              <p>+971 56 997 8496</p>
+              <p>+971 56 997 8497</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="customer-info">
+            <p><strong>Customer:</strong> {{ quotation.companyName }}</p>
+            <p><strong>Address:</strong> {{ quotation.companyAddress }}</p>
+            <div *ngIf="quotation.companyID > 0">
+              <p><strong>Branch:</strong> {{ quotation.branch }}</p>
+              <p><strong>TRN:</strong> {{ quotation.trn }}</p>
+              <p><strong>Machine:</strong> {{ quotation.machine }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="quotation-details text-end">
+            <p><strong>Date:</strong> {{ quotation.dateCreated | date }}</p>
+            <p><strong>TRN:</strong> 104733734800003</p>
+            <p><strong>Quotation No:</strong> {{ quotation.quotationNum }}</p>
+            <p><strong>Validity Date:</strong> {{ quotation.validUntil | date }}</p>
+            <p><strong>Created By:</strong> {{ userEmailId }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quotation Items Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>SKU ID</th>
+          <th>Quantity</th>
+          <th>Availability</th>
+          <th class="amount-column">Unit Price (AED)</th>
+          <th>VAT %</th>
+          <th class="amount-column">VAT Amount (AED)</th>
+          <th class="amount-column">Total (AED)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of quotationItems">
+          <td>{{ item.description }}</td>
+          <td class="text-center">{{ item.skuId }}</td>
+          <td class="text-center">{{ item.quantityUsed }}</td>
+          <td class="text-center">
+            <span class="status-badge" [ngClass]="{
+              'status-available': item.availablility === 'Available',
+              'status-limited': item.availablility === 'Limited',
+              'status-unavailable': item.availablility === 'Not Available'
+            }">
+              {{ item.availablility }}
+            </span>
+          </td>
+          <td class="amount-column">{{ item.amount | number: '1.2-2' }}</td>
+          <td class="text-center">{{ item.vatPercent }}%</td>
+          <td class="amount-column">{{ item.vat | number: '1.2-2' }}</td>
+          <td class="amount-column">{{ item.total | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+      <tfoot class="totals-section">
+        <tr *ngIf="quotation.itemDiscount">
+          <td colspan="6" class="text-end">Discount on Items</td>
+          <td colspan="2" class="amount-column">{{ quotation.itemDiscount | number: '1.2-2' }}</td>
+        </tr>
+        <tr>
+          <td colspan="5" class="text-end">Sub Total</td>
+          <td class="amount-column">{{ quotation.subTotal | number: '1.2-2' }}</td>
+          <td class="text-end">Total VAT</td>
+          <td class="amount-column">{{ quotation.totalVat | number: '1.2-2' }}</td>
+        </tr>
+        <tr>
+          <td colspan="6" class="text-end">Total Amount</td>
+          <td colspan="2" class="amount-column">{{ quotation.totalAmount | number: '1.2-2' }}</td>
+        </tr>
+        <tr>
+          <td colspan="8" class="amount-in-words">
+            Amount in Words: {{ convertNumberToWords(quotation.totalAmount) }}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <!-- Payment and Terms Section -->
+    <div class="row mt-4">
+      <div class="col-8">
+        <p class="mb-4">Looking forward for your business.</p>
+
+        <div class="bank-details">
+          <table>
+            <tr><td>BENEFICIARY : Bean Balance Catering Equipment trading LLC</td></tr>
+            <tr><td>BANK NAME : RAK Bank</td></tr>
+            <tr><td>ACCOUNT NO : 0553 4753 25001</td></tr>
+            <tr><td>IBAN : AE7304 0000 05534 7532 5001</td></tr>
+          </table>
+        </div>
+
+        <div class="terms-conditions">
+          <p class="fw-bold">Terms & Conditions</p>
+          <p>1. Quotation validity is (14) days from date of issue.</p>
+          <p>2. GOODS ONCE SOLD CANNOT BE RETURNED or EXCHANGED</p>
+        </div>
+      </div>
+      <div class="col-4 text-end">
+        <div class="document-signature">Authorized signature</div>
+      </div>
+    </div>
+
+    <!-- Additional Information -->
+    <div *ngIf="quotation.paymentTerms" class="additional-info">
+      <h5>Payment Terms</h5>
+      <p>{{ quotation.paymentTerms }}</p>
+    </div>
+
+    <div *ngIf="quotation.disclaimer" class="additional-info">
+      <h5>Disclaimer</h5>
+      <p>{{ quotation.disclaimer }}</p>
+    </div>
+
+    <div *ngIf="quotation.notes" class="additional-info">
+      <h5>Notes</h5>
+      <p>{{ quotation.notes }}</p>
+    </div>
+  </div>
+
+  <div class="text-center action-buttons">
+    <button mat-stroked-button color="warn" (click)="closeDialog()" class="me-3">
+      <span class="material-symbols-outlined">cancel</span> Cancel
+    </button>
+    <button mat-flat-button color="primary" (click)="downloadQuotationPDF()" [disabled]="isLoading">
+      <span class="material-symbols-outlined">{{ isPreviewOnly ? 'save' : 'download' }}</span> 
+      {{ isPreviewOnly ? 'Save & Download PDF' : 'Download PDF' }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!quotation" class="no-data">
+  <p>No quotation data available for preview.</p>
+  <button mat-button color="primary" (click)="closeDialog()">Close</button>
+</div>

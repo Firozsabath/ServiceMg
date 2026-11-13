@@ -1,2 +1,252 @@
+.page-container {
+  padding: 24px;
+}
 
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title-section h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--sm-text);
+}
+
+.title-section .subtitle {
+  color: var(--sm-muted);
+  margin: 4px 0 0;
+}
+
+/* Stats Cards */
+.stats-container {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--sm-text);
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--sm-muted);
+  font-size: 0.9rem;
+}
+
+/* Filter Section */
+.filter-section {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-field {
+  width: 100%;
+}
+
+.paginator-field {
+  background: transparent;
+}
+
+/* Table Styles */
+.table-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.inventory-table {
+  width: 100%;
+}
+
+/* Item Name Cell */
+.item-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* SKU Badge */
+.sku-badge {
+  background: var(--sm-subtle);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--sm-text);
+}
+
+/* Manufacturer & Vendor Cells */
+.manufacturer-cell,
+.vendor-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.manufacturer-cell .material-symbols-outlined,
+.vendor-cell .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--sm-muted);
+}
+
+/* Quantity Badge */
+.quantity-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quantity-ok {
+  background: var(--sm-success-soft);
+  color: var(--sm-success);
+}
+
+.quantity-low {
+  background: var(--sm-warning-soft);
+  color: var(--sm-warning);
+}
+
+.quantity-out {
+  background: var(--sm-danger-soft);
+  color: var(--sm-danger);
+}
+
+/* Cost Cells */
+.cost-cell {
+  font-variant-numeric: tabular-nums;
+  color: var(--sm-text);
+}
+
+.total-cost {
+  font-weight: 500;
+  color: var(--sm-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Date Cell */
+.date-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--sm-muted);
+}
+
+/* VAT Badge */
+.vat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: var(--sm-subtle);
+  color: var(--sm-muted);
+}
+
+.vat-badge.vat-applied {
+  background: var(--sm-success-soft);
+  color: var(--sm-success);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.action-buttons:hover {
+  opacity: 1;
+}
+
+/* Row Styles */
+.mat-row {
+  transition: background-color 0.2s;
+}
+
+.mat-row:hover {
+  background-color: var(--sm-canvas);
+}
+
+.low-stock-row {
+  background-color: var(--sm-warning-soft);
+}
+
+.low-stock-row:hover {
+  background-color: #f8e9cc;
+}
+
+/* No Data Message */
+.no-data-cell {
+  padding: 48px !important;
+}
+
+.no-data-message {
+  text-align: center;
+}
+
+.no-data-message .material-symbols-outlined {
+  font-size: 48px;
+  color: #a5b29a;
+  margin-bottom: 16px;
+}
+
+.no-data-message p {
+  color: var(--sm-muted);
+  margin-bottom: 24px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .action-button {
+    width: 100%;
+  }
+
+  .stats-container .col-md-3 {
+    margin-bottom: 16px;
+  }
+}
+
+.custombutton {
+  margin-top: 10px;
+}
+
+.custombutton .material-symbols-outlined {
+  font-size: 20px;
+  margin-right: 8px;
+  vertical-align: bottom;
+}
 

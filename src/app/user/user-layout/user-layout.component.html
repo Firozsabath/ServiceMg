@@ -1,13 +1,15 @@
-<app-headerbar></app-headerbar>
-<mat-sidenav-container>
-    <mat-sidenav [(opened)]="opened" mode="side">
-        <app-sidebar-student></app-sidebar-student>
+<div class="workspace-shell">
+  <a class="skip-to-content" href="#workspace-content">Skip to content</a>
+  <app-headerbar [navigationOpen]="opened" (open)="navOpen()"></app-headerbar>
+  <mat-sidenav-container class="workspace-container">
+    <mat-sidenav id="workspace-navigation" class="workspace-sidenav" [(opened)]="opened" [mode]="isMobile ? 'over' : 'side'" [autoFocus]="isMobile">
+      <app-sidebar-student (closeSideNav)="closeOnMobile()"></app-sidebar-student>
     </mat-sidenav>
     <mat-sidenav-content>
-      <main>
-        <div style="padding: 15px;">
-          <router-outlet></router-outlet>       
-        </div>
+      <main id="workspace-content" class="workspace-main" tabindex="-1">
+        <app-progress-spinner></app-progress-spinner>
+        <div class="workspace-content"><router-outlet></router-outlet></div>
       </main>
     </mat-sidenav-content>
   </mat-sidenav-container>
+</div>

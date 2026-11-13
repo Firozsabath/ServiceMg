@@ -26,7 +26,7 @@ export class DialogUsersComponent implements OnInit {
       role:['',Validators.required],
       password:['',
       [
-        Validators.required,
+        //Validators.required,
         Validators.minLength(8),
         Validators.pattern(
           '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
@@ -41,7 +41,7 @@ export class DialogUsersComponent implements OnInit {
     debugger;
     this.userData.patchValue(this.dialogdata);
     if(this.dialogdata){
-      this.isUpdate = true;
+      this.isUpdate = false;
       if(this.dialogdata.role != ""){
         this.selectedRole = this.dialogdata.role;
       }      

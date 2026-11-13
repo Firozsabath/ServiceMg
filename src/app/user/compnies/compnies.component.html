@@ -19,7 +19,7 @@
     
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </th>
-      <td width="20%" mat-cell *matCellDef="let row"><span><img class="rounded-circle custom_rounded profimg p-1" style="width:15%; margin-right: 5px;" src="../assets/Images/logo1.jpg" alt="Card image cap"></span> {{row.name}}</td>
+      <td width="20%" mat-cell *matCellDef="let row"><span><span class="entity-avatar material-symbols-outlined" aria-hidden="true">corporate_fare</span></span> {{row.name}}</td>
     </ng-container>
 
     <ng-container matColumnDef="contactPerson">

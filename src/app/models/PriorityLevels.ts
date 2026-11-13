@@ -20,7 +20,8 @@ export class drp{
     public id:number;
     public name:string;
     public foreignID:number;
-
+    public address?: string;
+    public trn?: string;
 }
 
 export class ServiceStatuses{

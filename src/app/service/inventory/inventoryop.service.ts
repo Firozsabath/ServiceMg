@@ -15,8 +15,12 @@ export class InventoryopService {
   getItems():Observable<any>{   
     return this.http.get<any>(this.apiUrl);
   }
+  
   getItemsByID(id:number):Observable<any>{
     return this.http.get<any>(this.apiUrl);
+  }
+  getItemsBySKUID(id:string):Observable<any>{
+    return this.http.get<any>(this.apiUrl+`/GetBySkuID/${id}`);
   }
   addItem(data:Inventory):Observable<any>{
     return this.http.post<any>(this.apiUrl,data);

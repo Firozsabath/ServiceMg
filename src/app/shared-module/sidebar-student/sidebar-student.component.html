@@ -1,8 +1,9 @@
-<mat-nav-list class="sidenav-list">   
-    <a mat-list-item routerLink="/user"><span class="material-symbols-outlined me-1">event_note</span>Service Requests</a> 
-    <a mat-list-item routerLink="/user/companies"><span class="material-symbols-outlined me-1">
-      add_business
-      </span> Companies</a> 
-    <!-- <a mat-list-item routerLink="/admin/branches"><span class="material-symbols-outlined me-1">component_exchange</span>Branches</a> 
-    <a mat-list-item routerLink="/admin/machines"><span class="material-symbols-outlined me-1">coffee_maker</span>Machines</a>      -->
-</mat-nav-list>
+<nav class="workspace-navigation" aria-label="Technician navigation">
+  <div class="navigation-intro"><span class="workspace-indicator" aria-hidden="true"></span><div><strong>My workspace</strong><span>Service operations</span></div></div>
+  <mat-nav-list>
+    <span class="navigation-label">WORKSPACE</span>
+    <a mat-list-item routerLink="/user" [class.nav-active]="requestsActive" [attr.aria-current]="requestsActive ? 'page' : null" (click)="closeSideNav.emit()"><span class="material-symbols-outlined" aria-hidden="true">confirmation_number</span>Service requests</a>
+    <a mat-list-item routerLink="/user/companies" routerLinkActive="nav-active" ariaCurrentWhenActive="page" (click)="closeSideNav.emit()"><span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>Companies</a>
+  </mat-nav-list>
+  <div class="navigation-footer"><span class="material-symbols-outlined" aria-hidden="true">hub</span><span>Everything, connected.<small>Service Management</small></span></div>
+</nav>

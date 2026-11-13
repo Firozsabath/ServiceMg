@@ -5,7 +5,7 @@
         <div class="row">
           <mat-form-field appearance="fill">
               <mat-label>SKU ID</mat-label>
-              <input matInput formControlName='skuID'>
+              <input matInput formControlName='skuID' (change)="onInputChange($event)">
               <mat-error *ngIf="inventoryData.get('skuID')?.hasError('skuID')">Company Name Required</mat-error> 
             </mat-form-field>
         </div>

@@ -1,22 +1,32 @@
-.mat-toolbar.mat-primary{
-    /* background-color: #3C4F76; */
-    background-color: #14402c;
-    color: #fff;
+:host { display: block; }
+.workspace-header.mat-toolbar {
+  height: 68px;
+  padding: 0 24px;
+  gap: 14px;
+  background: var(--sm-surface);
+  color: var(--sm-text);
+  border-bottom: 1px solid var(--sm-border);
+  font-family: var(--sm-font);
 }
-
-.app-header{
-    color: gold;
-    font-weight: bold;
-}
-
-.example-spacer {
-    flex: 1 1 auto;
-  }
-
-  .mat-toolbar-row, .mat-toolbar-single-row {
-    height: 100px;
-}
-
-.logo{
-    width:40%;
+.navigation-toggle, .logout-button { color: var(--sm-muted); }
+.workspace-brand { display: flex; align-items: center; gap: 10px; color: var(--sm-forest); text-decoration: none; font-size: 17px; font-weight: 650; letter-spacing: -.6px; }
+.workspace-brand svg { width: 29px; height: 29px; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.brand-light { font-weight: 400; }
+.header-divider { height: 22px; width: 1px; background: var(--sm-border); margin: 0 4px 0 10px; }
+.workspace-caption { font-size: 11px; font-weight: 400; color: var(--sm-muted); }
+.header-spacer { flex: 1; }
+.account { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.account-avatar { width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; background: var(--sm-sage-soft); color: var(--sm-forest); font-size: 13px; font-weight: 600; }
+.account-details { display: flex; flex-direction: column; line-height: 1.5; min-width: 0; }
+.account-name { font-size: 11px; font-weight: 500; max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
+.account-role { font-size: 10px; font-weight: 400; color: var(--sm-muted); }
+.logout-button { margin-left: 8px; }
+a:focus-visible { outline: 2px solid var(--sm-sage); outline-offset: 5px; border-radius: 4px; }
+@media (max-width: 900px) { .workspace-caption, .header-divider { display: none; } }
+@media (max-width: 600px) {
+  .workspace-header.mat-toolbar { padding: 0 10px; gap: 8px; height: 60px; }
+  .workspace-brand { font-size: 14px; gap: 6px; }
+  .workspace-brand svg { width: 24px; height: 24px; }
+  .account-details, .account-avatar { display: none; }
+  .account, .logout-button { margin: 0; }
 }

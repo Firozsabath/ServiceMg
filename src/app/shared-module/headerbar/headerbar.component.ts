@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthenticationserviceService } from 'src/app/service/auth/authenticationservice.service';
 
 @Component({
@@ -8,29 +7,30 @@ import { AuthenticationserviceService } from 'src/app/service/auth/authenticatio
   styleUrls: ['./headerbar.component.css']
 })
 export class HeaderbarComponent implements OnInit {
-
-  userEmailId :string;
+  @Input() navigationOpen = true;
+  @Output() open = new EventEmitter<boolean>();
+  userEmailId = '';
+  userRole = 'Workspace member';
+  userInitial = 'U';
+  homeRoute = '/user';
   logoutbtnHide = true;
-  constructor(private authService: AuthenticationserviceService, private _router: Router) { }
 
-  @Output()
-  open: EventEmitter<boolean> = new EventEmitter()
+  constructor(private authService: AuthenticationserviceService) { }
 
   ngOnInit(): void {
-    debugger;
-    var token = localStorage.getItem('token');
-    this.userEmailId = localStorage.getItem('userEmail');
-    if(token!=null){
-      this.logoutbtnHide = false;
-    }
+    this.logoutbtnHide = !localStorage.getItem('token');
+    this.userEmailId = localStorage.getItem('userEmail') || '';
+    this.userInitial = this.userEmailId.charAt(0).toUpperCase() || 'U';
+    const role = localStorage.getItem('userRole');
+    this.userRole = role === 'Admin' ? 'Administrator' : role === 'Technician' ? 'Technician' : 'Workspace member';
+    this.homeRoute = role === 'Admin' ? '/admin/dashboard' : '/user';
   }
 
-  clickMenu() {
+  clickMenu(): void {
     this.open.emit(true);
-    //console.log(this.logbtnHide);
   }
 
-  logout(){    
-    this.authService.logout();    
+  logout(): void {
+    this.authService.logout();
   }
 }

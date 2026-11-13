@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Branches } from 'src/app/models/Branches';
@@ -17,13 +17,15 @@ import { DialogConfirmBoxComponent } from '../../dialogs/dialog-confirm-box/dial
 })
 export class BranchesListComponent implements OnInit {
 
-  branches: any;
+  branches: any[] = [];
   
-  selectedValue:any;
-  companyList:Companiesdropdown[];
-  filteredCompanies: any;
+  selectedValue: any;
+  companyList: any[] = [];
+  filteredCompanies: any[] = [];
   optionsArray = ['Option 1', 'Option 2', 'Option 3', 'Option 4']; // Full options
   filteredOptions = [...this.optionsArray];
+  companyControl = new FormControl('');
+
   constructor(private branchService:BranchesopsService,private compServices:CompaniesopService, private fb:FormBuilder, 
     private dialog:MatDialog, private _snackBar:MatSnackBar) { 
 
@@ -122,6 +124,11 @@ export class BranchesListComponent implements OnInit {
         })
       }
     })
+  }
+
+  getCompanyName(companyId: string): string {
+    const company = this.companyList.find(c => c.id === companyId);
+    return company ? company.name : 'Unknown Company';
   }
 
 }

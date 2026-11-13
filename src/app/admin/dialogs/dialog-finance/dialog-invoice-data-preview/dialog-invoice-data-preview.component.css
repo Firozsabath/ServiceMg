@@ -1,0 +1,234 @@
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.preview-container {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-content {
+  padding: 30px;
+  background: #fff;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-overlay p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.company-info p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Enhanced Table Styles */
+.table {
+  width: 100%;
+  margin-bottom: 2rem;
+  border: 1px solid #dee2e6;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  padding: 15px 12px;
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.table tbody td {
+  padding: 12px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+  font-size: 0.95rem;
+}
+
+/* Monetary Value Columns */
+.amount-column {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+  background-color: #f8f9fa;
+  font-weight: 500;
+  position: relative;
+}
+
+.amount-column::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, #dee2e6, transparent);
+}
+
+/* Bank Details */
+.bank-details {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.bank-details table {
+  width: 100%;
+}
+
+.bank-details td {
+  padding: 5px 0;
+  font-family: 'Courier New', monospace;
+}
+
+/* Terms and Conditions */
+.terms-conditions {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.terms-conditions p {
+  margin: 5px 0;
+}
+
+/* Additional Information Sections */
+.additional-info {
+  margin-top: 20px;
+  padding: 15px;
+  border-top: 1px solid #dee2e6;
+}
+
+.additional-info h5 {
+  color: #495057;
+  margin-bottom: 10px;
+}
+
+.additional-info p {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin-top: 30px;
+}
+
+.action-buttons button {
+  min-width: 150px;
+}
+
+/* No Data Message */
+.no-data {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+/* Company Logo */
+.company-logo img {
+  max-width: 200px;
+  height: auto;
+}
+
+/* Document Title */
+.document-title {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.document-title h2 {
+  margin: 0;
+  color: #1a237e;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Company Details */
+.company-details {
+  font-size: 0.9em;
+}
+
+.contact-info {
+  margin-top: 10px;
+}
+
+.contact-info p {
+  margin: 2px 0;
+}
+
+/* Customer Info */
+.customer-info {
+  margin-bottom: 20px;
+}
+
+/* Invoice Details */
+.invoice-details {
+  text-align: right;
+}
+
+/* Table Footer */
+.table tfoot td {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  border-top: 2px solid #dee2e6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .preview-container {
+    padding: 10px;
+  }
+
+  .invoice-content {
+    padding: 15px;
+  }
+
+  .company-logo img {
+    max-width: 150px;
+  }
+
+  .document-title h2 {
+    font-size: 24px;
+  }
+
+  .table {
+    font-size: 0.9em;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    margin: 5px 0;
+  }
+} 

@@ -23,7 +23,7 @@ export class AuthenticationserviceService {
   }
   getValidated(data: any)
   {
-    return this.http.post<User>(this.apiUrl+"Auth/login",data).pipe(     
+    return this.http.post<{ token: string }>(this.apiUrl+"Auth/login",data).pipe(
       tap(res=>this.setSession),
       shareReplay()
     );

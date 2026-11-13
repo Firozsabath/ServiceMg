@@ -78,7 +78,7 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td width="20%" mat-cell *matCellDef="let element" class="text-center"> 
         <button mat-mini-fab color="primary" class="me-2" (click)="editMachine(element)"><span class="material-symbols-outlined">edit</span></button>
-        <button mat-mini-fab color="primary"  (click)="deleteMachine(element.id)"><span class="material-symbols-outlined">delete</span></button>
+        <button mat-mini-fab color="warn"  (click)="deleteMachine(element.id)"><span class="material-symbols-outlined">delete</span></button>
         </td>
     </ng-container>
 
@@ -97,7 +97,7 @@
     <!-- <mat-card *ngFor="let machine of machines" class="example-card mb-3">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image">
-            <img class="card-img-top rounded-circle custom_rounded profimg" src="../assets/Images/logo1.jpg" alt="Card image cap">
+            <span class="entity-avatar material-symbols-outlined" aria-hidden="true">precision_manufacturing</span>
           </div>
           <mat-card-title>{{machine.name}}</mat-card-title>
           <mat-card-subtitle>{{machine.branchName}}</mat-card-subtitle>
